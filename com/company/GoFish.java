@@ -23,6 +23,7 @@ public class GoFish {
 
     public static void main(String args[]){
         GoFish g = new GoFish();
+        System.out.println("test");
     }
 
 }
