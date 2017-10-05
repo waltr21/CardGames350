@@ -10,6 +10,8 @@ public class GoFish {
     ArrayList<Player> players;
 
     public GoFish(int numPlayers){
+        if (numPlayers > 4)
+            numPlayers = 4;
         gameDeck = new Deck(false);
         players = new ArrayList<>();
 
@@ -22,7 +24,7 @@ public class GoFish {
 
 
     public void resetGame(){
-        gameDeck.createDeck(false);
+        gameDeck.createDeck();
         gameDeck.shuffle();
 
 
@@ -31,10 +33,14 @@ public class GoFish {
                 p.giveCard(gameDeck.removeTop());
             }
         }
+
+        for (Player x : players){
+            x.printCards();
+        }
     }
 
     public static void main(String args[]){
-        GoFish g = new GoFish(2);
+        GoFish g = new GoFish(33);
 
     }
 

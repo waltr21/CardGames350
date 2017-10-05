@@ -27,4 +27,10 @@ public class Player {
         return playerCards;
     }
 
+    public void printCards(){
+        for (Card c : playerCards){
+            System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
+        }
+    }
+
 }

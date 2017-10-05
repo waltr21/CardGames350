@@ -9,10 +9,12 @@ import java.util.Random;
 public class Deck {
     Random r = new Random();
     ArrayList<Card> myCards;
+    boolean joker;
 
-    public Deck(boolean joker){
+    public Deck(boolean j){
         myCards = new ArrayList<>();
-        createDeck(joker);
+        joker = j;
+        createDeck();
     }
 
     /*
@@ -27,7 +29,7 @@ public class Deck {
      * @Param A boolean to decide if the deck should contain jokers or not.
      * @Return returns the fully sorted deck.
      */
-    public void createDeck(boolean joker){
+    public void createDeck(){
         ArrayList<Card> tempDeck = new ArrayList<>();
         for (int value = 1; value <=13 ; value++){
             for (int suit = 0; suit <= 3; suit++){
@@ -103,6 +105,12 @@ public class Deck {
         }
 
         return null;
+    }
+
+    public void printCards(){
+        for (Card c : myCards){
+            System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
+        }
     }
 
 
