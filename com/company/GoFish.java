@@ -6,24 +6,36 @@ import java.util.ArrayList;
  * Created by RyanWalt on 10/5/17.
  */
 public class GoFish {
-    BasicFunction b = new BasicFunction();
-    ArrayList<Card> gameCards = new ArrayList<>();
+    Deck gameDeck;
+    ArrayList<Player> players;
 
-    public GoFish(){
-        gameCards = b.createDeck(false);
+    public GoFish(int numPlayers){
+        gameDeck = new Deck(false);
+        players = new ArrayList<>();
 
-        gameCards = b.shuffle(gameCards);
+        for (int i = 0; i < numPlayers; i++){
+            players.add(new Player());
+        }
 
-        gameCards = b.createDeck(false);
-        for (int i = 0; i < gameCards.size(); i ++){
-            System.out.println("Number: " + gameCards.get(i).getValue() +
-                    " Suit: " + gameCards.get(i).getSuit());
+        resetGame();
+    }
+
+
+    public void resetGame(){
+        gameDeck.createDeck(false);
+        gameDeck.shuffle();
+
+
+        for (Player p : players){
+            for (int i = 1; i <= 7; i++){
+                p.giveCard(gameDeck.removeTop());
+            }
         }
     }
 
     public static void main(String args[]){
-        GoFish g = new GoFish();
-        System.out.println("test1");
+        GoFish g = new GoFish(2);
+
     }
 
 }
