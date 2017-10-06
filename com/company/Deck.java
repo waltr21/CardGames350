@@ -46,8 +46,6 @@ public class Deck {
         myCards = tempDeck;
     }
 
-
-
     /*
      * Shuffles the deck of cards.
      * @Param the requested deck to shuffle.
@@ -83,7 +81,9 @@ public class Deck {
         return temp;
     }
 
-
+    public int getSize(){
+        return myCards.size();
+    }
 
     /*
      * Searches for one card in the deck.

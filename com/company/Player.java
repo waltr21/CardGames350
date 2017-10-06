@@ -23,6 +23,25 @@ public class Player {
         playerCards.remove(c);
     }
 
+
+    /******************************************
+     * Removing a card from the player specifically
+     * for GoFish. This is because the suit of the card
+     * does not matter for removal in GoFish.
+     * @param c A card to remove.
+     * @return the card that was taken from the player.
+     ******************************************/
+    public Card takeCardFish(Card c){
+       for (int i = 0; i < playerCards.size(); i++){
+           if (playerCards.get(i).getValue() == c.getValue()){
+               Card temp = playerCards.get(i);
+               playerCards.remove(i);
+               return temp;
+           }
+       }
+        return null;
+    }
+
     public ArrayList<Card> getCards(){
         return playerCards;
     }
