@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by RyanWalt on 10/5/17.
@@ -40,6 +41,57 @@ public class Player {
            }
        }
         return null;
+    }
+
+    public void sortCards(){
+        flopSort(0, playerCards.size()-1);
+    }
+
+
+    private ArrayList<Card> flopSort(int s, int e){
+        int i = s;
+        int j = e;
+        boolean iMove = true;
+        int pos = 0;
+
+        if ((e - s) < 1)
+            return playerCards;
+
+        while(i < j){
+            if (isGreater(playerCards.get(i), playerCards.get(j))){
+                Collections.swap(playerCards, i, j);
+
+                if(iMove)
+                    iMove = false;
+                else
+                    iMove = true;
+            }
+
+            if(iMove)
+                i++;
+
+            if (!iMove)
+                j--;
+
+            pos = j;
+        }
+
+        playerCards = flopSort(pos, e);
+        return flopSort(s, pos-1);
+    }
+
+    private boolean isGreater(Card c1, Card c2){
+        if (c1.getValue() > c2.getValue()){
+            return true;
+        }
+        else if (c1.getValue() == c2.getValue()) {
+            if (c1.getSuit() > c2.getSuit()) {
+                return true;
+            }
+            return false;
+        }
+        else
+            return false;
     }
 
     public ArrayList<Card> getCards(){

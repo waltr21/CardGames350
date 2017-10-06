@@ -76,7 +76,7 @@ public class GoFish {
                     System.out.println("You dont have this card!");
                 } else if (!checkValid(players.get(index), tempCard)) {
                     System.out.println("Go Fish!");
-                    Card fish = gameDeck.getDeck().get(0);
+                    Card fish = gameDeck.removeTop();
                     players.get(turn).giveCard(fish);
                     System.out.println("Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit());
                     if (fish.getValue() == tempVal) {
@@ -90,8 +90,6 @@ public class GoFish {
                     players.get(turn).giveCard(transfer);
                     validMove = true;
                 }
-
-
             }
         }
         printAll();
@@ -142,7 +140,9 @@ public class GoFish {
 
     private void printAll(){
         int test = 1;
+
         for (Player x : players){
+            x.sortCards();
             System.out.println("Player " + test + ":");
             x.printCards();
             test++;
