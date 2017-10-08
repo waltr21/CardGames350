@@ -8,10 +8,13 @@ import java.util.Collections;
  */
 public class Player {
     ArrayList<Card> playerCards;
+    //(GoFish) ArralyList to keep track of the users 4 of a kind.
+    ArrayList<Integer> completeDeck;
+    int completeNum;
 
     public Player(){
+        completeNum = 0;
         playerCards = new ArrayList<>();
-
     }
 
 
@@ -41,6 +44,28 @@ public class Player {
            }
        }
         return null;
+    }
+
+
+    public void completeCount(){
+        int[] cards = new int[13];
+        for (int i = 0; i < cards.length; i++){
+            cards[i] = 0;
+        }
+
+
+        for (int i = 0; i < playerCards.size(); i++){
+            int index = playerCards.get(i).getValue() - 1;
+            cards[index]++;
+            if (cards[index] > 3){
+                completeNum++;
+            }
+        }
+
+    }
+
+    public int getCompleteNum(){
+        return completeNum;
     }
 
     public void sortCards(){

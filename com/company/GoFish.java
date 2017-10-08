@@ -1,8 +1,4 @@
 package com.company;
-
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +10,6 @@ public class GoFish {
     private ArrayList<Player> players;
     private int numCards;
     private int turn;
-    //private Console cons;
     Scanner cons = new Scanner(System.in);
 
     public GoFish(int numPlayers){
@@ -29,7 +24,6 @@ public class GoFish {
             numCards = 7;
 
         turn = 0;
-        //cons = System.console();
         gameDeck = new Deck(false);
         players = new ArrayList<>();
 
@@ -48,6 +42,18 @@ public class GoFish {
             takeTurn(players.get(turn));
             System.out.println("");
         }
+
+        System.out.println("The game is complete!");
+        int high = -1;
+        int indexWin = -1;
+        for (int i = 0; i < players.size(); i++){
+            if (players.get(i).getCompleteNum() > high) {
+                high = players.get(i).getCompleteNum();
+                indexWin = i;
+            }
+        }
+
+        System.out.println("Winner is: " + (indexWin + 1));
     }
 
     public void takeTurn(Player p){
@@ -86,14 +92,21 @@ public class GoFish {
                     validMove = true;
                 } else {
                     System.out.println("The player has this card!");
-                    Card transfer = players.get(index).takeCardFish(tempCard);
-                    players.get(turn).giveCard(transfer);
+                    //Continuously give the player each card of the requested type.
+                    while (checkValid((players.get(index)), tempCard)) {
+                        Card transfer = players.get(index).takeCardFish(tempCard);
+                        players.get(turn).giveCard(transfer);
+                    }
                     validMove = true;
                 }
             }
         }
         printAll();
         turn = index;
+
+        for (Player tempPlayer : players) {
+            tempPlayer.completeCount();
+        }
     }
 
     public boolean checkValid(Player p, Card c){

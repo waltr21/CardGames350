@@ -90,7 +90,7 @@ public class Deck {
      * @Param ArrayList<Card> - the deck of cards to search from.
      * @Param value - the number value of the card to find.
      * @Param suit - the suit of the card to find.
-     * @Return returns the fully sorted deck.
+     * @Return the card searched for.
      */
     public Card findCard(ArrayList<Card> a, Card c, boolean take){
         for (int i = 0; i < a.size(); i++){
