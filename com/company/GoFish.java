@@ -10,7 +10,7 @@ public class GoFish {
     private ArrayList<Player> players;
     private int numCards;
     private int turn;
-    Scanner cons = new Scanner(System.in);
+    private Scanner cons;
 
     public GoFish(int numPlayers){
         //Cap the number of players
@@ -24,6 +24,7 @@ public class GoFish {
             numCards = 7;
 
         turn = 0;
+        cons = new Scanner(System.in);
         gameDeck = new Deck(false);
         players = new ArrayList<>();
 

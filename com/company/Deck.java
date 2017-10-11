@@ -7,12 +7,13 @@ import java.util.Random;
  * Created by RyanWalt on 10/5/17.
  */
 public class Deck {
-    Random r = new Random();
-    ArrayList<Card> myCards;
-    boolean joker;
+    private Random r;
+    private ArrayList<Card> myCards;
+    private boolean joker;
 
     public Deck(boolean j){
         myCards = new ArrayList<>();
+        r = new Random();
         joker = j;
         createDeck();
     }

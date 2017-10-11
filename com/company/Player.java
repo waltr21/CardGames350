@@ -7,17 +7,14 @@ import java.util.Collections;
  * Created by RyanWalt on 10/5/17.
  */
 public class Player {
-    ArrayList<Card> playerCards;
+    private ArrayList<Card> playerCards;
     //(GoFish) ArralyList to keep track of the users 4 of a kind.
-    ArrayList<Integer> completeDeck;
-    int completeNum;
+    private int completeNum;
 
     public Player(){
         completeNum = 0;
         playerCards = new ArrayList<>();
     }
-
-
 
     public void giveCard(Card c){
         playerCards.add(c);
@@ -46,13 +43,15 @@ public class Player {
         return null;
     }
 
-
+    /******************************************
+     * Counts how maany 4 of a kind cards the
+     * player has in possession.
+     ******************************************/
     public void completeCount(){
         int[] cards = new int[13];
         for (int i = 0; i < cards.length; i++){
             cards[i] = 0;
         }
-
 
         for (int i = 0; i < playerCards.size(); i++){
             int index = playerCards.get(i).getValue() - 1;
@@ -128,5 +127,4 @@ public class Player {
             System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
         }
     }
-
 }
