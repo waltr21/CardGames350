@@ -27,7 +27,7 @@ public class HoldEm
         }
 
         over = false;
-        while(!over) {
+        while (!over) {
             // First  phase of holdem, big blind & small blind
             take_bet(players.get((chip + 1) % player_num), smallBlind);
             take_bet(players.get((chip + 2) % player_num), bigBlind);
@@ -43,6 +43,7 @@ public class HoldEm
                 play_turn(players.get(i));
             }
         }
+    }
 
     private void take_bet(Player p, int amount) {
         bet = Math.max(bet, amount);
