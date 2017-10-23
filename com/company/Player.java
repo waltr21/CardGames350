@@ -10,6 +10,7 @@ public class Player {
     private ArrayList<Card> playerCards;
     //(GoFish) ArralyList to keep track of the users 4 of a kind.
     private int completeNum;
+    private int score;
 
     public Player(){
         completeNum = 0;
@@ -127,4 +128,13 @@ public class Player {
             System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
         }
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int value) {
+        score = value;
+    }
+
 }
