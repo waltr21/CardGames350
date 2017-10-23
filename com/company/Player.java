@@ -175,5 +175,10 @@ public class Player {
     public void setScore(int value) {
         score = value;
     }
+    public int cardCount(){
+
+        return playerCards.size();
+
+    }
 
 }
