@@ -35,7 +35,14 @@ public class Player {
      * @param c Card to take.
      */
     public void takeCard(Card c){
-        playerCards.remove(c);
+        int tempVal = c.getValue();
+        int tempSuit = c.getSuit();
+        for (int i = 0; i < playerCards.size(); i++){
+            if (playerCards.get(i).getValue() == tempVal){
+                if (playerCards.get(i).getSuit() == tempSuit)
+                    playerCards.remove(playerCards.get(i));
+            }
+        }
     }
 
 
@@ -175,6 +182,7 @@ public class Player {
     public void setScore(int value) {
         score = value;
     }
+
     public int cardCount(){
 
         return playerCards.size();
