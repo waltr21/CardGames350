@@ -11,6 +11,7 @@ public class Player {
     private ArrayList<Card> playerCards;
     //(GoFish) int to keep track of the users 4 of a kind.
     private int completeNum;
+    private int score;
 
     /**
      * Constructor for the player class. Sets the number of 4 of a kinds to 0
@@ -166,4 +167,13 @@ public class Player {
             System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
         }
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int value) {
+        score = value;
+    }
+
 }
