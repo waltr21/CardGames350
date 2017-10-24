@@ -12,6 +12,7 @@ public class Player {
     //(GoFish) int to keep track of the users 4 of a kind.
     private int completeNum;
     private int score;
+    public boolean active;
 
     /**
      * Constructor for the player class. Sets the number of 4 of a kinds to 0
