@@ -3,6 +3,12 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// TODO: Change all the confusing mod _player_nums to currentPlayerNum() function
+// Add river, turn, flop
+// Figure out how to test it properly and format text
+// Add card comparisons for different hands
+
+
 public class HoldEm
 {
     private Deck deck;
