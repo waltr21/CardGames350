@@ -39,8 +39,10 @@ public class Player {
         int tempSuit = c.getSuit();
         for (int i = 0; i < playerCards.size(); i++){
             if (playerCards.get(i).getValue() == tempVal){
-                if (playerCards.get(i).getSuit() == tempSuit)
+                if (playerCards.get(i).getSuit() == tempSuit) {
                     playerCards.remove(playerCards.get(i));
+                    break;
+                }
             }
         }
     }
