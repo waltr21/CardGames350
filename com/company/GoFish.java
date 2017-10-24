@@ -6,12 +6,22 @@ import java.util.Scanner;
  * Created by RyanWalt on 10/5/17.
  */
 public class GoFish {
+    //Deck for the game
     private Deck gameDeck;
+    //Players for the game
     private ArrayList<Player> players;
+    //Number of cards for each player.
     private int numCards;
+    //Turn index for the players.
     private int turn;
+    //Scanner for testing in terminal game.
     private Scanner cons;
 
+    /**
+     * Constructor for the class.
+     * @param numPlayers The number of players to play the game.
+     *                   (anything above 4 will be set back to 4).
+     */
     public GoFish(int numPlayers){
         //Cap the number of players
         if (numPlayers > 4)
@@ -37,6 +47,10 @@ public class GoFish {
         startGame();
     }
 
+    /**
+     * The start of the game. Continues to play until the deck is
+     * empty.
+     */
     public void startGame(){
         while (gameDeck.getSize() > 0) {
             System.out.println("Player " + (turn + 1) + " it is your turn!");
@@ -47,6 +61,7 @@ public class GoFish {
         System.out.println("The game is complete!");
         int high = -1;
         int indexWin = -1;
+        //Get the winner with the most matches.
         for (int i = 0; i < players.size(); i++){
             if (players.get(i).getCompleteNum() > high) {
                 high = players.get(i).getCompleteNum();
@@ -57,6 +72,11 @@ public class GoFish {
         System.out.println("Winner is: " + (indexWin + 1));
     }
 
+    /**
+     * Takes the turn of a single user. Makes sure that the user
+     * has made a valid move (according to the rules of go fish)
+     * @param p The player to take a turn for.
+     */
     public void takeTurn(Player p){
         boolean validMove = false;
         int index = -1;
@@ -110,6 +130,12 @@ public class GoFish {
         }
     }
 
+    /**
+     * Checks to see if the specific player is holding a specific card.
+     * @param p Player to search
+     * @param c card to find
+     * @return True if the user holds the card. Else false.
+     */
     public boolean checkValid(Player p, Card c){
         ArrayList<Card> temp;
         temp = p.getCards();
@@ -122,7 +148,10 @@ public class GoFish {
         return false;
     }
 
-
+    /**
+     * Resets the game, and sets the appropriate values to the
+     * starting values in the constructor.
+     */
     public void resetGame(){
         gameDeck.createDeck();
         gameDeck.shuffle();
@@ -138,13 +167,13 @@ public class GoFish {
         printAll();
     }
 
-    /******************************************
+    /**
      * Return true if the cards are the same value.
      * @param c A card to compare
      * @param c1 A card to compare
      * @return True or false depending on if the cards hold the
      * same value.
-     ******************************************/
+     */
     public boolean sameValue(Card c, Card c1){
         if (c.getValue() == c1.getValue())
             return true;
@@ -152,9 +181,12 @@ public class GoFish {
             return false;
     }
 
+
+    /**
+     * Helper method to print the cards each user holds. (temporary)
+     */
     private void printAll(){
         int test = 1;
-
         for (Player x : players){
             x.sortCards();
             System.out.println("Player " + test + ":");
@@ -163,6 +195,24 @@ public class GoFish {
             System.out.println("");
         }
     }
+
+    /**
+     * Creates a printable string of the cards the user is holding.
+     * @param p Player to get cards from
+     * @return String with the card Value and Suit
+     */
+    public String getCardsString(Player p){
+        ArrayList<Card> temp = new ArrayList<>();
+        String cardList = "";
+        temp = p.getCards();
+        for (int i = 0; i < temp.size(); i++){
+            cardList += "Value: " + temp.get(i).getValue() + "Suit: " +
+                    temp.get(i).getSuit() + "\n";
+        }
+
+        return cardList;
+    }
+
 
     public static void main(String args[]){
         GoFish g = new GoFish(2);

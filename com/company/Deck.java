@@ -11,6 +11,10 @@ public class Deck {
     private ArrayList<Card> myCards;
     private boolean joker;
 
+    /**
+     * Construcor for the Deck class.
+     * @param j boolean value on whether or not the deck should include jokers.
+     */
     public Deck(boolean j){
         myCards = new ArrayList<>();
         r = new Random();
@@ -18,14 +22,14 @@ public class Deck {
         createDeck();
     }
 
-    /*
-   * @Return returns the deck of cards.
-   */
+    /**
+    * @Return returns the deck of cards.
+    */
     public ArrayList<Card> getDeck(){
         return myCards;
     }
 
-    /*
+    /**
      * Selects one random card from the deck.
      * @Param A boolean to decide if the deck should contain jokers or not.
      * @Return returns the fully sorted deck.
@@ -47,7 +51,7 @@ public class Deck {
         myCards = tempDeck;
     }
 
-    /*
+    /**
      * Shuffles the deck of cards.
      * @Param the requested deck to shuffle.
      * @Return returns the fully shuffled deck the user.
@@ -65,7 +69,7 @@ public class Deck {
         myCards = newCards;
     }
 
-    /*
+    /**
      * Selects one random card from the deck and removes it.
      * @Param The deck to take a random card from.
      * @Return Random card object from the deck.
@@ -82,16 +86,20 @@ public class Deck {
         return temp;
     }
 
+    /**
+     * @return the size of the current deck
+     */
     public int getSize(){
         return myCards.size();
     }
 
-    /*
-     * Searches for one card in the deck.
-     * @Param ArrayList<Card> - the deck of cards to search from.
-     * @Param value - the number value of the card to find.
-     * @Param suit - the suit of the card to find.
-     * @Return the card searched for.
+    /**
+     *
+     * @param a Arraylist of cards to search through.
+     * @param c Card to search for.
+     * @param take true if the user wants to remove the card from the deck.
+     *             else it will stay.
+     * @return the card found in the deck. Null if nothing is found.
      */
     public Card findCard(ArrayList<Card> a, Card c, boolean take){
         for (int i = 0; i < a.size(); i++){
@@ -108,6 +116,9 @@ public class Deck {
         return null;
     }
 
+    /**
+     * Prints all of the cards left in the deck.
+     */
     public void printCards(){
         for (Card c : myCards){
             System.out.println("Value: " + c.getValue() + " Suit: " + c.getSuit());
