@@ -2,7 +2,7 @@ package com.company;
 
 public class Card{
 
-    private int sui t;
+    private int suit;
     private int value;
 
     /**
