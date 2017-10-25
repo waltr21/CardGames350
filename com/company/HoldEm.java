@@ -25,6 +25,7 @@ public class HoldEm
     private boolean betting;
     private int i;
     private int[] bets;
+    private boolean[] acted;
 
     private Scanner in = new Scanner(System.in);
 
@@ -32,7 +33,9 @@ public class HoldEm
         _player_num = player_num;
         deck = new Deck(false);
         players = new ArrayList<Player>();
+        board = new ArrayList<Card>();
         bets = new int[player_num];
+        acted = new boolean[player_num];
         // The main pot
         pot = 0;
         // The current high bet
@@ -46,31 +49,39 @@ public class HoldEm
         for (int i = 0; i < player_num; i++) {
             Player p = new Player();
             p.active = true;
+
+            out("Enter the player's name.");
+
+            p.setName(in.nextLine());
+
             p.setScore(100); // Start with 100 money
 
             players.add(p);
             // Initialize the bets amount to 0.
             bets[i] = 0;
+            acted[i] = false;
         }
         // Boolean to control game finish
         over = false;
         while (!over) {
+            out("============================");
             // Start the hand.
-            i = chip;
+            i = 0;
 
             // Shuffle the deck.
             deck.shuffle();
 
             // Verbalize who has the dealer chip.
-            out(String.format("Player %d is the dealer.", currentPlayerNum()));
+            out(String.format("Player %s is the dealer.", currentPlayerName()));
 
             // First  phase of holdem, big blind & small blind
             i++;
-            out(String.format("$1 small blind from Player %d's stack.", currentPlayerNum()));
+            out(String.format("$1 small blind from Player %s's stack.", currentPlayerName()));
             place_bet(players.get((chip + 1) % player_num), smallBlind);
             i++;
-            out(String.format("$2 big blind from Player %d's stack.", currentPlayerNum()));
+            out(String.format("$2 big blind from Player %s's stack.", currentPlayerName()));
             place_bet(players.get((chip + 2) % player_num), bigBlind);
+            i++;
 
             // Next phase of holdem, deal 2 cards to every player, one at a time, starting w/ small blind position.
             for (int j = 1; j < (player_num * 2) + 1; j++) {
@@ -79,34 +90,100 @@ public class HoldEm
             }
 
             //  Betting starts, this is where user input begins.
-            betting = true;
-            for (i = chip + 3; betting; i++) {
+            for (i = i; !bettingRoundOver(); i++) {
+
+                out("__________________________________");
+
                 // Play the turn. i is a class variable, should persist without passing to play turn function
                 play_turn(players.get((chip + i) % _player_num));
 
-                // Check if all the bets are equal. Also if the big blind has gotten to play yet. If those are both true, move to the next stage.
-                if (bettingRoundOver() && i > chip + _player_num + 3) {
-                    betting = false;
-                }
-
-                // Add more stages here.. Flop, river turn
             }
+
+            // FLOP
+            highbet = 0;
+            i = chip + 1;
+            out("Flop:");
+            for (int j = 0; j < 3; j++) {
+                board.add(deck.removeTop());
+            }
+            for (i = i; !bettingRoundOver(); i++) {
+                out("_____________________");
+                out("Board:");
+                showBoard();
+
+                play_turn(players.get(currentPlayerNum()));
+            }
+
+            // TURN
+            highbet = 0;
+            i = chip + 1;
+            out("Turn:");
+            board.add(deck.removeTop());
+            for (i = i; !bettingRoundOver(); i++) {
+                out( "________________");
+                out("Board:");
+                showBoard();
+
+                play_turn(players.get(currentPlayerNum()));
+            }
+
+            // RIVER
+            highbet = 0;
+            i = chip + 1;
+            out("Turn:");
+            board.add(deck.removeTop());
+            for (i = i; !bettingRoundOver(); i++) {
+                out( "________________");
+                out("Board:");
+                showBoard();
+
+                play_turn(players.get(currentPlayerNum()));
+            }
+
+            // SHOW DOWN
+
+            // Have to make card ranking system...
+            // 
+
+
+        }
+    }
+
+    private void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    private void showBoard() {
+        for (int j = 0; j < board.size(); j++) {
+            out(board.get(j).toString());
+        }
+    }
+
+    private void collectBets() {
+        pot = calcPot();
+        for (int j = 0; j < bets.length; j++) {
+            bets[j] = 0;
+            acted[j] = false;
         }
     }
 
     private boolean bettingRoundOver() {
         int val = bets[0];
         for (int j = 0; j < bets.length; j++) {
-            if (bets[j] != val) {
+            if ((bets[j] != val && players.get(j).active) || !acted[j]) {
                 return false;
             }
         }
+        collectBets();
         return true;
     }
 
     private int currentPlayerNum() {
-        return ((chip + i)%_player_num)+1;
+        return ((chip + i)%_player_num);
     }
+
+    private String currentPlayerName() { return players.get(currentPlayerNum()).getName(); }
 
     public void out(String msg) {
         System.out.println(msg);
@@ -114,7 +191,7 @@ public class HoldEm
 
     private void place_bet(Player p, int amount) {
         // Take a player bet, put it on the board.
-        highbet = Math.max(highbet, amount + bets[currentPlayerNum() - 1]);
+        highbet = Math.max(highbet, amount - bets[currentPlayerNum()]);
         if (p.getScore() < amount) {
             bets[(chip + i)%_player_num] += p.getScore();
             p.setScore(0);
@@ -141,7 +218,7 @@ public class HoldEm
 
     private void play_turn(Player p) {
 
-
+        acted[currentPlayerNum()] = true;
 
         // If they are folded then they don't play
         if (!p.active) return;
@@ -149,14 +226,14 @@ public class HoldEm
         // If they're all in they can't do anything anyway.
         if (p.getScore() == 0) return;
 
-        out(String.format("Player %ss turn.", currentPlayerNum()));
+        out(String.format("Player %ss turn.", currentPlayerName()));
 
         show_hole_cards(p);
 
         // Player options: check, bet(amount), fold
         out(String.format("You have $%d in chips. It's your turn.", p.getScore()));
         out(String.format("The pot size is $%d.", calcPot()));
-        out(String.format("Your current bet is $%d. The high best is $%d. What do you want to do?", bets[currentPlayerNum()-1], highbet));
+        out(String.format("Your current bet is $%d. The high best is $%d. What do you want to do?", bets[currentPlayerNum()], highbet));
 
         // Player can only check if their bet is greater than or equal to the high bet.
         boolean canCheck = false;
@@ -174,9 +251,8 @@ public class HoldEm
 
             // F is for fold
             if (input.equals("f")) {
-                pot += bets[(chip + i) % _player_num];
                 p.active = false;
-                out(String.format("Player %d folded!", (i % _player_num) + 1));
+                out(String.format("Player %d folded!", currentPlayerNum()));
                 return;
             }
 
@@ -186,7 +262,7 @@ public class HoldEm
                     out("You can't check!");
                     continue;
                 }
-                out(String.format("Player %d checked!", (i % _player_num) + 1));
+                out(String.format("Player %d checked!", (i % _player_num)));
                 return;
             }
 
@@ -198,7 +274,7 @@ public class HoldEm
                 while (!validbet) {
                     try {
                         bet = Integer.parseInt(in.nextLine());
-                        if (bet - bets[currentPlayerNum()-1]<= p.getScore() && bet >= highbet) {
+                        if (bet - bets[currentPlayerNum()]<= p.getScore() && bet >= highbet) {
                             validbet = true;
                         } else {
                             out("Invalid bet. Try again!");
@@ -210,8 +286,8 @@ public class HoldEm
                     }
                 }
                 // Now we've got a valid bet that is less than or equal to the player's amount.
-                out(String.format("Player %d increases his bet to $%d!", (i % _player_num) + 1, bet));
-                place_bet(p, bet-bets[currentPlayerNum()-1]);
+                out(String.format("Player %s increases his bet to $%d!", currentPlayerName(), bet));
+                place_bet(p, bet-bets[currentPlayerNum()]);
                 return;
             } else {
                 out("Invalid input! Try again.");
