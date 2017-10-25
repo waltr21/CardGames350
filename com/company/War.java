@@ -1,6 +1,6 @@
 package com.company;
+
 import java.util.ArrayList;
-import com.company.GamesAndObjects.*;
 
 public class War {
 

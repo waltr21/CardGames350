@@ -1,6 +1,5 @@
 package com.company;
 import java.util.ArrayList;
-import com.company.GamesAndObjects.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
