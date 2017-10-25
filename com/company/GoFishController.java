@@ -1,69 +1,79 @@
 package com.company;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by RyanWalt on 10/24/17.
  */
-public class GoFishController extends Application {
+public class GoFishController extends Application implements Initializable {
+    int numPlayers;
     private GoFish game;
-    public Label numPlayerText;
-    public Slider playerSlider;
-    public Button playButton;
+    @FXML public Label messageText;
+    public Button showButton;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        //playGame();
+        game = new GoFish(3);
+        setMessageText(game.getMessage());
+        playGame();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public GoFishController(){
+        numPlayers = 0;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("PopUp.fxml"));
-        Scene popUp = new Scene(root, 200, 200);
-        stage.setTitle("Player Number");
-        stage.setScene(popUp);
+        Parent root = FXMLLoader.load(getClass().getResource("GoFishGUI.fxml"));
+        Scene goFish = new Scene(root, 1000, 700);
+        stage.setTitle("Go Fish!");
+        stage.setScene(goFish);
         stage.show();
+        //game = new GoFish(4);
+        //System.out.println(game.getMessage());
+        //messageText.setText(numPlayers + "");
+        //initialize("testing");
+        //playGame();
     }
 
-    /**
-     * Button listener to open the GoFish fxml file.
-     */
     public void onButtonAction(){
-        try {
-            Stage gameStage = new Stage();
-            Parent root1 = FXMLLoader.load(getClass().getResource("GoFishGUI.fxml"));
-            Scene scene = new Scene(root1, 1000, 700);
-            gameStage.setTitle("Go Fish!");
-            gameStage.setScene(scene);
-            gameStage.show();
+        System.out.println("testing");
+        messageText.setText("testing2");
+    }
 
-        }
-        catch(IOException e){
-            System.out.println(e);
-        }
-        game = new GoFish((int) playerSlider.getValue());
+    @FXML public void setMessageText(String m){
+        messageText.setText(m);
+    }
+
+    @FXML void playGame(){
+        int count = 0;
+        Player currentPlayer = game.getPlayer();
+
+        game.takeTurn(currentPlayer, 0, 0);
+        setMessageText(game.getMessage());
         System.out.println(game.getMessage());
+        count++;
+
     }
-
-    public void playGame(){
-        while (game.getGameDeckSize() > 0){
-            System.out.println(game.getTurnMessage());
-            Player currentPlayer = game.getPlayer();
-            game.takeTurn(currentPlayer, 0, 0);
-            System.out.println(game.getMessage());
-
-
-        }
-    }
-
-
 
 }

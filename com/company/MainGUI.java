@@ -3,6 +3,7 @@ package com.company;/**
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,8 +16,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class MainGUI extends Application {
+    @FXML
     public Button goFishButton;
-    int numPlayers;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,6 +33,8 @@ public class MainGUI extends Application {
         stage.setScene(scene);
         stage.show();
 
+
+        //goFishButton.setText("test");
     }
 
     /**
@@ -39,7 +42,7 @@ public class MainGUI extends Application {
      * Creates a new Go Fish game.
      */
     public void handleGoFishAction(){
-        GoFishController newGoFish = new GoFishController();
+        PopUpController newGoFish = new PopUpController();
         try {
             newGoFish.start(new Stage());
         }
@@ -48,9 +51,6 @@ public class MainGUI extends Application {
         }
     }
 
-    public int getNumPlayers(){
-        return numPlayers;
-    }
 
 
 }
