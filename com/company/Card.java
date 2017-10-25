@@ -47,4 +47,12 @@ public class Card{
         value = v;
     }
 
+    public boolean equals(Card c){
+
+        if(c.getValue() == value && c.getSuit() == suit)
+            return true;
+        return false;
+
+    }
+
 }

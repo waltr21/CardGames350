@@ -22,7 +22,7 @@ public class Rummy {
 
     /** Two dimensional array to hold player melds. First index is the player
      *  Second is the cards in the meld **/
-    private Card melds[][];
+    private ArrayList<ArrayList<Card>> melds;
 
     /** The number of cards to be dealt **/
     private int numCards;
@@ -65,13 +65,14 @@ public class Rummy {
         }
         //Assigns each player an array to hold their melds. Set the size to over
         //100 to ensure the array won't go out of bounds.
-        melds = new Card[numPlayers][100];
+        melds = new ArrayList<>();
         deck = new Deck(false);
         players = new ArrayList<>();
         discard = new ArrayList<>();
         //Adds all players the the game.
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
+            melds.add(new ArrayList<Card>());
         }
         //Deals the players their hands.
         giveHand();
@@ -110,9 +111,11 @@ public class Rummy {
             }
             players.get(turn).printCards();
             takeTurn(players.get(turn));
+            System.out.println(gameOver);
             turn++;
 
         }
+        System.out.println("Game over!");
         int winner = tallyScore();
         System.out.println("The final scores are: ");
         for (int i = 0; i < scores.length; i++){
@@ -154,9 +157,26 @@ public class Rummy {
         String c = in.nextLine();
         while(true){
 
+            if (c.equals("q")) {
+                gameOver = true;
+                return;
+            }
+
             if (c.equals("p")) {
 
-                player.giveCard(discard.remove(discard.size() - 1));
+                System.out.println("How many cards would you like?");
+                int amount = in.nextInt();
+                while(amount > discard.size() || amount == 0){
+
+                    if(amount > discard.size())
+                        System.out.println("This exceeds the current amount in the discard pile. Enter a valid amount.");
+                    else
+                        System.out.println("You must take at least one card. Enter a valid amount.");
+                    amount = in.nextInt();
+
+                }
+                for(int i = 0; i < amount; i++)
+                    player.giveCard(discard.remove(discard.size() - 1));
                 break;
 
             }
@@ -176,7 +196,22 @@ public class Rummy {
 
             String option;
             System.out.println("Would you like to play a meld (Y/N)? If none available, type N:  ");
+            in.nextLine();
             option = in.nextLine();
+            if(option.equals("Y") && option.equals("y") && option.equals("N") && option.equals("n")){
+                while(true){
+
+                    System.out.println("Invalid option. Y/N");
+
+                    option = in.nextLine();
+                    if(option.equals("Y") || option.equals("y") || option.equals("N") || option.equals("n")){
+
+                        break;
+
+                    }
+
+                }
+            }
             if(option.equals("N") || option.equals("n")) {
 
                 System.out.println("Enter the value of discard:  ");
@@ -201,7 +236,22 @@ public class Rummy {
                 System.out.println("Enter card suit");
                 int suit = in.nextInt();
                 in.nextLine();
-                Card temp = new Card(val, suit);
+                Card temp = new Card(val,suit);
+                while(!(player.checkCard(temp))){
+
+                    temp = new Card(val, suit);
+                    if(!(player.checkCard(temp))){
+
+                        System.out.println("You don't have this card! Enter a valid value of a card:  ");
+                        val = in.nextInt();
+                        in.nextLine();
+                        System.out.println("Enter a valid suit:  ");
+                        suit = in.nextInt();
+                        in.nextLine();
+
+                    }
+
+                }
                 tempMeld[i] = temp;
                 i++;
                 System.out.println("Add more cards? Y/N");
@@ -211,17 +261,24 @@ public class Rummy {
                 }
 
             }
-            int j = 0;
             if(checkValidMeld(tempMeld) == true){
 
+                /*//Loops til the end of the melds list for the player
                 while(melds[turn][j] != null){
 
                     j++;
 
                 }
+                //Adds the cards to the meld list.
                 for(int k = 0; k < melds.length; k++){
 
-                    melds[turn][j] = tempMeld[k];
+                    melds.get(turn).set(j,tempMeld[k]);
+                    j++;
+
+                }*/
+                for(int j = 0; j < tempMeld.length; j++){
+
+                    melds.get(turn).add(tempMeld[j]);
 
                 }
                 int k = 0;
@@ -239,6 +296,21 @@ public class Rummy {
                 int discard_suit = in.nextInt();
                 in.nextLine();
                 Card tempCard = new Card(discard_val,discard_suit);
+                while(!(player.checkCard(tempCard))){
+
+                    tempCard = new Card(discard_val, discard_suit);
+                    if(!(player.checkCard(tempCard))){
+
+                        System.out.println("You don't have this card! Enter a valid value of a card:  ");
+                        discard_val = in.nextInt();
+                        in.nextLine();
+                        System.out.println("Enter a valid suit:  ");
+                        discard_suit = in.nextInt();
+                        in.nextLine();
+
+                    }
+
+                }
                 discard.add(tempCard);
                 player.takeCard(tempCard);
                 break;
@@ -284,25 +356,40 @@ public class Rummy {
         int winner = 0;
         for(int i = 0; i < numPlayers; i++){
 
-            for(int j = 0; j < melds[i].length; j++){
+            System.out.println("Player: "+(turn+1));
+            int j = 0;
+            if(melds.get(i).size() != 0) {
+                while (melds.get(i).get(j) != null) {
 
-                if(melds[i][j].getValue() >= 1 && melds[i][j].getValue() < 10)
-                    scores[i]+=5;
-                else
-                    scores[i]+=10;
+                    System.out.println(melds.get(i).get(j).toString());
+                    if (melds.get(i).get(j).getValue() >= 1 && melds.get(i).get(j).getValue() < 10)
+                        scores[i] += 5;
+                    else
+                        scores[i] += 10;
+                    j++;
 
+                }
             }
-
+            System.out.println("Raw score: "+scores[i]);
             ArrayList<Card> tempHand = players.get(i).getCards();
+            int penalty = 0;
+            for(j = 0; j < players.get(i).cardCount(); j++){
 
-            for(int j = 0; j < players.get(i).cardCount(); j++){
+                System.out.println(tempHand.get(j).getValue());
+                if(tempHand.get(j).getValue() >= 1 && tempHand.get(j).getValue() < 10) {
 
-                if(tempHand.get(j).getValue() >= 1 && tempHand.get(j).getValue() < 10)
-                    scores[i]-=5;
-                else
-                    scores[i]-=10;
+                    scores[i] -= 5;
+                    penalty-=5;
 
+                }
+                else {
+
+                    scores[i] -= 10;
+                    penalty-=10;
+
+                }
             }
+            System.out.println("Penalty: "+penalty);
 
         }
         for(int i = 1; i < scores.length; i++){
@@ -311,7 +398,7 @@ public class Rummy {
                 winner = i+1;
 
         }
-        return winner;
+        return winner+1;
 
     }
 

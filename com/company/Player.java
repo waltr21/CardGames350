@@ -192,4 +192,17 @@ public class Player {
 
     }
 
+    public boolean checkCard(Card c){
+
+        for(int i = 0; i < playerCards.size(); i++){
+
+            Card temp = playerCards.get(i);
+            if(playerCards.get(i).equals(c))
+                return true;
+
+        }
+        return false;
+
+    }
+
 }
