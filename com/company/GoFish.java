@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Created by RyanWalt on 10/5/17.
  */
-public class GoFish {
+public class GoFish extends GoFishController{
     //Deck for the game
     private Deck gameDeck;
     //Players for the game
@@ -48,6 +48,7 @@ public class GoFish {
 
         resetGame();
         //startGame();
+
     }
 
     /**
