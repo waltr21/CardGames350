@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 /**
  * Created by RyanWalt on 10/25/17.

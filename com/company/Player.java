@@ -57,7 +57,6 @@ public class Player {
         }
     }
 
-
     /**
      * Removing a card from the player specifically
      * for GoFish. This is because the suit of the card

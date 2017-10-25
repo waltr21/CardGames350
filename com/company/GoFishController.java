@@ -1,18 +1,20 @@
 package com.company;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.stage.Modality;
+import javafx.scene.control.Separator;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,15 +24,18 @@ import java.util.ResourceBundle;
 public class GoFishController extends Application implements Initializable {
     int numPlayers;
     private GoFish game;
-    @FXML public Label messageText;
-    public Button showButton;
+    @FXML public Label messageText, turnText;
+    @FXML public Button showButton;
+    @FXML public ChoiceBox valueChoice;
+
+    //@FXML public ImageView cardImage1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        //playGame();
         game = new GoFish(3);
+        resetChoiceBox();
+        setTurnText(game.getTurnMessage());
         setMessageText(game.getMessage());
-        playGame();
     }
 
 
@@ -49,31 +54,78 @@ public class GoFishController extends Application implements Initializable {
         stage.setTitle("Go Fish!");
         stage.setScene(goFish);
         stage.show();
-        //game = new GoFish(4);
-        //System.out.println(game.getMessage());
-        //messageText.setText(numPlayers + "");
-        //initialize("testing");
-        //playGame();
     }
 
-    public void onButtonAction(){
+    @FXML public void onButtonAction(){
         System.out.println("testing");
         messageText.setText("testing2");
+
+    }
+
+    @FXML public void onCardDrag1(){
+        System.out.println("Drag Detected!!");
+    }
+
+    @FXML public void onCardClicked1(){
+        System.out.println("Card 1 clicked!");
+        int playerIndex = 1;
+        playTurn(playerIndex, 2);
+        setChoiceBoxPos();
+        valueChoice.setVisible(true);
+    }
+
+    @FXML public void onCardClicked2(){
+        System.out.println("Card 2 clicked!");
+        int playerIndex = 2;
+        playTurn(playerIndex, 2);
+        setChoiceBoxPos();
+        valueChoice.setVisible(true);
+    }
+
+    @FXML public void onCardClicked3(){
+        System.out.println("Card 3 clicked!");
+        int playerIndex = 3;
+        playTurn(playerIndex, 2);
+        setChoiceBoxPos();
+        valueChoice.setVisible(true);
+    }
+
+    @FXML public void onCardClicked4(){
+        System.out.println("Card 4 clicked!");
+        int playerIndex = 4;
+        playTurn(playerIndex, 2);
+        setChoiceBoxPos();
+        valueChoice.setVisible(true);
     }
 
     @FXML public void setMessageText(String m){
         messageText.setText(m);
     }
 
-    @FXML void playGame(){
-        int count = 0;
-        Player currentPlayer = game.getPlayer();
-
-        game.takeTurn(currentPlayer, 0, 0);
-        setMessageText(game.getMessage());
-        System.out.println(game.getMessage());
-        count++;
-
+    @FXML public void setTurnText(String m){
+        turnText.setText(m);
     }
 
+    @FXML public void resetChoiceBox(){
+        valueChoice.setItems(FXCollections.observableArrayList(
+                "Ace", "2", "3", "4", "5", "6", "7",
+                "8", "9", "10", "Jack", "Queen", "King"));
+        valueChoice.setVisible(false);
+        valueChoice.setLayoutX(0.0);
+        valueChoice.setLayoutY(0.0);
+    }
+
+    @FXML public void setChoiceBoxPos(){
+        Point p = MouseInfo.getPointerInfo().getLocation();
+        valueChoice.setLayoutX(p.getX());
+        valueChoice.setLayoutY(p.getY());
+    }
+
+    @FXML void playTurn(int playerIndex, int value){
+        Player currentPlayer = game.getPlayer();
+        game.takeTurn(currentPlayer, playerIndex, 2);
+        setMessageText(game.getMessage());
+        setTurnText(game.getTurnMessage());
+        System.out.println(game.getMessage());
+    }
 }
