@@ -16,6 +16,7 @@ import java.io.IOException;
 
 public class MainGUI extends Application {
     public Button goFishButton;
+    int numPlayers;
 
     public static void main(String[] args) {
         launch(args);
@@ -27,29 +28,28 @@ public class MainGUI extends Application {
 
         Scene scene = new Scene(root, 500, 500);
 
-
-
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();
 
     }
 
+    /**
+     * Button handler for the goFish game.
+     * Creates a new Go Fish game.
+     */
     public void handleGoFishAction(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GoFishGUI.fxml"));
+        GoFishController newGoFish = new GoFishController();
         try {
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Go Fish!");
-            stage.setScene(new Scene(root1));
-            stage.show();
+            newGoFish.start(new Stage());
         }
-        catch(IOException e){
-            System.out.println("Something went very wrong");
+        catch(Exception e){
+            System.out.println(e);
         }
+    }
 
+    public int getNumPlayers(){
+        return numPlayers;
     }
 
 
