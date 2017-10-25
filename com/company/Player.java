@@ -12,6 +12,7 @@ public class Player {
     //(GoFish) int to keep track of the users 4 of a kind.
     private int completeNum;
     private int score;
+    public String name;
     public boolean active;
 
     /**
@@ -21,6 +22,14 @@ public class Player {
     public Player(){
         completeNum = 0;
         playerCards = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        name = value;
     }
 
     /**

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.PopUpController">
+   <children>
+      <Label layoutX="13.0" layoutY="28.0" text="Enter the number of players:" />
+      <Slider fx:id="playerSlider" blockIncrement="1.0" layoutX="30.0" layoutY="100.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" showTickLabels="true" snapToTicks="true" value="1.0" />
+      <Button fx:id="playButton" layoutX="65.0" layoutY="144.0" mnemonicParsing="false" onAction="#onButtonAction" text="Lets Play!" />
+   </children>
+</AnchorPane>

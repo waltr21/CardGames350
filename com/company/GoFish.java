@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Created by RyanWalt on 10/5/17.
  */
-public class GoFish {
+public class GoFish extends GoFishController{
     //Deck for the game
     private Deck gameDeck;
     //Players for the game
@@ -16,6 +16,8 @@ public class GoFish {
     private int turn;
     //Scanner for testing in terminal game.
     private Scanner cons;
+    //
+    private String message;
 
     /**
      * Constructor for the class.
@@ -37,6 +39,7 @@ public class GoFish {
         cons = new Scanner(System.in);
         gameDeck = new Deck(false);
         players = new ArrayList<>();
+        message = "Starting game ...";
 
         //Add players to the game.
         for (int i = 0; i < numPlayers; i++){
@@ -44,17 +47,29 @@ public class GoFish {
         }
 
         resetGame();
-        startGame();
+        //startGame();
+
     }
 
     /**
      * The start of the game. Continues to play until the deck is
-     * empty.
+     * empty. (Not for GUI use!!!!)
      */
     public void startGame(){
         while (gameDeck.getSize() > 0) {
             System.out.println("Player " + (turn + 1) + " it is your turn!");
-            takeTurn(players.get(turn));
+
+            //System.out.print("Player to request a card from: ");
+            int indexS = Integer.parseInt(cons.nextLine());
+
+            //System.out.print("Value to request: ");
+            int valueS = Integer.parseInt(cons.nextLine());
+
+            boolean tempValid = takeTurn(players.get(turn), indexS, valueS);
+            if (!tempValid){
+                System.out.println("Not valid turn! Try again!");
+            }
+
             System.out.println("");
         }
 
@@ -77,57 +92,53 @@ public class GoFish {
      * has made a valid move (according to the rules of go fish)
      * @param p The player to take a turn for.
      */
-    public void takeTurn(Player p){
-        boolean validMove = false;
-        int index = -1;
-        while (!validMove) {
-            System.out.print("Player to request a card from: ");
-            String indexS = cons.nextLine();
-            index = Integer.parseInt(indexS) - 1;
+    public boolean takeTurn(Player p, int playerIndex, int requestVal){
+        int index = playerIndex -1;
 
-            if (index >= players.size() || index < 0 || index == turn){
-                System.out.println("That wasn't a valid player! Try again...");
-            }
-            else if (players.get(index).getCards().size() < 1){
-                System.out.println("This player is out of cards!");
-            }
+        if (index >= players.size() || index < 0 || index == turn){
+            message = "That wasn't a valid player! Try again...";
+            return false;
+        }
+        else if (players.get(index).getCards().size() < 1){
+            message = "This player is out of cards! Try again..." ;
+            return false;
+        }
 
-            else {
-                System.out.print("Value of card to request: ");
-                String requestValue = cons.nextLine();
-                int tempVal = Integer.parseInt(requestValue);
+        else {
+            Card tempCard = new Card(requestVal, -1);
 
-                Card tempCard = new Card(tempVal, -1);
-
-                if (!checkValid(p, tempCard)) {
-                    System.out.println("You dont have this card!");
-                } else if (!checkValid(players.get(index), tempCard)) {
-                    System.out.println("Go Fish!");
-                    Card fish = gameDeck.removeTop();
-                    players.get(turn).giveCard(fish);
-                    System.out.println("Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit());
-                    if (fish.getValue() == tempVal) {
-                        index = turn;
-                        System.out.println("You got the card you wanted. The turn continues.");
-                    }
-                    validMove = true;
-                } else {
-                    System.out.println("The player has this card!");
-                    //Continuously give the player each card of the requested type.
-                    while (checkValid((players.get(index)), tempCard)) {
-                        Card transfer = players.get(index).takeCardFish(tempCard);
-                        players.get(turn).giveCard(transfer);
-                    }
-                    validMove = true;
+            if (!checkValid(p, tempCard)) {
+                message = "You don't have this card! Request a different card. Try again...";
+                return false;
+            } else if (!checkValid(players.get(index), tempCard)) {
+                message = "Go Fish!";
+                Card fish = gameDeck.removeTop();
+                players.get(turn).giveCard(fish);
+                message = "Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
+                if (fish.getValue() == requestVal) {
+                    index = turn;
+                    message = "You got the card you wanted! The turn continues.";
                 }
+
+            } else {
+                message = "The player has this card!";
+                //Continuously give the player each card of the requested type.
+                while (checkValid((players.get(index)), tempCard)) {
+                    Card transfer = players.get(index).takeCardFish(tempCard);
+                    players.get(turn).giveCard(transfer);
+                }
+
             }
         }
-        printAll();
+
+        //printAll();
         turn = index;
 
         for (Player tempPlayer : players) {
             tempPlayer.completeCount();
         }
+
+        return true;
     }
 
     /**
@@ -164,7 +175,7 @@ public class GoFish {
             }
         }
 
-        printAll();
+        //printAll();
     }
 
     /**
@@ -197,12 +208,34 @@ public class GoFish {
     }
 
     /**
+     * @return the size of the game deck.
+     */
+    public int getGameDeckSize(){
+        return gameDeck.getSize();
+    }
+
+    /**
+     * @return the current message of the game.
+     */
+    public String getMessage(){
+        return message;
+    }
+
+    public Player getPlayer(){
+        return players.get(turn);
+    }
+
+    public String getTurnMessage(){
+        return "Player " + (turn + 1) + " it is your turn!";
+    }
+
+    /**
      * Creates a printable string of the cards the user is holding.
      * @param p Player to get cards from
      * @return String with the card Value and Suit
      */
     public String getCardsString(Player p){
-        ArrayList<Card> temp = new ArrayList<>();
+        ArrayList<Card> temp;
         String cardList = "";
         temp = p.getCards();
         for (int i = 0; i < temp.size(); i++){
