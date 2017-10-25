@@ -57,7 +57,7 @@ public class Player {
         }
     }
 
-    public Card takeTopCard(Card c) {
+    public Card takeTopCard() {
         return playerCards.remove(0);
     }
 
