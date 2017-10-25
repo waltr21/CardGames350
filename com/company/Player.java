@@ -57,6 +57,10 @@ public class Player {
         }
     }
 
+    public Card takeTopCard(Card c) {
+        return playerCards.remove(0);
+    }
+
     /**
      * Removing a card from the player specifically
      * for GoFish. This is because the suit of the card
