@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
 
 /**
  * Created by RyanWalt on 10/24/17.
+ * Controller class for the Go Fish fxml file.
+ * Connects all of the buttons and images to some
+ * sort of action.
  */
 public class GoFishController extends Application implements Initializable {
     private int playerIndex;

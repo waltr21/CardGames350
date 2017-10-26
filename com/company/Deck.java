@@ -5,6 +5,8 @@ import java.util.Random;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class to hold all of the cards in a deck that are not
+ * in the users hands.
  */
 public class Deck {
     private final Random r;

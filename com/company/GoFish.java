@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class for the Go Fish game. Holds all of the
+ * logic for taking turns, keeping score, swapping
+ * cards, etc...
  */
 public class GoFish{
     //Deck for the game

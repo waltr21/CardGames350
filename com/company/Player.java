@@ -5,6 +5,8 @@ import java.util.Collections;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class to keep track of a players hand and score
+ * (along with other things)
  */
 public class Player {
     //ArrayList of the cards the user is holding.
