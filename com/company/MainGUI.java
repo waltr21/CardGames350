@@ -51,6 +51,16 @@ public class MainGUI extends Application {
         }
     }
 
+    public void handleWarAction() {
+        WarController newWar = new WarController();
+        try {
+            newWar.start(new Stage());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
 
 }
