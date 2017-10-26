@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Created by RyanWalt on 10/24/17.
  */
 public class GoFishController extends Application implements Initializable {
-    private int numPlayers, playerIndex;
+    private int playerIndex;
     private boolean showing;
     private GoFish game;
     @FXML public Label messageText, turnText, userCardsLabel;
@@ -51,10 +51,6 @@ public class GoFishController extends Application implements Initializable {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public GoFishController(){
-        numPlayers = 0;
     }
 
     @Override
