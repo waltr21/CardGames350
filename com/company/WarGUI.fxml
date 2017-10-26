@@ -19,7 +19,7 @@
             <Image url="@../../Images/CardBack.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="showButton" layoutX="33.0" layoutY="272.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="122.0" text="Show Cards">
+      <Button fx:id="showButton" layoutX="33.0" layoutY="272.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="122.0" text="Play Turn">
          <font>
             <Font size="16.0" />
          </font>
