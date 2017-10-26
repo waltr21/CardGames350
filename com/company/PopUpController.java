@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class PopUpController extends Application {
     public Slider playerSlider;
     public Button playButton;
-    int numPlayers;
+    private int numPlayers;
 
     public static void main(String[] args) {
         launch(args);

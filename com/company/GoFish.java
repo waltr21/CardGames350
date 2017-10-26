@@ -7,15 +7,15 @@ import java.util.Scanner;
  */
 public class GoFish{
     //Deck for the game
-    private Deck gameDeck;
+    private final Deck gameDeck;
     //Players for the game
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     //Number of cards for each player.
-    private int numCards;
+    private final int numCards;
     //Turn index for the players.
     private int turn;
     //Scanner for testing in terminal game.
-    private Scanner cons;
+    private final Scanner cons;
     //
     private String message;
 
@@ -136,9 +136,7 @@ public class GoFish{
         printAll();
         turn = index;
 
-        for (Player tempPlayer : players) {
-            tempPlayer.completeCount();
-        }
+        players.forEach(Player::completeCount);
 
         return true;
     }
@@ -149,7 +147,7 @@ public class GoFish{
      * @param c card to find
      * @return True if the user holds the card. Else false.
      */
-    public boolean checkValid(Player p, Card c){
+    private boolean checkValid(Player p, Card c){
         ArrayList<Card> temp;
         temp = p.getCards();
 
@@ -187,11 +185,8 @@ public class GoFish{
      * @return True or false depending on if the cards hold the
      * same value.
      */
-    public boolean sameValue(Card c, Card c1){
-        if (c.getValue() == c1.getValue())
-            return true;
-        else
-            return false;
+    private boolean sameValue(Card c, Card c1){
+        return c.getValue() == c1.getValue();
     }
 
 
@@ -244,8 +239,8 @@ public class GoFish{
         ArrayList<Card> temp;
         String cardList = "";
         temp = p.getCards();
-        for (int i = 0; i < temp.size(); i++){
-            cardList += temp.get(i).toString() + "\n";
+        for (Card aTemp : temp) {
+            cardList += aTemp.toString() + "\n";
         }
         return cardList;
     }
@@ -253,6 +248,7 @@ public class GoFish{
 
     public static void main(String args[]){
         GoFish g = new GoFish(2);
+        g.startGame();
     }
 
 }

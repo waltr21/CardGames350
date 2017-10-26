@@ -12,7 +12,7 @@ public class Player {
     //(GoFish) int to keep track of the users 4 of a kind.
     private int completeNum;
     private int score;
-    public String name;
+    private String name;
     public boolean active;
 
     /**
@@ -80,7 +80,7 @@ public class Player {
     }
 
     /**
-     * Counts how maany 4 of a kind cards the
+     * Counts how many 4 of a kind cards the
      * player has in possession.
      */
     public void completeCount(){
@@ -89,10 +89,10 @@ public class Player {
             cards[i] = 0;
         }
 
-        for (int i = 0; i < playerCards.size(); i++){
-            int index = playerCards.get(i).getValue() - 1;
+        for (Card playerCard : playerCards) {
+            int index = playerCard.getValue() - 1;
             cards[index]++;
-            if (cards[index] > 3){
+            if (cards[index] > 3) {
                 completeNum++;
             }
         }
@@ -132,10 +132,7 @@ public class Player {
             if (isGreater(playerCards.get(i), playerCards.get(j))){
                 Collections.swap(playerCards, i, j);
 
-                if(iMove)
-                    iMove = false;
-                else
-                    iMove = true;
+                iMove = !iMove;
             }
 
             if(iMove)
@@ -152,7 +149,7 @@ public class Player {
     }
 
     /**
-     * Comparison method so we dont have to overload the
+     * Comparison method so we don't have to overload the
      * compare operators.
      * @param c1 First card to compare.
      * @param c2 Second card to compare.
@@ -165,10 +162,7 @@ public class Player {
             return true;
         }
         else if (c1.getValue() == c2.getValue()) {
-            if (c1.getSuit() > c2.getSuit()) {
-                return true;
-            }
-            return false;
+            return c1.getSuit() > c2.getSuit();
         }
         else
             return false;
@@ -205,16 +199,11 @@ public class Player {
     }
 
     public boolean checkCard(Card c){
-
-        for(int i = 0; i < playerCards.size(); i++){
-
-            Card temp = playerCards.get(i);
-            if(playerCards.get(i).equals(c))
+        for (Card temp : playerCards) {
+            if (temp.equals(c))
                 return true;
-
         }
         return false;
-
     }
 
 }

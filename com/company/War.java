@@ -13,7 +13,7 @@ public class War {
         player1 = new Player();
         player2 = new Player();
         deck = new Deck(false);
-        table = new ArrayList<Card>();
+        table = new ArrayList<>();
     }
 
     public boolean over() {

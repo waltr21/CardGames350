@@ -1,6 +1,5 @@
 package com.company;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -21,7 +20,7 @@ public class WarController extends Application implements Initializable {
 
     @FXML public void onButtonAction(){
         if (game.over()) {
-            ;
+
         } else {
             play(game);
         }

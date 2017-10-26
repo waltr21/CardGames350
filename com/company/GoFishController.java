@@ -10,13 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -161,17 +157,19 @@ public class GoFishController extends Application implements Initializable {
 
     @FXML public void onMoveClicked(){
         String x = valueChoice.getValue() + "";
-        if (x.equals("Ace")){
-            x = "1";
-        }
-        else if (x.equals("Jack")){
-            x = "11";
-        }
-        else if (x.equals("Queen")){
-            x = "12";
-        }
-        else if (x.equals("King")){
-            x = "13";
+        switch (x) {
+            case "Ace":
+                x = "1";
+                break;
+            case "Jack":
+                x = "11";
+                break;
+            case "Queen":
+                x = "12";
+                break;
+            case "King":
+                x = "13";
+                break;
         }
 
         int value = Integer.parseInt(x);

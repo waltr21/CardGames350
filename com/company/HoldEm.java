@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class HoldEm
 {
-    private Deck deck;
+    Deck deck;
     private ArrayList<Player> players;
     private ArrayList<Card> board;
     private int _player_num;
