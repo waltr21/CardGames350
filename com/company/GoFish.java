@@ -48,6 +48,7 @@ public class GoFish{
 
         resetGame();
         //startGame();
+        printAll();
 
     }
 
@@ -111,17 +112,18 @@ public class GoFish{
                 message = "You don't have this card! Request a different card. Try again...";
                 return false;
             } else if (!checkValid(players.get(index), tempCard)) {
-                message = "Go Fish!";
+                message = "Player " + (turn+1) + " Go Fish!\n";
                 Card fish = gameDeck.removeTop();
                 players.get(turn).giveCard(fish);
-                message = "Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
+                message += "Player " + (turn + 1) + " Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
                 if (fish.getValue() == requestVal) {
                     index = turn;
                     message = "You got the card you wanted! The turn continues.";
                 }
 
             } else {
-                message = "The player has this card!";
+                message = "Player " + (turn+1) + " takes the cards from player " + (playerIndex) + "!";
+
                 //Continuously give the player each card of the requested type.
                 while (checkValid((players.get(index)), tempCard)) {
                     Card transfer = players.get(index).takeCardFish(tempCard);
@@ -131,7 +133,7 @@ public class GoFish{
             }
         }
 
-        //printAll();
+        printAll();
         turn = index;
 
         for (Player tempPlayer : players) {
@@ -225,6 +227,10 @@ public class GoFish{
         return players.get(turn);
     }
 
+    public int getPlayerIndex(){
+        return turn + 1;
+    }
+
     public String getTurnMessage(){
         return "Player " + (turn + 1) + " it is your turn!";
     }
@@ -239,10 +245,8 @@ public class GoFish{
         String cardList = "";
         temp = p.getCards();
         for (int i = 0; i < temp.size(); i++){
-            cardList += "Value: " + temp.get(i).getValue() + "Suit: " +
-                    temp.get(i).getSuit() + "\n";
+            cardList += temp.get(i).toString() + "\n";
         }
-
         return cardList;
     }
 
