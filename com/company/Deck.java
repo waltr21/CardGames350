@@ -71,6 +71,14 @@ public class Deck {
     }
 
     /**
+     * Gets the current deck.
+     * @return Array List of cards.
+     */
+    public ArrayList<Card> getDeck(){
+        return myCards;
+    }
+
+    /**
      * @return the size of the current deck
      */
     public int getSize(){

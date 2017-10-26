@@ -195,9 +195,7 @@ public class Player {
     }
 
     public int cardCount(){
-
         return playerCards.size();
-
     }
 
     public boolean checkCard(Card c){

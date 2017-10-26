@@ -9,6 +9,8 @@ import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by RyanWalt on 10/26/17.
+ * Super basic test class of the card class.
+ * Very small because it holds almost no logic.
  */
 public class CardTest {
     @Test
