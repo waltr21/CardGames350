@@ -102,8 +102,8 @@ public class WarController extends Application implements Initializable {
 
         game.table.clear();
 
-        out(String.format("Player 1's cards: %d", game.player1.cardCount()));
-        out(String.format("Player 2's cards: %d", game.player2.cardCount()));
+        set(messageText, String.format("Player 1's cards: %d", game.player1.cardCount()));
+        set(turnText, String.format("Player 2's cards: %d", game.player2.cardCount()));
     }
 
 
@@ -127,7 +127,7 @@ public class WarController extends Application implements Initializable {
 
     private void out(String msg) {
         System.out.println(msg);
-        pause();
+        //set(messageText, msg);
     }
 
     private static void pause() {
