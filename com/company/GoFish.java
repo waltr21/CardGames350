@@ -59,7 +59,7 @@ public class GoFish{
      * The start of the game. Continues to play until the deck is
      * empty. (Not for GUI use!!!!)
      */
-    public void startGame(){
+    private void startGame(){
         while (gameDeck.getSize() > 0) {
             System.out.println("Player " + (turn + 1) + " it is your turn!");
 
@@ -118,7 +118,7 @@ public class GoFish{
                 message = "Player " + (turn+1) + " Go Fish!\n";
                 Card fish = gameDeck.removeTop();
                 players.get(turn).giveCard(fish);
-                message += "Player " + (turn + 1) + " Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
+                //message += "Player " + (turn + 1);
                 if (fish.getValue() == requestVal) {
                     index = turn;
                     message = "You got the card you wanted! The turn continues.";
@@ -221,14 +221,26 @@ public class GoFish{
         return message;
     }
 
+    /**
+     * Gets the current player object that is up to play
+     * @return Player object
+     */
     public Player getPlayer(){
         return players.get(turn);
     }
 
+    /**
+     * Gets the integer value of the player who is up
+     * @return Player number integer.
+     */
     public int getPlayerIndex(){
         return turn + 1;
     }
 
+    /**
+     * Gets the message of the player who is up
+     * @return message String.
+     */
     public String getTurnMessage(){
         return "Player " + (turn + 1) + " it is your turn!";
     }

@@ -60,6 +60,10 @@ public class Deck {
         myCards = newCards;
     }
 
+    /**
+     * Removes the top card of the deck.
+     * @return Card removed from the top of the deck.
+     */
     public Card removeTop(){
         Card temp = myCards.get(0);
         myCards.remove(0);
