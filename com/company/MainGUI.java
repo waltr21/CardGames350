@@ -1,6 +1,4 @@
-package com.company;/**
- * Created by RyanWalt on 10/11/17.
- */
+package com.company;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -8,13 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-
+/**
+ * Controller class to handle the main screen GUI
+ */
 public class MainGUI extends Application {
     @FXML
     public Button goFishButton;
@@ -47,6 +43,16 @@ public class MainGUI extends Application {
             newGoFish.start(new Stage());
         }
         catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void handleWarAction() {
+        WarController newWar = new WarController();
+        try {
+            newWar.start(new Stage());
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
     }

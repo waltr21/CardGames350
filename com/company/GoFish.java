@@ -4,18 +4,21 @@ import java.util.Scanner;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class for the Go Fish game. Holds all of the
+ * logic for taking turns, keeping score, swapping
+ * cards, etc...
  */
 public class GoFish{
     //Deck for the game
-    private Deck gameDeck;
+    private final Deck gameDeck;
     //Players for the game
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     //Number of cards for each player.
-    private int numCards;
+    private final int numCards;
     //Turn index for the players.
     private int turn;
     //Scanner for testing in terminal game.
-    private Scanner cons;
+    private final Scanner cons;
     //
     private String message;
 
@@ -48,6 +51,7 @@ public class GoFish{
 
         resetGame();
         //startGame();
+        printAll();
 
     }
 
@@ -55,7 +59,7 @@ public class GoFish{
      * The start of the game. Continues to play until the deck is
      * empty. (Not for GUI use!!!!)
      */
-    public void startGame(){
+    private void startGame(){
         while (gameDeck.getSize() > 0) {
             System.out.println("Player " + (turn + 1) + " it is your turn!");
 
@@ -111,17 +115,18 @@ public class GoFish{
                 message = "You don't have this card! Request a different card. Try again...";
                 return false;
             } else if (!checkValid(players.get(index), tempCard)) {
-                message = "Go Fish!";
+                message = "Player " + (turn+1) + " Go Fish!\n";
                 Card fish = gameDeck.removeTop();
                 players.get(turn).giveCard(fish);
-                message = "Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
+                //message += "Player " + (turn + 1);
                 if (fish.getValue() == requestVal) {
                     index = turn;
                     message = "You got the card you wanted! The turn continues.";
                 }
 
             } else {
-                message = "The player has this card!";
+                message = "Player " + (turn+1) + " takes the cards from player " + (playerIndex) + "!";
+
                 //Continuously give the player each card of the requested type.
                 while (checkValid((players.get(index)), tempCard)) {
                     Card transfer = players.get(index).takeCardFish(tempCard);
@@ -131,12 +136,10 @@ public class GoFish{
             }
         }
 
-        //printAll();
+        printAll();
         turn = index;
 
-        for (Player tempPlayer : players) {
-            tempPlayer.completeCount();
-        }
+        players.forEach(Player::completeCount);
 
         return true;
     }
@@ -147,7 +150,7 @@ public class GoFish{
      * @param c card to find
      * @return True if the user holds the card. Else false.
      */
-    public boolean checkValid(Player p, Card c){
+    private boolean checkValid(Player p, Card c){
         ArrayList<Card> temp;
         temp = p.getCards();
 
@@ -185,11 +188,8 @@ public class GoFish{
      * @return True or false depending on if the cards hold the
      * same value.
      */
-    public boolean sameValue(Card c, Card c1){
-        if (c.getValue() == c1.getValue())
-            return true;
-        else
-            return false;
+    private boolean sameValue(Card c, Card c1){
+        return c.getValue() == c1.getValue();
     }
 
 
@@ -221,10 +221,26 @@ public class GoFish{
         return message;
     }
 
+    /**
+     * Gets the current player object that is up to play
+     * @return Player object
+     */
     public Player getPlayer(){
         return players.get(turn);
     }
 
+    /**
+     * Gets the integer value of the player who is up
+     * @return Player number integer.
+     */
+    public int getPlayerIndex(){
+        return turn + 1;
+    }
+
+    /**
+     * Gets the message of the player who is up
+     * @return message String.
+     */
     public String getTurnMessage(){
         return "Player " + (turn + 1) + " it is your turn!";
     }
@@ -238,17 +254,16 @@ public class GoFish{
         ArrayList<Card> temp;
         String cardList = "";
         temp = p.getCards();
-        for (int i = 0; i < temp.size(); i++){
-            cardList += "Value: " + temp.get(i).getValue() + "Suit: " +
-                    temp.get(i).getSuit() + "\n";
+        for (Card aTemp : temp) {
+            cardList += aTemp.toString() + "\n";
         }
-
         return cardList;
     }
 
 
     public static void main(String args[]){
         GoFish g = new GoFish(2);
+        g.startGame();
     }
 
 }

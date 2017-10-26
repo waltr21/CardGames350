@@ -1,28 +1,51 @@
 package com.company;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class WarController {
+public class WarController extends Application implements Initializable {
 
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLFiles/WarGUI.fxml"));
-        Scene goFish = new Scene(root, 1000, 700);
-        stage.setTitle("War!");
-        stage.setScene(goFish);
-        stage.show();
+    War game;
+
+    @FXML
+    public Label messageText, turnText, player1CardText, player2CardText;
+
+    @FXML public void onButtonAction(){
+        if (game.over()) {
+
+        } else {
+            play(game);
+        }
     }
 
-    public static void main(String args[]) {
-        WarController gameController = new WarController();
-        War game = new War();
+    public void set(Label label, String msg) {
+        label.setText(msg);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        game = new War();
         game.setup();
         game.deal();
-        while (!game.over()) {
-            gameController.play(game);
-        }
+    }
+
+    public WarController() {}
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("WarGUI.fxml"));
+        Scene war = new Scene(root, 1000, 700);
+        stage.setTitle("War!");
+        stage.setScene(war);
+        stage.show();
     }
 
     public void play(War game) {
@@ -35,6 +58,9 @@ public class WarController {
         // Put them on the table.
         game.table.add(player1Card);
         game.table.add(player2Card);
+
+        set(player1CardText, player1Card.toString());
+        set(player2CardText, player2Card.toString());
 
         // Variables for each card.
         int card1val = player1Card.getValue();
@@ -75,8 +101,8 @@ public class WarController {
 
         game.table.clear();
 
-        out(String.format("Player 1's cards: %d", game.player1.cardCount()));
-        out(String.format("Player 2's cards: %d", game.player2.cardCount()));
+        set(messageText, String.format("Player 1's cards: %d", game.player1.cardCount()));
+        set(turnText, String.format("Player 2's cards: %d", game.player2.cardCount()));
     }
 
 
@@ -100,7 +126,7 @@ public class WarController {
 
     private void out(String msg) {
         System.out.println(msg);
-        pause();
+        //set(messageText, msg);
     }
 
     private static void pause() {

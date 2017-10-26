@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
@@ -13,17 +13,17 @@
             <Image url="@../../Images/CardBack.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="14.0" onMouseClicked="#onCardClicked2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <ImageView fx:id="cardImage2" fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="14.0" onMouseClicked="#onCardClicked2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <image>
             <Image url="@../../Images/CardBack.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="230.0" fitWidth="200.0" layoutX="14.0" layoutY="282.0" onMouseClicked="#onCardClicked3" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+      <ImageView fx:id="cardImage3" fitHeight="230.0" fitWidth="200.0" layoutX="14.0" layoutY="282.0" onMouseClicked="#onCardClicked3" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
          <image>
             <Image url="@../../Images/CardBack.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="282.0" onMouseClicked="#onCardClicked4" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <ImageView fx:id="cardImage4" fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="282.0" onMouseClicked="#onCardClicked4" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <image>
             <Image url="@../../Images/CardBack.jpg" />
          </image>
@@ -44,5 +44,12 @@
          </font>
       </Label>
       <ChoiceBox fx:id="valueChoice" layoutX="465.0" layoutY="312.0" prefHeight="27.0" prefWidth="71.0" />
+      <Button fx:id="moveButton" layoutX="33.0" layoutY="387.0" mnemonicParsing="false" onAction="#onMoveClicked" text="Make Move!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Rectangle fx:id="showImage" arcHeight="5.0" arcWidth="12.0" fill="WHITE" height="230.0" layoutX="12.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="170.0" />
+      <Label fx:id="userCardsLabel" layoutX="406.0" layoutY="487.0" text="Label" visible="false" wrapText="true" />
    </children>
 </AnchorPane>
