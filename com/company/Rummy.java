@@ -101,6 +101,10 @@ public class Rummy {
             if(turn >= numPlayers)
                 turn = 0;
             System.out.println("Player "+(turn+1)+(", your move."));
+
+            players.get(turn).printCards();
+            takeTurn(players.get(turn));
+            turn++;
             //Checks for any empty hands.
             for(int i = 0; i < numPlayers; i++){
 
@@ -109,10 +113,6 @@ public class Rummy {
                     break;
                 }
             }
-            players.get(turn).printCards();
-            takeTurn(players.get(turn));
-            System.out.println(gameOver);
-            turn++;
 
         }
         System.out.println("Game over!");
@@ -228,6 +228,7 @@ public class Rummy {
             }
             Card tempMeld[] = new Card[player.cardCount()];
             int i = 0;
+            int meldAmount = 1;
             while(true){
 
                 System.out.println("Enter card value");
@@ -254,6 +255,11 @@ public class Rummy {
                 }
                 tempMeld[i] = temp;
                 i++;
+                meldAmount++;
+                if(meldAmount == player.getCards().size()){
+                    gameOver = true;
+                    break;
+                }
                 System.out.println("Add more cards? Y/N");
                 option = in.nextLine();
                 if(option.equals("N") || option.equals("n")){
@@ -261,21 +267,8 @@ public class Rummy {
                 }
 
             }
-            if(checkValidMeld(tempMeld) == true){
+            if(checkValidMeld(tempMeld)){
 
-                /*//Loops til the end of the melds list for the player
-                while(melds[turn][j] != null){
-
-                    j++;
-
-                }
-                //Adds the cards to the meld list.
-                for(int k = 0; k < melds.length; k++){
-
-                    melds.get(turn).set(j,tempMeld[k]);
-                    j++;
-
-                }*/
                 for(int j = 0; j < tempMeld.length; j++){
 
                     melds.get(turn).add(tempMeld[j]);
@@ -288,6 +281,11 @@ public class Rummy {
                     player.takeCard(tempCard);
                     k++;
 
+                }
+                if(player.getCards().size() == 1){
+                    discard.add(player.getCards().get(0));
+                    player.getCards().remove(0);
+                    return;
                 }
                 System.out.println("Enter the value of discard:  ");
                 int discard_val = in.nextInt();
@@ -319,7 +317,7 @@ public class Rummy {
             else{
 
                 System.out.println("Invalid move. End turn? Y/N");
-                if(in.nextLine().equals("Y"))
+                if(in.nextLine().equals("Y") || in.nextLine().equals("y"))
                     break;
 
             }
