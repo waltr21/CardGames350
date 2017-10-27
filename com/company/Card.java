@@ -1,12 +1,15 @@
 package com.company;
 
 
-
+/**
+ * Class to keep track of card values and suits.
+ */
 public class Card{
     private int suit;
     private int value;
 
     /**
+     * Contructor function for the card class.
      * @param s - The suit of the card: 0 - Spades, 1 - Clubs,
      * 2 - Hearts, 3 - Diamonds.
      * @param v - The number value of the card (Ace-King)
@@ -17,6 +20,7 @@ public class Card{
     }
 
     /**
+     * Gets the suit for the card.
      * @return suit value of the card.
      */
     public int getSuit(){
@@ -25,6 +29,7 @@ public class Card{
 
 
     /**
+     * Gets the value of the card.
      * @return the value of the card.
      */
     public int getValue(){
@@ -40,10 +45,19 @@ public class Card{
         value = v;
     }
 
+    /**
+     * Sets the suit of the card.
+     * @param s Suit value.
+     */
     public void setSuit(int s ){
         suit = s;
     }
 
+    /**
+     * Whether or not a card is equal to the current card.
+     * @param c Card to compare to.
+     * @return True if they are equal. False if else.
+     */
     public boolean equals(Card c){
         return c.getValue() == value && c.getSuit() == suit;
     }

@@ -33,7 +33,6 @@ public class GoFishController extends Application implements Initializable {
     @FXML public ImageView cardImage1,cardImage2,
             cardImage3, cardImage4;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources){
         game = new GoFish(4);
@@ -61,6 +60,9 @@ public class GoFishController extends Application implements Initializable {
         stage.show();
     }
 
+    /**
+     * Handles the hide button action.
+     */
     @FXML public void onButtonAction(){
         userCardsLabel.setText(game.getCardsString(game.getPlayer()));
         if (game.getPlayerIndex() == 1){
@@ -107,6 +109,9 @@ public class GoFishController extends Application implements Initializable {
         System.out.println("Drag Detected!!");
     }
 
+    /**
+     * Handles when card 1 is clicked.
+     */
     @FXML public void onCardClicked1(){
         System.out.println("Card 1 clicked!");
         playerIndex = 1;
@@ -114,6 +119,9 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setVisible(true);
     }
 
+    /**
+     * handles when card 2 is clicked.
+     */
     @FXML public void onCardClicked2(){
         System.out.println("Card 2 clicked!");
         playerIndex = 2;
@@ -121,6 +129,9 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setVisible(true);
     }
 
+    /**
+     * Handles when card 3 is clicked.
+     */
     @FXML public void onCardClicked3(){
         System.out.println("Card 3 clicked!");
         playerIndex = 3;
@@ -128,6 +139,9 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setVisible(true);
     }
 
+    /**
+     * Handles when card 4 is clicked.
+     */
     @FXML public void onCardClicked4(){
         System.out.println("Card 4 clicked!");
         playerIndex = 4;
@@ -135,14 +149,25 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setVisible(true);
     }
 
+    /**
+     * Updates the game message
+     * @param m message to set fot the game.
+     */
     @FXML public void setMessageText(String m){
         messageText.setText(m);
     }
 
+    /**
+     * Updates the turn text message.
+     * @param m message to set for the turn.
+     */
     @FXML public void setTurnText(String m){
         turnText.setText(m);
     }
 
+    /**
+     * Initializes the variables for the choice box.
+     */
     @FXML public void resetChoiceBox(){
         valueChoice.setItems(FXCollections.observableArrayList(
                 "Ace", "2", "3", "4", "5", "6", "7",
@@ -152,12 +177,22 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setLayoutY(0.0);
     }
 
+    /**
+     * Changes the position of the choicebox according to where
+     * the cards are placed.
+     * @param x Position X for the box.
+     * @param y Position Y for the box.
+     */
     @FXML public void setChoiceBoxPos(double x, double y){
         valueChoice.setLayoutX(x);
         valueChoice.setLayoutY(y);
         valueChoice.show();
     }
 
+    /**
+     * Handles how a move should be made when the user clicks the
+     * move button.
+     */
     @FXML public void onMoveClicked(){
         String x = valueChoice.getValue() + "";
         switch (x) {
@@ -184,9 +219,11 @@ public class GoFishController extends Application implements Initializable {
         showImage.setVisible(false);
     }
 
-
-
-
+    /**
+     * Plays one turn for the Go Fish game.
+     * @param playerIndex player to choose a card from.
+     * @param value value of the card to take.
+     */
     @FXML void playTurn(int playerIndex, int value){
         Player currentPlayer = game.getPlayer();
         game.takeTurn(currentPlayer, playerIndex, value);
