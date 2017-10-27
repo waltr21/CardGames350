@@ -4,10 +4,13 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * Created by RyanWalt on 10/26/17.
  * Test Cases for a game of go fish.
  */
 public class GoFishTest {
+    /**
+     * test to make sure that the initial values of the new game
+     * are made correctly.
+     */
     @Test
     public void testNewGameValues(){
         GoFish game = new GoFish(3);
@@ -21,6 +24,10 @@ public class GoFishTest {
         assertEquals(game1.getPlayers().get(0).getCards().size(), 7);
     }
 
+    /**
+     * Test to make sure that the single turn of the game
+     * works correctly.
+     */
     @Test
     public void testGameTurn(){
         GoFish game = new GoFish(4);
@@ -40,6 +47,9 @@ public class GoFishTest {
         assertEquals(game.getTurn(), 3);
     }
 
+    /**
+     * Test to make sure that the game is able to be reset correctly.
+     */
     @Test
     public void testRest(){
         GoFish game = new GoFish(4);

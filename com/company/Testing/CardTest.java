@@ -11,6 +11,10 @@ import static junit.framework.TestCase.assertEquals;
  * Very small because it holds almost no logic.
  */
 public class CardTest {
+    /**
+     * Test to make sure the Card holds the right values after
+     * being assigned.
+     */
     @Test
     public void testCorrectAssignValues(){
         Card c1 = new Card(10, 2);
@@ -22,6 +26,9 @@ public class CardTest {
         assertEquals(c2.getValue(), -1);
     }
 
+    /**
+     * Test to make sure the set methods work correctly.
+     */
     @Test
     public void testAssignMethods(){
         Card c1 = new Card(5, 1);
@@ -32,6 +39,9 @@ public class CardTest {
         assertEquals(c1.getSuit(), 2);
     }
 
+    /**
+     * Test to make sure the equals method workd correctly.
+     */
     @Test
     public void testEqualsMethod(){
         Card c1 = new Card(2,3);

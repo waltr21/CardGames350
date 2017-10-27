@@ -15,6 +15,9 @@ import static junit.framework.TestCase.assertEquals;
 public class DeckTest{
 
 
+    /**
+     * Test to make sure the Deck is created correctly.
+     */
     @Test
     public void testDeckCreation(){
         Deck d = new Deck(false);
@@ -26,6 +29,9 @@ public class DeckTest{
 
     }
 
+    /**
+     * Test to make sure the remove card method works correctly.
+     */
     @Test
     public void testRemoveCard(){
         Deck d = new Deck(false);
@@ -40,6 +46,9 @@ public class DeckTest{
         assertTrue(c.getValue() >= -1);
     }
 
+    /**
+     * Test to make sure the Deck is shuffled correctly.
+     */
     @Test
     public void testShuffle(){
         Deck d = new Deck(true);

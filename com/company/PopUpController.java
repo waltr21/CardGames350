@@ -9,7 +9,6 @@ import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
 /**
- * Created by RyanWalt on 10/25/17.
  * Controller class for the popup menue for
  * specific games.
  */

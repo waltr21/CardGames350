@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by RyanWalt on 10/5/17.
  * Class for the Go Fish game. Holds all of the
  * logic for taking turns, keeping score, swapping
  * cards, etc...
@@ -96,9 +95,11 @@ public class GoFish{
     }
 
     /**
-     * Takes the turn of a single user. Makes sure that the user
-     * has made a valid move (according to the rules of go fish)
-     * @param p The player to take a turn for.
+     * Takes a single turn for a player
+     * @param p Player who is taking the turn
+     * @param playerIndex Which player to choose a card from (1-4)
+     * @param requestVal Values of the card to request
+     * @return True if the turn was valid. Fales if not.
      */
     public boolean takeTurn(Player p, int playerIndex, int requestVal){
         int index = playerIndex -1;

@@ -14,7 +14,9 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class PlayerTest {
 
-
+    /**
+     * Test to make sure the user is given appropriate cards.
+     */
     @Test
     public void testGiveCards(){
         Player p = new Player();
@@ -30,6 +32,9 @@ public class PlayerTest {
         assertEquals(p.cardCount(), 30);
     }
 
+    /**
+     * Test to make sure that the sorting algorithm is properly working.
+     */
     @Test
     public void testSort(){
         Player p = new Player();
@@ -53,6 +58,9 @@ public class PlayerTest {
         assertTrue(sorted);
     }
 
+    /**
+     * Test to make sure the players top card is correctly being removed.
+     */
     @Test
     public void testTakeTop(){
         Player p = new Player();
