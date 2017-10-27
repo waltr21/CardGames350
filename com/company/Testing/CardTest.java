@@ -1,8 +1,6 @@
 package com.company.Testing;
-
 import com.company.Card;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;

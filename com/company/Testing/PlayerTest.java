@@ -3,7 +3,6 @@ import com.company.Card;
 import com.company.Deck;
 import com.company.Player;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;

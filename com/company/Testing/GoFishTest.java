@@ -1,13 +1,6 @@
 package com.company.Testing;
-import com.company.Card;
-import com.company.Deck;
 import com.company.GoFish;
-import com.company.Player;
-import junit.framework.Assert;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
 /**

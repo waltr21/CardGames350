@@ -2,11 +2,7 @@ package com.company.Testing;
 import com.company.Card;
 import com.company.Deck;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.util.ArrayList;
-
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
