@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class for the Go Fish game. Holds all of the
+ * logic for taking turns, keeping score, swapping
+ * cards, etc...
  */
 public class GoFish{
     //Deck for the game
@@ -56,7 +59,7 @@ public class GoFish{
      * The start of the game. Continues to play until the deck is
      * empty. (Not for GUI use!!!!)
      */
-    public void startGame(){
+    private void startGame(){
         while (gameDeck.getSize() > 0) {
             System.out.println("Player " + (turn + 1) + " it is your turn!");
 
@@ -115,7 +118,7 @@ public class GoFish{
                 message = "Player " + (turn+1) + " Go Fish!\n";
                 Card fish = gameDeck.removeTop();
                 players.get(turn).giveCard(fish);
-                message += "Player " + (turn + 1) + " Card got: Value: " + fish.getValue() + " Suit: " + fish.getSuit();
+                //message += "Player " + (turn + 1);
                 if (fish.getValue() == requestVal) {
                     index = turn;
                     message = "You got the card you wanted! The turn continues.";
@@ -168,6 +171,10 @@ public class GoFish{
         gameDeck.shuffle();
         turn = 0;
 
+        for (Player p : players){
+            p.resetCards();
+        }
+
         //Give each player X cards and remove them from the deck.
         for (int i = 1; i <= numCards; i++){
             for (Player p : players) {
@@ -218,14 +225,26 @@ public class GoFish{
         return message;
     }
 
+    /**
+     * Gets the current player object that is up to play
+     * @return Player object
+     */
     public Player getPlayer(){
         return players.get(turn);
     }
 
+    /**
+     * Gets the integer value of the player who is up
+     * @return Player number integer.
+     */
     public int getPlayerIndex(){
         return turn + 1;
     }
 
+    /**
+     * Gets the message of the player who is up
+     * @return message String.
+     */
     public String getTurnMessage(){
         return "Player " + (turn + 1) + " it is your turn!";
     }
@@ -245,6 +264,21 @@ public class GoFish{
         return cardList;
     }
 
+    /**
+     * Gets the players in the game. (used for testing)
+     * @return Array List of players.
+     */
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    /**
+     * Gets the current turn
+     * @return int of the turn value.
+     */
+    public int getTurn(){
+        return turn;
+    }
 
     public static void main(String args[]){
         GoFish g = new GoFish(2);

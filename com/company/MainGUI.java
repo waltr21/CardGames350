@@ -1,6 +1,4 @@
-package com.company;/**
- * Created by RyanWalt on 10/11/17.
- */
+package com.company;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -10,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-
+/**
+ * Controller class to handle the main screen GUI
+ */
 public class MainGUI extends Application {
     @FXML
     public Button goFishButton;

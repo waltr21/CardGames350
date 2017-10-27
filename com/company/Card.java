@@ -1,16 +1,10 @@
 package com.company;
 
-public class Card{
 
+
+public class Card{
     private int suit;
     private int value;
-
-
-    public String toString() {
-        String[] values = {"?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-        String[] suits = {"♠", "♣", "♥", "♦"};
-        return String.format("%s of %s", values[value], suits[suit]);
-    }
 
     /**
      * @param s - The suit of the card: 0 - Spades, 1 - Clubs,
@@ -53,5 +47,16 @@ public class Card{
     public boolean equals(Card c){
         return c.getValue() == value && c.getSuit() == suit;
     }
+
+    /**
+     * Makes a string for printing out the user cards.
+     * @return Formatted string for the user to print.
+     */
+    public String toString() {
+        String[] values = {"?", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        String[] suits = {"♠", "♣", "♥", "♦"};
+        return String.format("%s of %s", values[value], suits[suit]);
+    }
+
 
 }

@@ -5,6 +5,8 @@ import java.util.Random;
 
 /**
  * Created by RyanWalt on 10/5/17.
+ * Class to hold all of the cards in a deck that are not
+ * in the users hands.
  */
 public class Deck {
     private final Random r;
@@ -58,10 +60,22 @@ public class Deck {
         myCards = newCards;
     }
 
+    /**
+     * Removes the top card of the deck.
+     * @return Card removed from the top of the deck.
+     */
     public Card removeTop(){
         Card temp = myCards.get(0);
         myCards.remove(0);
         return temp;
+    }
+
+    /**
+     * Gets the current deck.
+     * @return Array List of cards.
+     */
+    public ArrayList<Card> getDeck(){
+        return myCards;
     }
 
     /**
