@@ -49,6 +49,18 @@ public class Rummy {
      *************************************************************************/
     public Rummy(int numPlayers){
 
+        if(numPlayers > 4){
+
+            System.out.println("THe game only allows for up to 4 players. Defaulting to 4.");
+            numPlayers = 4;
+
+        }
+        if(numPlayers < 2){
+
+            System.out.println("The game must have at least 2 players. Defaulting to 2.");
+            numPlayers = 2;
+
+        }
         //Cap the number of players
         if (numPlayers > 4) {
             this.numPlayers = 4;
@@ -74,6 +86,7 @@ public class Rummy {
             players.add(new Player());
             melds.add(new ArrayList<Card>());
         }
+        deck.shuffle();
         //Deals the players their hands.
         giveHand();
         in = new Scanner(System.in);
@@ -157,22 +170,17 @@ public class Rummy {
         String c = in.nextLine();
         while(true){
 
-            if (c.equals("q")) {
-                gameOver = true;
-                return;
-            }
-
             if (c.equals("p")) {
 
                 System.out.println("How many cards would you like?");
-                int amount = in.nextInt();
+                int amount = Integer.parseInt(in.nextLine());
                 while(amount > discard.size() || amount == 0){
 
                     if(amount > discard.size())
                         System.out.println("This exceeds the current amount in the discard pile. Enter a valid amount.");
                     else
                         System.out.println("You must take at least one card. Enter a valid amount.");
-                    amount = in.nextInt();
+                    amount = Integer.parseInt(in.nextLine());
 
                 }
                 for(int i = 0; i < amount; i++)
@@ -215,10 +223,10 @@ public class Rummy {
             if(option.equals("N") || option.equals("n")) {
 
                 System.out.println("Enter the value of discard:  ");
-                int discard_val = in.nextInt();
+                int discard_val = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 System.out.println("Enter the suit of discard:   ");
-                int discard_suit = in.nextInt();
+                int discard_suit = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 Card tempCard = new Card(discard_val,discard_suit);
                 discard.add(tempCard);
@@ -232,10 +240,10 @@ public class Rummy {
             while(true){
 
                 System.out.println("Enter card value");
-                int val = in.nextInt();
+                int val = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 System.out.println("Enter card suit");
-                int suit = in.nextInt();
+                int suit = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 Card temp = new Card(val,suit);
                 while(!(player.checkCard(temp))){
@@ -244,10 +252,10 @@ public class Rummy {
                     if(!(player.checkCard(temp))){
 
                         System.out.println("You don't have this card! Enter a valid value of a card:  ");
-                        val = in.nextInt();
+                        val = Integer.parseInt(in.nextLine());
                         in.nextLine();
                         System.out.println("Enter a valid suit:  ");
-                        suit = in.nextInt();
+                        suit = Integer.parseInt(in.nextLine());
                         in.nextLine();
 
                     }
@@ -288,10 +296,10 @@ public class Rummy {
                     return;
                 }
                 System.out.println("Enter the value of discard:  ");
-                int discard_val = in.nextInt();
+                int discard_val = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 System.out.println("Enter the suit of discard:   ");
-                int discard_suit = in.nextInt();
+                int discard_suit = Integer.parseInt(in.nextLine());
                 in.nextLine();
                 Card tempCard = new Card(discard_val,discard_suit);
                 while(!(player.checkCard(tempCard))){
@@ -300,10 +308,10 @@ public class Rummy {
                     if(!(player.checkCard(tempCard))){
 
                         System.out.println("You don't have this card! Enter a valid value of a card:  ");
-                        discard_val = in.nextInt();
+                        discard_val = Integer.parseInt(in.nextLine());
                         in.nextLine();
                         System.out.println("Enter a valid suit:  ");
-                        discard_suit = in.nextInt();
+                        discard_suit = Integer.parseInt(in.nextLine());
                         in.nextLine();
 
                     }
@@ -349,6 +357,13 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Method to calculate the final scores for each player at the end of the
+     * round. Adds up each card in the meld and deducts each remaining card
+     * from the player's hand.
+     *
+     * @return  Int representing the winning player.
+     *************************************************************************/
     private int tallyScore(){
 
         int winner = 0;
@@ -400,11 +415,125 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Helper method to print all cards in the discard pile.
+     *************************************************************************/
     private void printDiscard(){
 
         for(Card i : discard) System.out.println("Value: " + i.getValue() + " Suit: " + i.getSuit());
 
     }
+
+    /***************************************************************************
+     * Getter for the game's deck.
+     *
+     * @return The game's current deck
+     **************************************************************************/
+    public Deck getDeck() {
+        return deck;
+    }
+
+    /**************************************************************************
+     * Setter for the game's deck
+     *
+     * @param deck The deck to replace the game's current deck
+     *************************************************************************/
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    /*************************************************************************
+     * Getter for the game's players
+     *
+     * @return ArrayList holding each player object.
+     ************************************************************************/
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /*************************************************************************
+     * Getter for the discard pile
+     *
+     * @return The current discard pile
+     ************************************************************************/
+    public ArrayList<Card> getDiscard() {
+        return discard;
+    }
+
+    /**************************************************************************
+     * Getter for the melds for each player
+     *
+     * @return An ArrayList of size equaling the amount of player with each
+     * element holding an ArrayList representing each card in a meld.
+     *************************************************************************/
+    public ArrayList<ArrayList<Card>> getMelds() {
+        return melds;
+    }
+
+    /**************************************************************************
+     * Getter for the number of cards to deal out.
+     *
+     * @return The number of cards to deal out.
+     *************************************************************************/
+    public int getNumCards() {
+        return numCards;
+    }
+
+    /**************************************************************************
+     * Getter for the number of players in the game
+     *
+     * @return The number of players in the game.
+     *************************************************************************/
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    /**************************************************************************
+     * Setter for the number of players in the game
+     *
+     * @param numPlayers The number of players to play the game.
+     *************************************************************************/
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
+    /**************************************************************************
+     * Getter for the current turn.
+     *
+     * @return Int representing the current player's turn
+     *************************************************************************/
+    public int getTurn() {
+        return turn;
+    }
+
+    /**************************************************************************
+     * Checks if game is over
+     *
+     * @return True if game is over, false if game is ongoing.
+     *************************************************************************/
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    /**************************************************************************
+     * Sets the state of the game
+     *
+     * @param gameOver Sets to true if game is over or false if game is to
+     * start.
+     *************************************************************************/
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    /**************************************************************************
+     * Gets the scores for each of the players
+     *
+     * @return Array holding scores for each player.
+     *************************************************************************/
+    public int[] getScores() {
+        return scores;
+    }
+
 
     public static void main(String[] args){Rummy rummy = new Rummy(2);}
 
