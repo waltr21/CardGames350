@@ -16,11 +16,12 @@ public class WarController extends Application implements Initializable {
     War game;
 
     @FXML
-    public Label messageText, turnText, player1CardText, player2CardText;
+    public Label player1Message, player2Message, player1CardText, player2CardText, gameMessage1, gameMessage2, gameMessage3;
 
     @FXML public void onButtonAction(){
         if (game.over()) {
-
+            String winner = (game.player1.cardCount() >= 52) ? "Player 1" : "Player 2";
+            set(gameMessage1, String.format("%s wins!", winner));
         } else {
             play(game);
         }
@@ -49,11 +50,13 @@ public class WarController extends Application implements Initializable {
     }
 
     public void play(War game) {
+
+        set(gameMessage1, "");
+        set(gameMessage2, "");
+
         // Draw player cards.
         Card player1Card = game.player1.takeTopCard();
-        out(String.format("Player 1 draws %s.", player1Card.toString()));
         Card player2Card = game.player2.takeTopCard();
-        out(String.format("Player 2 draws %s.", player2Card.toString()));
 
         // Put them on the table.
         game.table.add(player1Card);
@@ -67,33 +70,34 @@ public class WarController extends Application implements Initializable {
         int card2val = player2Card.getValue();
 
         while (card1val == card2val) {
-            out("WAR!");
+            set(gameMessage1, "WAR!");
+            set(gameMessage2, "Each player places three additional cards on the table.");
 
             if (game.player1.cardCount() == 0 || game.player2.cardCount() == 0) {
                 break;
             }
 
-            // Draw player cards.
-            player1Card = game.player1.takeTopCard();
-            out(String.format("Player 1 draws %s.", player1Card.toString()));
-            player2Card = game.player1.takeTopCard();
-            out(String.format("Player 2 draws %s.", player2Card.toString()));
+            for (int j = 0; j < 4; j++) {
+                // Draw player cards.
+                player1Card = game.player1.takeTopCard();
+                player2Card = game.player1.takeTopCard();
 
-            // Put them on the table.
-            game.table.add(player1Card);
-            game.table.add(player2Card);
+                // Put them on the table.
+                game.table.add(player1Card);
+                game.table.add(player2Card);
+            }
 
             card1val = player1Card.getValue();
             card2val = player2Card.getValue();
         }
 
         if (card1val > card2val) {
-            out("Player 1 takes the pile!");
+            set(gameMessage3, String.format("Player 1 takes the pile! %d cards!", game.table.size()));
             for (Card temp: game.table) {
                 game.player1.giveCard(temp);
             }
         } else {
-            out("Player 2 takes the pile!");
+            set(gameMessage3, String.format("Player 2 takes the pile! %d cards!", game.table.size()));
             for (Card temp: game.table) {
                 game.player2.giveCard(temp);
             }
@@ -101,40 +105,7 @@ public class WarController extends Application implements Initializable {
 
         game.table.clear();
 
-        set(messageText, String.format("Player 1's cards: %d", game.player1.cardCount()));
-        set(turnText, String.format("Player 2's cards: %d", game.player2.cardCount()));
+        set(player1Message, String.format("Player 1's cards: %d", game.player1.cardCount()));
+        set(player2Message, String.format("Player 2's cards: %d", game.player2.cardCount()));
     }
-
-
-    /*public static void main(String args[]) {
-        War game = new War();
-        game.deal();
-        while (true) {
-            if (game.player1.cardCount() >= 52) {
-                out("Player 1 wins!");
-                break;
-            }
-            if (game.player2.cardCount() >= 52) {
-                out("Player 2 wins!");
-                break;
-            }
-            game.play();
-        }
-    }*/
-
-    // HELPERS
-
-    private void out(String msg) {
-        System.out.println(msg);
-        //set(messageText, msg);
-    }
-
-    private static void pause() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
-    }
-
 }

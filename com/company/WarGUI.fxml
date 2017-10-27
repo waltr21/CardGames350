@@ -24,22 +24,37 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Label fx:id="messageText" alignment="CENTER" layoutX="228.0" layoutY="99.0" prefHeight="96.0" prefWidth="546.0" text="Message" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+      <Label fx:id="gameMessage2" alignment="CENTER" layoutX="228.0" layoutY="69.0" prefHeight="96.0" prefWidth="546.0" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="turnText" alignment="CENTER" contentDisplay="CENTER" layoutX="250.0" layoutY="33.0" prefHeight="30.0" prefWidth="501.0" text="Label" textAlignment="JUSTIFY" textFill="#fff9f9">
+      <Label fx:id="gameMessage1" alignment="CENTER" contentDisplay="CENTER" layoutX="250.0" layoutY="33.0" prefHeight="30.0" prefWidth="501.0" textAlignment="JUSTIFY" textFill="#fff9f9">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="player1CardText" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="364.0" prefHeight="30.0" prefWidth="501.0" text="Player1Card" textAlignment="JUSTIFY" textFill="#fff9f9">
+      <Label fx:id="player1CardText" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="364.0" prefHeight="36.0" prefWidth="158.0" textAlignment="JUSTIFY" textFill="#fff9f9">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="player2CardText" alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="497.0" prefHeight="30.0" prefWidth="501.0" text="Player2Card" textAlignment="JUSTIFY" textFill="#fff9f9">
+      <Label fx:id="player2CardText" alignment="CENTER" contentDisplay="CENTER" layoutX="820.0" layoutY="364.0" prefHeight="36.0" prefWidth="158.0" textAlignment="JUSTIFY" textFill="#fff9f9">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="gameMessage3" alignment="CENTER" layoutX="227.0" layoutY="140.0" prefHeight="96.0" prefWidth="546.0" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1Message" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="408.0" prefHeight="36.0" prefWidth="350.0" textAlignment="JUSTIFY" textFill="#fff9f9">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2Message" alignment="CENTER" contentDisplay="CENTER" layoutX="636.0" layoutY="408.0" prefHeight="36.0" prefWidth="350.0" textAlignment="JUSTIFY" textFill="#fff9f9">
          <font>
             <Font size="25.0" />
          </font>
