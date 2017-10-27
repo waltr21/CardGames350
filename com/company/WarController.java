@@ -73,7 +73,7 @@ public class WarController extends Application implements Initializable {
             set(gameMessage1, "WAR!");
             set(gameMessage2, "Each player places three additional cards on the table.");
 
-            if (game.player1.cardCount() == 0 || game.player2.cardCount() == 0) {
+            if (game.player1.cardCount() <= 4 || game.player2.cardCount() <= 4) {
                 break;
             }
 
