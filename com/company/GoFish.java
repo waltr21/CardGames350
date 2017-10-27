@@ -19,7 +19,7 @@ public class GoFish{
     private int turn;
     //Scanner for testing in terminal game.
     private final Scanner cons;
-    //
+    //message to update the game.
     private String message;
 
     /**
@@ -31,6 +31,10 @@ public class GoFish{
         //Cap the number of players
         if (numPlayers > 4)
             numPlayers = 4;
+
+        else if (numPlayers < 1)
+            numPlayers = 1;
+
 
         //Set initial card amount.
         if(numPlayers > 2)

@@ -79,6 +79,7 @@ public class Deck {
     }
 
     /**
+     * Gets the size of the deck.
      * @return the size of the current deck
      */
     public int getSize(){
