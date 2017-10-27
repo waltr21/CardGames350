@@ -171,6 +171,10 @@ public class GoFish{
         gameDeck.shuffle();
         turn = 0;
 
+        for (Player p : players){
+            p.resetCards();
+        }
+
         //Give each player X cards and remove them from the deck.
         for (int i = 1; i <= numCards; i++){
             for (Player p : players) {
@@ -260,6 +264,21 @@ public class GoFish{
         return cardList;
     }
 
+    /**
+     * Gets the players in the game. (used for testing)
+     * @return Array List of players.
+     */
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    /**
+     * Gets the current turn
+     * @return int of the turn value.
+     */
+    public int getTurn(){
+        return turn;
+    }
 
     public static void main(String args[]){
         GoFish g = new GoFish(2);

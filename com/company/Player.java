@@ -59,6 +59,13 @@ public class Player {
         }
     }
 
+    /**
+     * Reset the players cards to be null.
+     */
+    public void resetCards(){
+        playerCards.clear();
+    }
+
     public Card takeTopCard() {
         return playerCards.remove(0);
     }
