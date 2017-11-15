@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -101,11 +102,38 @@ public class GoFishController extends Application implements Initializable {
             userCardsLabel.setVisible(false);
             showing = false;
         }
-
     }
 
     @FXML public void onCardDrag1(){
-        System.out.println("Drag Detected!!");
+        cardImage1.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    @FXML public void onCardDrag2(){
+        cardImage2.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    @FXML public void onCardDrag3(){
+        cardImage3.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    @FXML public void onCardDrag4(){
+        cardImage4.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    @FXML public void onCardExit1(){
+        cardImage1.setBlendMode(BlendMode.SRC_OVER);
+    }
+
+    @FXML public void onCardExit2(){
+        cardImage2.setBlendMode(BlendMode.SRC_OVER);
+    }
+
+    @FXML public void onCardExit3(){
+        cardImage3.setBlendMode(BlendMode.SRC_OVER);
+    }
+
+    @FXML public void onCardExit4(){
+        cardImage4.setBlendMode(BlendMode.SRC_OVER);
     }
 
     /**

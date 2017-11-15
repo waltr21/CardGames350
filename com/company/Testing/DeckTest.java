@@ -23,7 +23,6 @@ public class DeckTest{
         Deck d = new Deck(false);
         Deck d1 = new Deck(true);
 
-
         assertEquals(d.getSize(), 52);
         assertEquals(d1.getSize(), 54);
 
