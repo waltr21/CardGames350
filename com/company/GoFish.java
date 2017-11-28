@@ -20,6 +20,8 @@ public class GoFish{
     private final Scanner cons;
     //message to update the game.
     private String message;
+    //ArrayList for the possible AI in the game.
+    private ArrayList<GoFishAI> AI;
 
     /**
      * Constructor for the class.
@@ -46,10 +48,16 @@ public class GoFish{
         gameDeck = new Deck(false);
         players = new ArrayList<>();
         message = "Starting game ...";
+        AI = new ArrayList<>();
 
         //Add players to the game.
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
+        }
+
+        //Add AI to the game.
+        for (int i = 0; i < 4-numPlayers; i++){
+            AI.add(new GoFishAI(5));
         }
 
         resetGame();
