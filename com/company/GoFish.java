@@ -80,7 +80,7 @@ public class GoFish{
             //System.out.print("Value to request: ");
             int valueS = Integer.parseInt(cons.nextLine());
 
-            boolean tempValid = takeTurn(players.get(turn), indexS, valueS);
+            boolean tempValid = takeTurn(indexS, valueS);
             if (!tempValid){
                 System.out.println("Not valid turn! Try again!");
             }
@@ -104,12 +104,11 @@ public class GoFish{
 
     /**
      * Takes a single turn for a player
-     * @param p Player who is taking the turn
      * @param playerIndex Which player to choose a card from (1-4)
      * @param requestVal Values of the card to request
      * @return True if the turn was valid. Fales if not.
      */
-    public boolean takeTurn(Player p, int playerIndex, int requestVal){
+    public boolean takeTurn(int playerIndex, int requestVal){
         int index = playerIndex -1;
 
         if (index >= players.size() || index < 0 || index == turn){
@@ -117,14 +116,14 @@ public class GoFish{
             return false;
         }
         else if (players.get(index).getCards().size() < 1){
-            message = "This player is out of cards! Try again..." ;
+            message = "This player is out of cards! Try again...";
             return false;
         }
 
         else {
             Card tempCard = new Card(requestVal, -1);
 
-            if (!checkValid(p, tempCard)) {
+            if (!checkValid(getPlayer(), tempCard)) {
                 message = "You don't have this card! Request a different card. Try again...";
                 return false;
             } else if (!checkValid(players.get(index), tempCard)) {

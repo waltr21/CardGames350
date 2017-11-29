@@ -242,7 +242,6 @@ public class GoFishController extends Application implements Initializable {
         playTurn(playerIndex, value);
         valueChoice.setValue(null);
         valueChoice.setVisible(false);
-
         showImage.setVisible(false);
     }
 
@@ -253,7 +252,7 @@ public class GoFishController extends Application implements Initializable {
      */
     @FXML void playTurn(int playerIndex, int value){
         Player currentPlayer = game.getPlayer();
-        game.takeTurn(currentPlayer, playerIndex, value);
+        game.takeTurn(playerIndex, value);
         setMessageText(game.getMessage());
         setTurnText(game.getTurnMessage());
         System.out.println(game.getMessage());

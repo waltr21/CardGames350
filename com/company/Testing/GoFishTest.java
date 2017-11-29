@@ -33,17 +33,17 @@ public class GoFishTest {
         GoFish game = new GoFish(4);
 
         //Test an invalid move...
-        game.takeTurn(game.getPlayer(), -10, -10);
+        game.takeTurn(-10, -10);
         assertEquals(game.getTurn(), 0);
 
         //Test a valid turn and make sure the turn has changed
         int valid = game.getPlayers().get(0).getCards().get(0).getValue();
-        game.takeTurn(game.getPlayer(), 2, valid);
+        game.takeTurn(2, valid);
         assertEquals(game.getTurn(), 1);
 
         //Continue and take the turn for the game
         valid = game.getPlayers().get(1).getCards().get(1).getValue();
-        game.takeTurn(game.getPlayer(), 4, valid);
+        game.takeTurn(4, valid);
         assertEquals(game.getTurn(), 3);
     }
 
@@ -55,7 +55,7 @@ public class GoFishTest {
         GoFish game = new GoFish(4);
         //Take a turn then reset the game.
         int valid = game.getPlayers().get(0).getCards().get(0).getValue();
-        game.takeTurn(game.getPlayer(), 2, valid);
+        game.takeTurn(2, valid);
         game.resetGame();
         //Check to make sure the player cards are set back to 5.
         assertEquals(game.getPlayers().get(1).getCards().size(), 5);
