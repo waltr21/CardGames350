@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class WarController extends Application implements Initializable {
@@ -17,6 +19,9 @@ public class WarController extends Application implements Initializable {
 
     @FXML
     public Label player1Message, player2Message, player1CardText, player2CardText, gameMessage1, gameMessage2, gameMessage3;
+
+    @FXML
+    public ImageView player1CardImage, player2CardImage;
 
     @FXML public void onButtonAction(){
         if (game.over()) {
@@ -29,6 +34,13 @@ public class WarController extends Application implements Initializable {
 
     public void set(Label label, String msg) {
         label.setText(msg);
+    }
+
+    public void setImage(ImageView image, String path) {
+
+        //System.out.println(path);
+
+        image.setImage(new Image("file:"+path));
     }
 
     @Override
@@ -61,6 +73,9 @@ public class WarController extends Application implements Initializable {
         // Put them on the table.
         game.table.add(player1Card);
         game.table.add(player2Card);
+
+        setImage(player1CardImage, player1Card.imagePath());
+        setImage(player2CardImage, player2Card.imagePath());
 
         set(player1CardText, player1Card.toString());
         set(player2CardText, player2Card.toString());

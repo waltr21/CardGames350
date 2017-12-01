@@ -72,5 +72,46 @@ public class Card{
         return String.format("%s of %s", values[value], suits[suit]);
     }
 
+    public String imagePath() {
+        String suitPath = "";
+        String valuePath = "";
+        switch (suit) {
+            case 0:
+                suitPath = "S";
+                break;
+            case 1:
+                suitPath = "C";
+                break;
+            case 2:
+                suitPath = "H";
+                break;
+            case 3:
+                suitPath = "D";
+                break;
+            default:
+                break;
+        }
+        //System.out.println(value);
+        switch (value) {
+            case 1:
+                valuePath = "A";
+                break;
+            case 11:
+                valuePath = "J";
+                break;
+            case 12:
+                valuePath = "Q";
+                break;
+            case 13:
+                valuePath = "K";
+                break;
+            default:
+                valuePath = Integer.toString(value);
+                break;
+        }
+        String mainPath = System.getProperty("user.dir");
+        return mainPath + "\\Images\\png\\" + valuePath + suitPath + ".png";
+    }
+
 
 }
