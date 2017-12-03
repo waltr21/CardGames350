@@ -47,6 +47,16 @@ public class MainGUI extends Application {
         }
     }
 
+    public void handleFiftyTwoPickupAction() {
+        FiftyTwoPickupController newFiftyTwoPickup = new FiftyTwoPickupController();
+        try {
+            newFiftyTwoPickup.start(new Stage());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void handleWarAction() {
         WarController newWar = new WarController();
         try {
