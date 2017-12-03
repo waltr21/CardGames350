@@ -21,11 +21,12 @@ public class GoFishAI {
         memory = new ArrayList<>();
     }
 
-    public void addMemory(int index, Card c){
+
+    public void addMemory(int playerIndex, int cardVal){
         if (memory.size() > level){
             memory.remove(0);
         }
-        memory.add(new Pair(index, c));
+        memory.add(new Pair(playerIndex, cardVal));
     }
 
     public Player getPlayer(){
@@ -35,7 +36,7 @@ public class GoFishAI {
     /**
      * Go through the players cards and weight them by how close they are
      * to getting four of a kind.
-     * @return
+     * @return ArrayList of weighted cards.
      */
     public ArrayList<Integer> weightCards(){
         ArrayList<Card> tempCards = bot.getCards();
@@ -68,23 +69,52 @@ public class GoFishAI {
                     max = (int) pair.getValue();
                     cardVal = (int) pair.getKey();
                 }
-                it.remove();
             }
-            finalVals.add(cardVal);
+            if (max < 4)
+                finalVals.add(cardVal);
+
             map.remove(cardVal);
 
             if (map.size() < 1){
-                empty = false;
+                empty = true;
             }
         }
-        
+
+        System.out.print(finalVals);
         return finalVals;
     }
 
-    public void takeTurn(){
-        for (Pair p : memory){
-            break;
+
+    public void takeTurn(ArrayList<Player> players){
+        ArrayList<Integer> weightedCards = weightCards();
+        for (int val : weightedCards){
+            for (Pair slot : memory){
+                if (val == slot.getVal()){
+                    //take this card and return
+                    Card tempCard = new Card (val, -1);
+                    players.get(slot.getIndex()).takeCard(tempCard);
+                    return;
+                }
+            }
         }
+    }
+
+    /**
+     * Testing for the thing (temp)
+     * @param args
+     */
+    public static void main(String[] args){
+        GoFishAI x = new GoFishAI(5);
+        x.getPlayer().giveCard(new Card(1,1));
+        x.getPlayer().giveCard(new Card(1,2));
+        x.getPlayer().giveCard(new Card(4,1));
+        x.getPlayer().giveCard(new Card(4,2));
+        x.getPlayer().giveCard(new Card(8,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.weightCards();
     }
 }
 
@@ -94,18 +124,18 @@ public class GoFishAI {
  */
 class Pair{
     int index;
-    Card card;
-    public Pair(int i, Card c){
+    int val;
+    public Pair(int i, int v){
         index = i;
-        card = c;
+        val = v;
     }
 
     public int getIndex(){
         return index;
     }
 
-    public Card getCard(){
-        return card;
+    public int getVal(){
+        return val;
     }
 }
 

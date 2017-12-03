@@ -50,14 +50,18 @@ public class GoFish{
         message = "Starting game ...";
         AI = new ArrayList<>();
 
+        //Add AI to the game.
+        for (int i = 0; i < 4-numPlayers; i++){
+            AI.add(new GoFishAI(5));
+        }
+
         //Add players to the game.
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
         }
-
-        //Add AI to the game.
-        for (int i = 0; i < 4-numPlayers; i++){
-            AI.add(new GoFishAI(5));
+        //Add the AI players into the game.
+        for (GoFishAI b : AI){
+            players.add(b.getPlayer());
         }
 
         resetGame();
@@ -130,7 +134,6 @@ public class GoFish{
                 message = "Player " + (turn+1) + " Go Fish!\n";
                 Card fish = gameDeck.removeTop();
                 players.get(turn).giveCard(fish);
-                //message += "Player " + (turn + 1);
                 if (fish.getValue() == requestVal) {
                     index = turn;
                     message = "You got the card you wanted! The turn continues.";
@@ -146,14 +149,25 @@ public class GoFish{
                 }
 
             }
+
         }
 
-        printAll();
+        // printAll();
+        setMem(turn, requestVal);
         turn = index;
-
         players.forEach(Player::completeCount);
 
         return true;
+    }
+
+
+
+
+
+    public void setMem(int playerIndex, int requestVal){
+        for (GoFishAI bot : AI){
+            bot.addMemory(playerIndex, requestVal);
+        }
     }
 
     /**
