@@ -35,7 +35,7 @@ public class GoFishController extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        game = new GoFish(4);
+        game = new GoFish(2);
         resetChoiceBox();
         showing = false;
         userCardsLabel.setLayoutX(cardImage1.getLayoutX());
@@ -255,7 +255,7 @@ public class GoFishController extends Application implements Initializable {
         game.takeTurn(playerIndex, value);
         setMessageText(game.getMessage());
         setTurnText(game.getTurnMessage());
-        System.out.println(game.getMessage());
-        System.out.println(game.getCardsString(currentPlayer));
+        //System.out.println(game.getMessage());
+        //System.out.println(game.getCardsString(currentPlayer));
     }
 }

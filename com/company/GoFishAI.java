@@ -15,18 +15,41 @@ public class GoFishAI {
     Player bot = new Player();
     //Level of difficulty the AI will be.
     int level = 0;
+    //Index for where the AI sits on the player turn list.
+    int index = 0;
 
-    public GoFishAI(int l){
-        level = l;
+    public GoFishAI(int lev, int ind){
+        level = lev;
+        index = ind;
         memory = new ArrayList<>();
+        System.out.println("Bot created with index: " + index);
     }
 
+    public int getIndex(){
+        return index;
+    }
+
+    public void removeMemory(int playerIndex, int cardVal){
+        for (Pair p : memory){
+            if (p.getIndex() == playerIndex && p.getVal() == cardVal){
+                memory.remove(p);
+                System.out.println("Memory removed from :" + index);
+            }
+        }
+    }
 
     public void addMemory(int playerIndex, int cardVal){
+        if (playerIndex == index){
+            return;
+        }
+
         if (memory.size() > level){
             memory.remove(0);
+            System.out.println("Memory lost.");
         }
         memory.add(new Pair(playerIndex, cardVal));
+        System.out.println("Memory added to: " + index + " -- Player: " + playerIndex
+                + " Card: " + cardVal);
     }
 
     public Player getPlayer(){
@@ -80,23 +103,13 @@ public class GoFishAI {
             }
         }
 
-        System.out.print(finalVals);
+        System.out.println(finalVals);
         return finalVals;
     }
 
 
-    public void takeTurn(ArrayList<Player> players){
-        ArrayList<Integer> weightedCards = weightCards();
-        for (int val : weightedCards){
-            for (Pair slot : memory){
-                if (val == slot.getVal()){
-                    //take this card and return
-                    Card tempCard = new Card (val, -1);
-                    players.get(slot.getIndex()).takeCard(tempCard);
-                    return;
-                }
-            }
-        }
+    public ArrayList<Pair> getMemory(){
+        return memory;
     }
 
     /**
@@ -104,7 +117,7 @@ public class GoFishAI {
      * @param args
      */
     public static void main(String[] args){
-        GoFishAI x = new GoFishAI(5);
+        GoFishAI x = new GoFishAI(5, 2);
         x.getPlayer().giveCard(new Card(1,1));
         x.getPlayer().giveCard(new Card(1,2));
         x.getPlayer().giveCard(new Card(4,1));
