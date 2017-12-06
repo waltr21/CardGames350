@@ -44,7 +44,7 @@ public class MainGUI extends Application {
         }
     }
 
-    
+
     public void handleFiftyTwoPickupAction() {
         FiftyTwoPickupController newFiftyTwoPickup = new FiftyTwoPickupController();
         try {
