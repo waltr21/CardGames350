@@ -38,7 +38,6 @@ public class GoFish{
         //Cap the number of players
         if (numPlayers > 4)
             numPlayers = 4;
-
         else if (numPlayers < 1)
             numPlayers = 1;
 
@@ -46,7 +45,6 @@ public class GoFish{
 
         //Set initial card amount.
         numCards = 5;
-
 
         turn = 0;
         cons = new Scanner(System.in);
@@ -73,9 +71,6 @@ public class GoFish{
         }
 
         resetGame();
-        //startGame();
-        printAll();
-
     }
 
     /**
@@ -169,7 +164,6 @@ public class GoFish{
         turn = index;
         players.forEach(Player::completeCount);
 
-        //printAll();
 
         if (turn > numPlayers - 1){
             return false;
@@ -177,12 +171,15 @@ public class GoFish{
         return true;
     }
 
+    /**
+     * Takes the entire turn for the bot. Checks their memory for their ideal cards,
+     * or draws a random card from a player if they can't find a card in memory.
+     * @return true if it is stil the bots turn. False if it is a player turn.
+     */
     public boolean takeBotTurn(){
-
-
         GoFishAI currBot = getCurrentAI();
         System.out.println("Taking bot turn: " + currBot.getIndex());
-        Card transfer = null;
+        Card transfer;
 
         ArrayList<Integer> weightedCards = currBot.weightCards();
         boolean done = false;
@@ -214,22 +211,17 @@ public class GoFish{
         int randomIndex = 0;
         if (!done){
             Random r = new Random();
+
+            //Only take cards from the real players (makes the game harder for them)
             randomIndex = r.nextInt(numPlayers);
 
-            //Makes sure the bot cant pick from itself.
-//            while (randomIndex == currBot.getIndex()){
-//                randomIndex = r.nextInt(4);
-//            }
-
+            //Create a temporary card from the most demanded weight of the bot.
             Card tempCard = new Card(weightedCards.get(0), -1);
-            System.out.println("No cards of bot have been found in memory. Trying player: "
-                    + randomIndex + "Card: " + tempCard.getValue());
 
             while (checkValid((players.get(randomIndex)), tempCard)) {
                 transfer = players.get(randomIndex).takeCardFish(tempCard);
                 players.get(turn).giveCard(transfer);
                 done = true;
-                System.out.println("Bot taking: " + transfer.getValue());
                 message = "Bot has taken a " + transfer.getValue() + " From player " + (randomIndex+1) + "!";
             }
             if (done)
@@ -241,10 +233,8 @@ public class GoFish{
         if (!done){
             message = "Bot requests a " + weightedCards.get(0) + " from player: " + (randomIndex+1);
             Card fish = gameDeck.removeTop();
-            System.out.println("Go fish for the bot. Got: " + fish.getValue());
             players.get(turn).giveCard(fish);
             if (fish.getValue() == weightedCards.get(0)){
-                System.out.println("Bot fished the right card... Continues...");
                 message += "\nBot fished the right card... His turn continues.";
             }
             else{
@@ -253,7 +243,6 @@ public class GoFish{
             }
         }
 
-        //printAll();
         //If the turn passes to another bot repeat the same process.
         if (turn > numPlayers - 1){
             return false;
@@ -261,6 +250,9 @@ public class GoFish{
         return true;
     }
 
+    /**
+     * @return the current AI who is up for a turn.
+     */
     private GoFishAI getCurrentAI(){
         for (GoFishAI bot : AI){
             if (bot.getIndex() == turn)
@@ -270,6 +262,11 @@ public class GoFish{
         return null;
     }
 
+    /**
+     * Updates the memory of all of the bots in the game.
+     * @param playerIndex The player who requested a card.
+     * @param requestVal The value of the card the player requested.
+     */
     private void setMem(int playerIndex, int requestVal){
         for (GoFishAI bot : AI){
             bot.addMemory(playerIndex, requestVal);

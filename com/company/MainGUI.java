@@ -23,14 +23,11 @@ public class MainGUI extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainGUI.fxml"));
 
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 900, 700);
 
         stage.setTitle("Main");
         stage.setScene(scene);
         stage.show();
-
-
-        //goFishButton.setText("test");
     }
 
     /**
@@ -47,6 +44,7 @@ public class MainGUI extends Application {
         }
     }
 
+    
     public void handleFiftyTwoPickupAction() {
         FiftyTwoPickupController newFiftyTwoPickup = new FiftyTwoPickupController();
         try {

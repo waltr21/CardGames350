@@ -3,7 +3,6 @@ package com.company;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javax.swing.*;
-import javax.xml.ws.handler.Handler;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -150,7 +144,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 1 is clicked.
      */
     @FXML public void onCardClicked1(){
-        System.out.println("Card 1 clicked!");
         playerIndex = 1;
         setChoiceBoxPos(cardImage1.getLayoutX(), cardImage1.getLayoutY());
         valueChoice.setVisible(true);
@@ -160,7 +153,6 @@ public class GoFishController extends Application implements Initializable {
      * handles when card 2 is clicked.
      */
     @FXML public void onCardClicked2(){
-        System.out.println("Card 2 clicked!");
         playerIndex = 2;
         setChoiceBoxPos(cardImage2.getLayoutX(), cardImage2.getLayoutY());
         valueChoice.setVisible(true);
@@ -170,7 +162,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 3 is clicked.
      */
     @FXML public void onCardClicked3(){
-        System.out.println("Card 3 clicked!");
         playerIndex = 3;
         setChoiceBoxPos(cardImage3.getLayoutX(), cardImage3.getLayoutY());
         valueChoice.setVisible(true);
@@ -180,7 +171,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 4 is clicked.
      */
     @FXML public void onCardClicked4(){
-        System.out.println("Card 4 clicked!");
         playerIndex = 4;
         setChoiceBoxPos(cardImage4.getLayoutX(), cardImage4.getLayoutY());
         valueChoice.setVisible(true);
@@ -270,26 +260,25 @@ public class GoFishController extends Application implements Initializable {
         }
 
         while (!playerTurn){
-            //setTurnText(game.getTurnMessage());
+            //Temp String to store the bot turn string.
             String temp = game.getTurnMessage();
+
+            //Delay for updating the bot thinking text
             Timeline timer = new Timeline(
                     new KeyFrame(Duration.seconds(4), event -> setBotThink(temp))
             );
             timer.play();
+
             playerTurn = game.takeBotTurn();
+
+            //Delay for updating the bot turn text.
             Timeline timer1 = new Timeline(
                     new KeyFrame(Duration.seconds(6), event -> setBotText())
             );
             timer1.play();
 
-//            setTurnText(game.getTurnMessage());
-//            setMessageText(game.getMessage());
         }
-        //setTurnText(game.getTurnMessage());
 
-
-        //System.out.println(game.getMessage());
-        //System.out.println(game.getCardsString(currentPlayer));
     }
 
     public void setNumPlayers(int n){
