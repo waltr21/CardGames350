@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
  */
 public class MainGUI extends Application {
     @FXML
-    public Button goFishButton;
+    public ImageView GoFishImage, pickupImage, warImage, rummyImage;
 
     public static void main(String[] args) {
         launch(args);
@@ -44,6 +46,13 @@ public class MainGUI extends Application {
         }
     }
 
+    public void fishMouseEnter(){
+        GoFishImage.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    public void fishMouseExit(){
+        GoFishImage.setBlendMode(BlendMode.SRC_OVER);
+    }
 
     public void handleFiftyTwoPickupAction() {
         FiftyTwoPickupController newFiftyTwoPickup = new FiftyTwoPickupController();
@@ -53,6 +62,14 @@ public class MainGUI extends Application {
         catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void pickupMouseEnter(){
+        pickupImage.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    public void pickupMouseExit(){
+        pickupImage.setBlendMode(BlendMode.SRC_OVER);
     }
 
     public void handleWarAction() {
@@ -65,6 +82,19 @@ public class MainGUI extends Application {
         }
     }
 
+    public void warMouseEnter(){
+        warImage.setBlendMode(BlendMode.LIGHTEN);
+    }
 
+    public void warMouseExit(){
+        warImage.setBlendMode(BlendMode.SRC_OVER);
+    }
 
+    public void rummyMouseEnter(){
+        rummyImage.setBlendMode(BlendMode.LIGHTEN);
+    }
+
+    public void rummyMouseExit(){
+        rummyImage.setBlendMode(BlendMode.SRC_OVER);
+    }
 }

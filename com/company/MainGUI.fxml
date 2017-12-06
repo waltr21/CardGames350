@@ -7,22 +7,22 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="900.0" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #1BA13E;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.MainGUI">
    <children>
-      <ImageView fx:id="GoFishImage" fitHeight="177.0" fitWidth="274.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#handleGoFishAction" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <ImageView fx:id="GoFishImage" fitHeight="177.0" fitWidth="274.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#handleGoFishAction" onMouseEntered="#fishMouseEnter" onMouseExited="#fishMouseExit" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
          <image>
             <Image url="@../../Images/GoFish.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pickupImage" fitHeight="177.0" fitWidth="274.0" layoutX="640.0" layoutY="14.0" onMouseClicked="#handleFiftyTwoPickupAction" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <ImageView fx:id="pickupImage" fitHeight="177.0" fitWidth="274.0" layoutX="640.0" layoutY="14.0" onMouseClicked="#handleFiftyTwoPickupAction" onMouseEntered="#pickupMouseEnter" onMouseExited="#pickupMouseExit" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <image>
             <Image url="@../../Images/52pick.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="177.0" fitWidth="274.0" layoutX="14.0" layoutY="509.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+      <ImageView fx:id="rummyImage" fitHeight="177.0" fitWidth="274.0" layoutX="14.0" layoutY="509.0" onMouseEntered="#rummyMouseEnter" onMouseExited="#rummyMouseExit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
          <image>
             <Image url="@../../Images/Rummy.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="warImage" fitHeight="177.0" fitWidth="274.0" layoutX="640.0" layoutY="509.0" onMouseClicked="#handleWarAction" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <ImageView fx:id="warImage" fitHeight="177.0" fitWidth="274.0" layoutX="640.0" layoutY="509.0" onMouseClicked="#handleWarAction" onMouseEntered="#warMouseEnter" onMouseExited="#warMouseExit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <image>
             <Image url="@../../Images/War.png" />
          </image>
