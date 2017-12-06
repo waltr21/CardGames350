@@ -35,14 +35,12 @@ public class PopUpController extends Application {
      */
     public void onButtonAction() {
         GoFishController newGame = new GoFishController();
+        numPlayers = (int) playerSlider.getValue();
+        newGame.setNumPlayers(numPlayers);
         try {
             newGame.start(new Stage());
         } catch (Exception e) {
             System.out.println("From PopUp: \n" + e);
         }
-    }
-
-    public int getNumPlayers() {
-        return numPlayers;
     }
 }

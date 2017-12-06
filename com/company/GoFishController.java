@@ -1,6 +1,9 @@
 package com.company;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,12 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import javax.swing.*;
+import javax.xml.ws.handler.Handler;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,9 +32,10 @@ import java.util.ResourceBundle;
  * sort of action.
  */
 public class GoFishController extends Application implements Initializable {
-    private int playerIndex;
+    private int playerIndex, numPlayers;
     private boolean showing;
     private GoFish game;
+
     @FXML public Label messageText, turnText, userCardsLabel;
     @FXML public Button showButton, moveButton;
     @FXML public ChoiceBox valueChoice;
@@ -250,12 +260,50 @@ public class GoFishController extends Application implements Initializable {
      * @param playerIndex player to choose a card from.
      * @param value value of the card to take.
      */
-    @FXML void playTurn(int playerIndex, int value){
-        Player currentPlayer = game.getPlayer();
-        game.takeTurn(playerIndex, value);
+    @FXML public void playTurn(int playerIndex, int value){
+        boolean playerTurn;
+        playerTurn = game.takeTurn(playerIndex, value);
+
         setMessageText(game.getMessage());
-        setTurnText(game.getTurnMessage());
+        if (playerTurn){
+            setTurnText(game.getTurnMessage());
+        }
+
+        while (!playerTurn){
+            //setTurnText(game.getTurnMessage());
+            String temp = game.getTurnMessage();
+            Timeline timer = new Timeline(
+                    new KeyFrame(Duration.seconds(4), event -> setBotThink(temp))
+            );
+            timer.play();
+            playerTurn = game.takeBotTurn();
+            Timeline timer1 = new Timeline(
+                    new KeyFrame(Duration.seconds(6), event -> setBotText())
+            );
+            timer1.play();
+
+//            setTurnText(game.getTurnMessage());
+//            setMessageText(game.getMessage());
+        }
+        //setTurnText(game.getTurnMessage());
+
+
         //System.out.println(game.getMessage());
         //System.out.println(game.getCardsString(currentPlayer));
+    }
+
+    public void setNumPlayers(int n){
+        numPlayers = n;
+        System.out.println("NUM PLAYERS SET: " + numPlayers);
+    }
+
+    public void setBotText(){
+        setTurnText(game.getTurnMessage());
+        setMessageText(game.getMessage());
+    }
+
+    public void setBotThink(String s){
+        setTurnText(s);
+        setMessageText("Bot thinking ");
     }
 }
