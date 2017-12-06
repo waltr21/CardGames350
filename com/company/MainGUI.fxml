@@ -20,7 +20,7 @@
   </rowConstraints>
    <children>
       <Button fx:id="goFishButton" mnemonicParsing="false" onAction="#handleGoFishAction" prefHeight="195.0" prefWidth="348.0" text="Go Fish" GridPane.columnIndex="1" />
-      <Button mnemonicParsing="false" prefHeight="203.0" prefWidth="374.0" text="Rummy" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" onAction="#handleRummyAction" prefHeight="203.0" prefWidth="374.0" text="Rummy" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button mnemonicParsing="false" onAction="#handleFiftyTwoPickupAction" prefHeight="206.0" prefWidth="344.0" text="52 Pickup" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button mnemonicParsing="false" onAction="#handleWarAction" prefHeight="135.0" prefWidth="184.0" text="War" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>

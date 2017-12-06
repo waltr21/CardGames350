@@ -39,6 +39,8 @@ public class Rummy {
     /** Flag to check is game is still in progress **/
     private boolean gameOver = false;
 
+    private String message;
+
     /** Array to hold scores **/
     private int scores[];
 
@@ -51,7 +53,7 @@ public class Rummy {
 
         if(numPlayers > 4){
 
-            System.out.println("THe game only allows for up to 4 players. Defaulting to 4.");
+            System.out.println("The game only allows for up to 4 players. Defaulting to 4.");
             numPlayers = 4;
 
         }
@@ -96,14 +98,15 @@ public class Rummy {
         scores = new int[numPlayers];
         //Starts the discard pile with the top card of the deck.
         discard.add(deck.removeTop());
-        startGame();
+        message = "Game initialized.";
+        //startGame();
 
     }
 
     /**************************************************************************
      * Initializes the game and loops until a player has run out of cards.
      *************************************************************************/
-    private void startGame(){
+   /* private void startGame(){
 
         //Loops until the round is over, which is when a player
         //depletes their hands.
@@ -113,8 +116,7 @@ public class Rummy {
             //players.
             if(turn >= numPlayers)
                 turn = 0;
-            System.out.println("Player "+(turn+1)+(", your move."));
-
+            System.out.println(getTurnMessage());
             players.get(turn).printCards();
             takeTurn(players.get(turn));
             turn++;
@@ -128,7 +130,7 @@ public class Rummy {
             }
 
         }
-        System.out.println("Game over!");
+        message = "Game over!";
         int winner = tallyScore();
         System.out.println("The final scores are: ");
         for (int i = 0; i < scores.length; i++){
@@ -138,7 +140,7 @@ public class Rummy {
         }
         System.out.println("Player "+winner+", you have won the game!");
 
-    }
+    }*/
 
     /**************************************************************************
      * Method to give players their initial hands at the start of the round.
@@ -162,27 +164,18 @@ public class Rummy {
      *
      * @param player The player with the current turn.
      *************************************************************************/
-    public void takeTurn(Player player){
+    public void takeTurn(Player player, String c, int pile){
 
         System.out.println("The current discard pile: ");
         printDiscard();
-        System.out.println("Draw card from deck or remove from discard pile?((p)ile/(d)eck)");
-        String c = in.nextLine();
+       // System.out.println("Draw card from deck or remove from discard pile?((p)ile/(d)eck)");
+       // String c = in.nextLine();
         while(true){
 
             if (c.equals("p")) {
 
-                System.out.println("How many cards would you like?");
-                int amount = Integer.parseInt(in.nextLine());
-                while(amount > discard.size() || amount == 0){
-
-                    if(amount > discard.size())
-                        System.out.println("This exceeds the current amount in the discard pile. Enter a valid amount.");
-                    else
-                        System.out.println("You must take at least one card. Enter a valid amount.");
-                    amount = Integer.parseInt(in.nextLine());
-
-                }
+                //System.out.println("How many cards would you like?");
+                int amount = pile;
                 for(int i = 0; i < amount; i++)
                     player.giveCard(discard.remove(discard.size() - 1));
                 break;
@@ -190,6 +183,7 @@ public class Rummy {
             }
             else if(c.equals("d")) {
 
+                message = "Drew card from the top of the deck.";
                 player.giveCard(deck.removeTop());
                 break;
 
@@ -200,7 +194,7 @@ public class Rummy {
         }
         player.sortCards();
         player.printCards();
-        while(true){
+       /* while(true){
 
             String option;
             System.out.println("Would you like to play a meld (Y/N)? If none available, type N:  ");
@@ -330,7 +324,7 @@ public class Rummy {
 
             }
 
-        }
+        }*/
 
     }
 
@@ -534,6 +528,35 @@ public class Rummy {
         return scores;
     }
 
+    public String toString(Player p){
+
+        ArrayList<Card> temp;
+        String cardList = "";
+        temp = p.getCards();
+        for (Card aTemp : temp) {
+            cardList += aTemp.toString() + "\n";
+        }
+        return cardList;
+
+    }
+
+    public Player getCurrentPlayer(){
+
+        return players.get(turn);
+
+    }
+
+    public String getTurnMessage(){
+
+        return "Player "+(turn+1)+", it's your turn.";
+
+    }
+
+    public String getMessage(){
+
+        return message;
+
+    }
 
     public static void main(String[] args){Rummy rummy = new Rummy(2);}
 

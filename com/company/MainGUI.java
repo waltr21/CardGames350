@@ -57,6 +57,16 @@ public class MainGUI extends Application {
         }
     }
 
+    public void handleRummyAction() {
+        RummyController rummy = new RummyController();
+        try {
+            rummy.start(new Stage());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void handleWarAction() {
         WarController newWar = new WarController();
         try {
