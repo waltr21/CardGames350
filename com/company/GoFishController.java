@@ -26,7 +26,8 @@ import java.util.ResourceBundle;
  * sort of action.
  */
 public class GoFishController extends Application implements Initializable {
-    private int playerIndex, numPlayers;
+    private int playerIndex;
+    public static int numPlayers;
     private boolean showing;
     private GoFish game;
 
@@ -39,17 +40,19 @@ public class GoFishController extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        game = new GoFish(2);
-        resetChoiceBox();
         showing = false;
+        resetChoiceBox();
         userCardsLabel.setLayoutX(cardImage1.getLayoutX());
         userCardsLabel.setLayoutY(cardImage1.getLayoutY());
         showImage.setLayoutX(cardImage1.getLayoutX());
         showImage.setLayoutY(cardImage1.getLayoutY());
-        setTurnText(game.getTurnMessage());
-        setMessageText(game.getMessage());
+        setTurnText("Player 1 it is your turn!");
+        setMessageText("");
     }
 
+    public GoFishController(){
+        game = new GoFish(numPlayers);
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -279,11 +282,6 @@ public class GoFishController extends Application implements Initializable {
 
         }
 
-    }
-
-    public void setNumPlayers(int n){
-        numPlayers = n;
-        System.out.println("NUM PLAYERS SET: " + numPlayers);
     }
 
     public void setBotText(){

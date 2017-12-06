@@ -36,7 +36,8 @@ public class PopUpController extends Application {
     public void onButtonAction() {
         GoFishController newGame = new GoFishController();
         numPlayers = (int) playerSlider.getValue();
-        newGame.setNumPlayers(numPlayers);
+        newGame.numPlayers = numPlayers;
+        //newGame.setNumPlayers(numPlayers);
         try {
             newGame.start(new Stage());
         } catch (Exception e) {

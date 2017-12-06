@@ -22,7 +22,6 @@ public class GoFishAI {
         level = lev;
         index = ind;
         memory = new ArrayList<>();
-        System.out.println("Bot created with index: " + index);
     }
 
     public int getIndex(){

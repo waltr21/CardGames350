@@ -13,15 +13,15 @@ import java.util.Scanner;
  */
 public class GoFish{
     //Deck for the game
-    private final Deck gameDeck;
+    private Deck gameDeck;
     //Players for the game
-    private final ArrayList<Player> players;
+    private ArrayList<Player> players;
     //Number of cards for each player.
-    private final int numCards;
+    private int numCards;
     //Turn index for the players.
     private int turn;
     //Scanner for testing in terminal game.
-    private final Scanner cons;
+    private Scanner cons;
     //message to update the game.
     private String message;
     //ArrayList for the possible AI in the game.
@@ -35,7 +35,14 @@ public class GoFish{
      *                   (anything above 4 will be set back to 4).
      */
     public GoFish(int numPlayers){
-        //Cap the number of players
+        resetGame(numPlayers);
+    }
+
+    /**
+     * Resets the game, and sets the appropriate values to the
+     * starting values in the constructor.
+     */
+    public void resetGame(int numPlayers){
         if (numPlayers > 4)
             numPlayers = 4;
         else if (numPlayers < 1)
@@ -47,7 +54,7 @@ public class GoFish{
         numCards = 5;
 
         turn = 0;
-        cons = new Scanner(System.in);
+//        cons = new Scanner(System.in);
         gameDeck = new Deck(false);
         players = new ArrayList<>();
         message = "Starting game ...";
@@ -70,7 +77,22 @@ public class GoFish{
             players.add(b.getPlayer());
         }
 
-        resetGame();
+        gameDeck.createDeck();
+        gameDeck.shuffle();
+        turn = 0;
+
+        for (Player p : players){
+            p.resetCards();
+        }
+
+        //Give each player X cards and remove them from the deck.
+        for (int i = 1; i <= numCards; i++){
+            for (Player p : players) {
+                p.giveCard(gameDeck.removeTop());
+            }
+        }
+
+        //printAll();
     }
 
     /**
@@ -291,28 +313,7 @@ public class GoFish{
         return false;
     }
 
-    /**
-     * Resets the game, and sets the appropriate values to the
-     * starting values in the constructor.
-     */
-    public void resetGame(){
-        gameDeck.createDeck();
-        gameDeck.shuffle();
-        turn = 0;
 
-        for (Player p : players){
-            p.resetCards();
-        }
-
-        //Give each player X cards and remove them from the deck.
-        for (int i = 1; i <= numCards; i++){
-            for (Player p : players) {
-                p.giveCard(gameDeck.removeTop());
-            }
-        }
-
-        //printAll();
-    }
 
     /**
      * Return true if the cards are the same value.
@@ -353,6 +354,8 @@ public class GoFish{
     public String getMessage(){
         return message;
     }
+
+
 
     /**
      * Gets the current player object that is up to play
