@@ -159,187 +159,70 @@ public class Rummy {
 
     }
 
-    /**************************************************************************
-     * Method to handle the user input for the player's turn
-     *
-     * @param player The player with the current turn.
-     *************************************************************************/
-    public void takeTurn(Player player, String c, int pile){
+    public void takeDiscard(int amount){
 
-        System.out.println("The current discard pile: ");
-        printDiscard();
-       // System.out.println("Draw card from deck or remove from discard pile?((p)ile/(d)eck)");
-       // String c = in.nextLine();
-        while(true){
+        for(int i = 0; i < amount; i++) {
 
-            if (c.equals("p")) {
-
-                //System.out.println("How many cards would you like?");
-                int amount = pile;
-                for(int i = 0; i < amount; i++)
-                    player.giveCard(discard.remove(discard.size() - 1));
-                break;
-
-            }
-            else if(c.equals("d")) {
-
-                message = "Drew card from the top of the deck.";
-                player.giveCard(deck.removeTop());
-                break;
-
-            }
-            System.out.println("Invalid choice. Please type p for pile or d for deck:  ");
-            c = in.nextLine();
+            players.get(turn).giveCard(discard.remove(discard.size()-1));
 
         }
-        player.sortCards();
-        player.printCards();
-       /* while(true){
+    }
 
-            String option;
-            System.out.println("Would you like to play a meld (Y/N)? If none available, type N:  ");
-            in.nextLine();
-            option = in.nextLine();
-            if(option.equals("Y") && option.equals("y") && option.equals("N") && option.equals("n")){
-                while(true){
+    public void removeTopDeck(){
 
-                    System.out.println("Invalid option. Y/N");
-
-                    option = in.nextLine();
-                    if(option.equals("Y") || option.equals("y") || option.equals("N") || option.equals("n")){
-
-                        break;
-
-                    }
-
-                }
-            }
-            if(option.equals("N") || option.equals("n")) {
-
-                System.out.println("Enter the value of discard:  ");
-                int discard_val = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                System.out.println("Enter the suit of discard:   ");
-                int discard_suit = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                Card tempCard = new Card(discard_val,discard_suit);
-                discard.add(tempCard);
-                player.takeCard(tempCard);
-                break;
-
-            }
-            Card tempMeld[] = new Card[player.cardCount()];
-            int i = 0;
-            int meldAmount = 1;
-            while(true){
-
-                System.out.println("Enter card value");
-                int val = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                System.out.println("Enter card suit");
-                int suit = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                Card temp = new Card(val,suit);
-                while(!(player.checkCard(temp))){
-
-                    temp = new Card(val, suit);
-                    if(!(player.checkCard(temp))){
-
-                        System.out.println("You don't have this card! Enter a valid value of a card:  ");
-                        val = Integer.parseInt(in.nextLine());
-                        in.nextLine();
-                        System.out.println("Enter a valid suit:  ");
-                        suit = Integer.parseInt(in.nextLine());
-                        in.nextLine();
-
-                    }
-
-                }
-                tempMeld[i] = temp;
-                i++;
-                meldAmount++;
-                if(meldAmount == player.getCards().size()){
-                    gameOver = true;
-                    break;
-                }
-                System.out.println("Add more cards? Y/N");
-                option = in.nextLine();
-                if(option.equals("N") || option.equals("n")){
-                    break;
-                }
-
-            }
-            if(checkValidMeld(tempMeld)){
-
-                for(int j = 0; j < tempMeld.length; j++){
-
-                    melds.get(turn).add(tempMeld[j]);
-
-                }
-                int k = 0;
-                while(tempMeld[k] != null){
-
-                    Card tempCard = tempMeld[k];
-                    player.takeCard(tempCard);
-                    k++;
-
-                }
-                if(player.getCards().size() == 1){
-                    discard.add(player.getCards().get(0));
-                    player.getCards().remove(0);
-                    return;
-                }
-                System.out.println("Enter the value of discard:  ");
-                int discard_val = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                System.out.println("Enter the suit of discard:   ");
-                int discard_suit = Integer.parseInt(in.nextLine());
-                in.nextLine();
-                Card tempCard = new Card(discard_val,discard_suit);
-                while(!(player.checkCard(tempCard))){
-
-                    tempCard = new Card(discard_val, discard_suit);
-                    if(!(player.checkCard(tempCard))){
-
-                        System.out.println("You don't have this card! Enter a valid value of a card:  ");
-                        discard_val = Integer.parseInt(in.nextLine());
-                        in.nextLine();
-                        System.out.println("Enter a valid suit:  ");
-                        discard_suit = Integer.parseInt(in.nextLine());
-                        in.nextLine();
-
-                    }
-
-                }
-                discard.add(tempCard);
-                player.takeCard(tempCard);
-                break;
-
-            }
-            else{
-
-                System.out.println("Invalid move. End turn? Y/N");
-                if(in.nextLine().equals("Y") || in.nextLine().equals("y"))
-                    break;
-
-            }
-
-        }*/
+        players.get(turn).giveCard(deck.removeTop());
 
     }
 
-    private boolean checkValidMeld(Card meld[]){
+    public void discard(Card c){
 
-        if(meld.length < 3)
+        players.get(turn).takeCard(c);
+        discard.add(c);
+        turn++;
+        message = "Player "+(turn+1)+" discarded";
+        if(players.get(turn).getCards().size() == 0){
+            gameOver = true;
+            tallyScore();
+        }
+
+    }
+
+    public void playMeld(ArrayList<Card> meld){
+
+        if(checkValidMeld(meld)){
+
+            while(meld.size() != 0){
+
+                Card temp = meld.remove(meld.size()-1);
+                players.get(turn).getCards().remove(temp);
+                melds.get(turn).add(temp);
+
+            }
+            message = "Meld played!";
+            turn++;
+        }
+        else{
+            message = "Invalid meld.";
+        }
+        if(players.get(turn).getCards().size() == 0){
+            gameOver = true;
+            tallyScore();
+        }
+
+    }
+
+    private boolean checkValidMeld(ArrayList<Card> meld){
+
+        if(meld.size() < 3)
             return false;
         boolean valid = false;
         int i = 1;
-        while(meld[i] != null){
+        while(i < meld.size()){
 
-            if(meld[i].getValue() == (meld[i-1].getValue()+1) && meld[i].getSuit() == meld[i-1].getSuit()){
+            if(meld.get(i).getValue() == (meld.get(i-1).getValue()+1) && meld.get(i).getSuit() == meld.get(i-1).getSuit()){
                 valid = true;
             }
-            else if(meld[i].getValue() == meld[i-1].getValue()){
+            else if(meld.get(i).getValue() == meld.get(i-1).getValue()){
                 valid = true;
             }
             else
@@ -405,6 +288,7 @@ public class Rummy {
                 winner = i+1;
 
         }
+        message = "Winner: Player "+(winner+1)+"!";
         return winner+1;
 
     }
@@ -415,6 +299,12 @@ public class Rummy {
     private void printDiscard(){
 
         for(Card i : discard) System.out.println("Value: " + i.getValue() + " Suit: " + i.getSuit());
+        for(int i = 0; i < players.size(); i++){
+            if(players.get(i).getCards().size() == 0){
+                message = "Game over!";
+                gameOver = true;
+            }
+        }
 
     }
 
@@ -497,7 +387,7 @@ public class Rummy {
      * @return Int representing the current player's turn
      *************************************************************************/
     public int getTurn() {
-        return turn;
+        return turn+1;
     }
 
     /**************************************************************************
@@ -540,6 +430,16 @@ public class Rummy {
 
     }
 
+    public String toString(ArrayList<Card> hand){
+
+        String cardList = "";
+        for (Card aTemp : hand) {
+            cardList += aTemp.toString() + "\n";
+        }
+        return cardList;
+
+    }
+
     public Player getCurrentPlayer(){
 
         return players.get(turn);
@@ -549,6 +449,12 @@ public class Rummy {
     public String getTurnMessage(){
 
         return "Player "+(turn+1)+", it's your turn.";
+
+    }
+
+    public boolean getStatus(){
+
+        return gameOver;
 
     }
 

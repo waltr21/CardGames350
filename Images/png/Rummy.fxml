@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #1BA13E;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.GoFishController">
+   <children>
+      <ImageView fx:id="cardImage1" fitHeight="230.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#onCardClicked1" onMouseEntered="#onCardDrag1" onMouseExited="#onCardExit1" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../../../Images/CardBack.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cardImage2" fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="14.0" onMouseClicked="#onCardClicked2" onMouseEntered="#onCardDrag2" onMouseExited="#onCardExit2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../../../../../Images/CardBack.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cardImage3" fitHeight="230.0" fitWidth="200.0" layoutX="14.0" layoutY="282.0" onMouseClicked="#onCardClicked3" onMouseEntered="#onCardDrag3" onMouseExited="#onCardExit3" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+         <image>
+            <Image url="@../../../../../Images/CardBack.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="cardImage4" fitHeight="230.0" fitWidth="200.0" layoutX="511.0" layoutY="282.0" onMouseClicked="#onCardClicked4" onMouseEntered="#onCardDrag4" onMouseExited="#onCardExit4" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+         <image>
+            <Image url="@../../../../../Images/CardBack.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="showButton" layoutX="33.0" layoutY="272.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="122.0" text="Show Cards">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="messageText" alignment="CENTER" layoutX="228.0" layoutY="99.0" prefHeight="96.0" prefWidth="546.0" text="Message" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="turnText" alignment="CENTER" contentDisplay="CENTER" layoutX="250.0" layoutY="33.0" prefHeight="30.0" prefWidth="501.0" text="Label" textAlignment="JUSTIFY" textFill="#fff9f9">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="valueChoice" layoutX="460.0" layoutY="187.0" prefHeight="27.0" prefWidth="71.0" />
+      <Button fx:id="moveButton" layoutX="33.0" layoutY="423.0" mnemonicParsing="false" onAction="#onMoveClicked" text="Make Move!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Rectangle fx:id="showImage" arcHeight="5.0" arcWidth="12.0" fill="WHITE" height="230.0" layoutX="12.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="170.0" />
+      <Label fx:id="userCardsLabel" layoutX="406.0" layoutY="487.0" text="Label" visible="false" wrapText="true" />
+      <ImageView fx:id="cardImage11" fitHeight="230.0" fitWidth="200.0" layoutX="303.0" layoutY="294.0" onMouseClicked="#onCardClicked1" onMouseEntered="#onCardDrag1" onMouseExited="#onCardExit1" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Images/CardBack.jpg" />
+         </image>
+      </ImageView>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f7f8f8" height="230.0" layoutX="531.0" layoutY="294.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Button fx:id="showButton1" layoutX="326.0" layoutY="546.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="122.0" text="Draw">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="showButton2" layoutX="33.0" layoutY="350.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="202.0" text="Show Player Melds">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="showButton3" layoutX="535.0" layoutY="546.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="53.0" prefWidth="194.0" text="Pick up discard">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
