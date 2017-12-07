@@ -1,5 +1,7 @@
 package com.company;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,8 +27,10 @@ import java.util.ResourceBundle;
  */
 public class GoFishController extends Application implements Initializable {
     private int playerIndex;
+    public static int numPlayers;
     private boolean showing;
     private GoFish game;
+
     @FXML public Label messageText, turnText, userCardsLabel;
     @FXML public Button showButton, moveButton;
     @FXML public ChoiceBox valueChoice;
@@ -35,17 +40,19 @@ public class GoFishController extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        game = new GoFish(4);
-        resetChoiceBox();
         showing = false;
+        resetChoiceBox();
         userCardsLabel.setLayoutX(cardImage1.getLayoutX());
         userCardsLabel.setLayoutY(cardImage1.getLayoutY());
         showImage.setLayoutX(cardImage1.getLayoutX());
         showImage.setLayoutY(cardImage1.getLayoutY());
-        setTurnText(game.getTurnMessage());
-        setMessageText(game.getMessage());
+        setTurnText("Player 1 it is your turn!");
+        setMessageText("");
     }
 
+    public GoFishController(){
+        game = new GoFish(numPlayers);
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -140,7 +147,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 1 is clicked.
      */
     @FXML public void onCardClicked1(){
-        System.out.println("Card 1 clicked!");
         playerIndex = 1;
         setChoiceBoxPos(cardImage1.getLayoutX(), cardImage1.getLayoutY());
         valueChoice.setVisible(true);
@@ -150,7 +156,6 @@ public class GoFishController extends Application implements Initializable {
      * handles when card 2 is clicked.
      */
     @FXML public void onCardClicked2(){
-        System.out.println("Card 2 clicked!");
         playerIndex = 2;
         setChoiceBoxPos(cardImage2.getLayoutX(), cardImage2.getLayoutY());
         valueChoice.setVisible(true);
@@ -160,7 +165,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 3 is clicked.
      */
     @FXML public void onCardClicked3(){
-        System.out.println("Card 3 clicked!");
         playerIndex = 3;
         setChoiceBoxPos(cardImage3.getLayoutX(), cardImage3.getLayoutY());
         valueChoice.setVisible(true);
@@ -170,7 +174,6 @@ public class GoFishController extends Application implements Initializable {
      * Handles when card 4 is clicked.
      */
     @FXML public void onCardClicked4(){
-        System.out.println("Card 4 clicked!");
         playerIndex = 4;
         setChoiceBoxPos(cardImage4.getLayoutX(), cardImage4.getLayoutY());
         valueChoice.setVisible(true);
@@ -250,12 +253,44 @@ public class GoFishController extends Application implements Initializable {
      * @param playerIndex player to choose a card from.
      * @param value value of the card to take.
      */
-    @FXML void playTurn(int playerIndex, int value){
-        Player currentPlayer = game.getPlayer();
-        game.takeTurn(playerIndex, value);
+    @FXML public void playTurn(int playerIndex, int value){
+        boolean playerTurn;
+        playerTurn = game.takeTurn(playerIndex, value);
+
         setMessageText(game.getMessage());
+        if (playerTurn){
+            setTurnText(game.getTurnMessage());
+        }
+
+        while (!playerTurn){
+            //Temp String to store the bot turn string.
+            String temp = game.getTurnMessage();
+
+            //Delay for updating the bot thinking text
+            Timeline timer = new Timeline(
+                    new KeyFrame(Duration.seconds(4), event -> setBotThink(temp))
+            );
+            timer.play();
+
+            playerTurn = game.takeBotTurn();
+
+            //Delay for updating the bot turn text.
+            Timeline timer1 = new Timeline(
+                    new KeyFrame(Duration.seconds(6), event -> setBotText())
+            );
+            timer1.play();
+
+        }
+
+    }
+
+    public void setBotText(){
         setTurnText(game.getTurnMessage());
-        System.out.println(game.getMessage());
-        System.out.println(game.getCardsString(currentPlayer));
+        setMessageText(game.getMessage());
+    }
+
+    public void setBotThink(String s){
+        setTurnText(s);
+        setMessageText("Bot thinking ");
     }
 }

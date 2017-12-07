@@ -15,17 +15,40 @@ public class GoFishAI {
     Player bot = new Player();
     //Level of difficulty the AI will be.
     int level = 0;
+    //Index for where the AI sits on the player turn list.
+    int index = 0;
 
-    public GoFishAI(int l){
-        level = l;
+    public GoFishAI(int lev, int ind){
+        level = lev;
+        index = ind;
         memory = new ArrayList<>();
     }
 
-    public void addMemory(int index, Card c){
+    public int getIndex(){
+        return index;
+    }
+
+    public void removeMemory(int playerIndex, int cardVal){
+        for (Pair p : memory){
+            if (p.getIndex() == playerIndex && p.getVal() == cardVal){
+                memory.remove(p);
+                System.out.println("Memory removed from :" + index);
+            }
+        }
+    }
+
+    public void addMemory(int playerIndex, int cardVal){
+        if (playerIndex == index){
+            return;
+        }
+
         if (memory.size() > level){
             memory.remove(0);
+            System.out.println("Memory lost.");
         }
-        memory.add(new Pair(index, c));
+        memory.add(new Pair(playerIndex, cardVal));
+        System.out.println("Memory added to: " + index + " -- Player: " + playerIndex
+                + " Card: " + cardVal);
     }
 
     public Player getPlayer(){
@@ -35,7 +58,7 @@ public class GoFishAI {
     /**
      * Go through the players cards and weight them by how close they are
      * to getting four of a kind.
-     * @return
+     * @return ArrayList of weighted cards.
      */
     public ArrayList<Integer> weightCards(){
         ArrayList<Card> tempCards = bot.getCards();
@@ -68,23 +91,42 @@ public class GoFishAI {
                     max = (int) pair.getValue();
                     cardVal = (int) pair.getKey();
                 }
-                it.remove();
             }
-            finalVals.add(cardVal);
+            if (max < 4)
+                finalVals.add(cardVal);
+
             map.remove(cardVal);
 
             if (map.size() < 1){
-                empty = false;
+                empty = true;
             }
         }
-        
+
+        System.out.println(finalVals);
         return finalVals;
     }
 
-    public void takeTurn(){
-        for (Pair p : memory){
-            break;
-        }
+
+    public ArrayList<Pair> getMemory(){
+        return memory;
+    }
+
+    /**
+     * Testing for the thing (temp)
+     * @param args
+     */
+    public static void main(String[] args){
+        GoFishAI x = new GoFishAI(5, 2);
+        x.getPlayer().giveCard(new Card(1,1));
+        x.getPlayer().giveCard(new Card(1,2));
+        x.getPlayer().giveCard(new Card(4,1));
+        x.getPlayer().giveCard(new Card(4,2));
+        x.getPlayer().giveCard(new Card(8,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.getPlayer().giveCard(new Card(9,1));
+        x.weightCards();
     }
 }
 
@@ -94,18 +136,18 @@ public class GoFishAI {
  */
 class Pair{
     int index;
-    Card card;
-    public Pair(int i, Card c){
+    int val;
+    public Pair(int i, int v){
         index = i;
-        card = c;
+        val = v;
     }
 
     public int getIndex(){
         return index;
     }
 
-    public Card getCard(){
-        return card;
+    public int getVal(){
+        return val;
     }
 }
 
