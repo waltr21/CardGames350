@@ -19,6 +19,7 @@ package com.company;
         import javafx.scene.image.ImageView;
         import javafx.scene.layout.Pane;
         import javafx.scene.layout.VBox;
+        import javafx.scene.text.Font;
         import javafx.stage.Stage;
         import javafx.scene.input.*;
 
@@ -46,9 +47,8 @@ public class FiftyTwoPickupController extends Application implements Initializab
     }
 
     public void tossCards () {
-        deck = new Deck(false);
-        while (deck.getSize() > 0) {
-            Card c = deck.removeTop();
+        while (game.deck.getSize() > 0) {
+            Card c = game.deck.removeTop();
             placeCard(c);
         }
     }
@@ -94,16 +94,19 @@ public class FiftyTwoPickupController extends Application implements Initializab
 
         Label youWin = new Label();
         youWin.setText("You win!");
-        youWin.setLayoutX(500);
+        youWin.setLayoutX(460);
         youWin.setLayoutY(500);
+        youWin.setFont(new Font(30.0));
         stack.getChildren().add(youWin);
 
         Button newGame = new Button();
         newGame.setText("New game");
+        newGame.setLayoutX(500);
+        newGame.setLayoutY(400);
         newGame.setOnMouseReleased(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                pickedUp = 0;
                 stack.getChildren().removeAll(stack.getChildren());
+                game.reset();
                 tossCards();
             }
         });

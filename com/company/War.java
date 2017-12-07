@@ -9,6 +9,14 @@ public class War {
     Deck deck;
     ArrayList<Card> table;
 
+    public int getPlayer1CardCount() {
+        return player1.cardCount();
+    }
+
+    public int getPlayer2CardCount() {
+        return player2.cardCount();
+    }
+
     public void setup () {
         player1 = new Player();
         player2 = new Player();
