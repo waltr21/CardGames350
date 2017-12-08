@@ -1,12 +1,10 @@
 package com.company;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
-//import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -27,15 +26,11 @@ public class RummyController extends Application implements Initializable {
     private boolean showing,draw,discard;
     private Rummy rummy;
     @FXML
-    public Label messageText, turnText, userCardsLabel, discardLabel;
+    private Label messageText, turnText, userCardsLabel, discardLabel;
     @FXML
-    public Button showCards, showMelds1, showMelds2, showMelds3, showMelds4, playMeld;
+    private Rectangle showImage, showImage2;
     @FXML
-    public ChoiceBox valueChoice;
-    @FXML
-    public Rectangle showImage, showImage2;
-    @FXML
-    public ImageView cardImage1, cardImage2,
+    private ImageView cardImage1, cardImage2,
             cardImage3, cardImage4, cardDeck, cardDiscard;
 
     @Override
@@ -165,12 +160,10 @@ public class RummyController extends Application implements Initializable {
             userCardsLabel.setLayoutX(cardImage1.getLayoutX());
             userCardsLabel.setLayoutY(cardImage1.getLayoutY());
             if (!showing) {
-               // showMelds1.setText("Hide melds");
                 showImage.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-              //  showMelds1.setText("Show melds");
                 showImage.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
@@ -265,11 +258,13 @@ public class RummyController extends Application implements Initializable {
 
     @FXML public void onCardExitDiscard(){cardDeck.setBlendMode(BlendMode.SRC_OVER);}
 
-    @FXML public void setMessageText(String m){
+    @FXML
+    private void setMessageText(String m){
         messageText.setText(m);
     }
 
-    @FXML public void setTurnText(String m){
+    @FXML
+    private void setTurnText(String m){
         turnText.setText(m);
     }
 
@@ -278,7 +273,7 @@ public class RummyController extends Application implements Initializable {
         if(rummy.getStatus()){
             return;
         }
-        if(draw == false && discard == false){
+        if(!draw && !discard){
 
             return;
 
@@ -315,10 +310,17 @@ public class RummyController extends Application implements Initializable {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
-        String s = suit.getText().toLowerCase().substring(0,1);
-        String v = value.getText().toLowerCase();
+        String s,v;
+        try {
+            s = suit.getText().toLowerCase().substring(0, 1);
+            v = value.getText().toLowerCase();
+        } catch (Exception e){
+
+            s = "";
+            v = "";
+        }
         int s_int = 0;
-        int v_int = 0;
+        int v_int;
         switch (s){
 
             case "s":
@@ -333,6 +335,8 @@ public class RummyController extends Application implements Initializable {
             case "d":
                 s_int = 3;
                 break;
+            default:
+                return;
 
         }
         switch(v.substring(0,1)){
@@ -350,7 +354,15 @@ public class RummyController extends Application implements Initializable {
                 v_int = 1;
                 break;
             default:
-                v_int = Integer.parseInt(v);
+                try {
+                    v_int = Integer.parseInt(v);
+                }
+                catch (Exception e){
+                    return;
+                }
+                if(v_int > 10 || v_int < 2){
+                    return;
+                }
                 break;
 
         }
@@ -451,10 +463,17 @@ public class RummyController extends Application implements Initializable {
         ArrayList<Card> meld = new ArrayList<>();
         while(true) {
             Optional<Pair<String, String>> result = dialog.showAndWait();
-            String s = suit.getText().toLowerCase().substring(0,1);
-            String v = value.getText().toLowerCase();
+            String s,v;
+            try {
+                s = suit.getText().toLowerCase().substring(0, 1);
+                v = value.getText().toLowerCase();
+            }
+            catch (Exception e){
+                s = "";
+                v = "";
+            }
             int s_int = 0;
-            int v_int = 0;
+            int v_int;
             switch (s){
 
                 case "s":
@@ -469,6 +488,8 @@ public class RummyController extends Application implements Initializable {
                 case "d":
                     s_int = 3;
                     break;
+                default:
+                    return;
 
             }
             switch(v.substring(0,1)){
@@ -486,7 +507,15 @@ public class RummyController extends Application implements Initializable {
                     v_int = 1;
                     break;
                 default:
-                    v_int = Integer.parseInt(v);
+                    try{
+                        v_int = Integer.parseInt(v);
+                    }
+                    catch (Exception e){
+                        return;
+                    }
+                    if(v_int > 10 || v_int < 2){
+                        return;
+                    }
                     break;
 
             }
@@ -496,13 +525,13 @@ public class RummyController extends Application implements Initializable {
             alert.setHeaderText("");
             alert.setContentText("Add another card to meld?");
             Optional<ButtonType> choice = alert.showAndWait();
-            if (choice.get() == ButtonType.CANCEL) {
+            if (choice.isPresent() && (choice.get() == ButtonType.CANCEL)) {
                 break;
             }
         }
         rummy.playMeld(meld);
         setMessageText(rummy.getMessage());
-        if(rummy.getMessage() == "Meld played!"){
+        if(Objects.equals(rummy.getMessage(), "Meld played!")){
             playerIndex++;
             setTurnText(rummy.getTurnMessage());
         }
