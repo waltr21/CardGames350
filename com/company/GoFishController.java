@@ -279,7 +279,7 @@ public class GoFishController extends Application implements Initializable {
             Timeline timer1 = new Timeline(
                     new KeyFrame(Duration.seconds(6), event -> setBotText())
             );
-            timer1.play();Las
+            timer1.play();
             if (game.gameWon()){
                 setNulls();
             }
