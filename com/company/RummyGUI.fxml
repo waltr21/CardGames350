@@ -56,11 +56,6 @@
             <Image url="@../../Images/png/red_back.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="cardDiscard" fitHeight="230.0" fitWidth="100.0" layoutX="426.0" layoutY="256.0" onMouseClicked="#discardClicked" onMouseEntered="#onCardDragDiscard" onMouseExited="#onCardExitDiscard" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="224.0">
-         <image>
-            <Image url="@../../Images/png/blank.png" />
-         </image>
-      </ImageView>
       <Button fx:id="showButton11" layoutX="53.0" layoutY="292.0" mnemonicParsing="false" onAction="#playMeld" prefHeight="20.0" prefWidth="122.0" text="Play Meld" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="325.0">
          <font>
             <Font size="16.0" />
@@ -86,7 +81,6 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Rectangle fx:id="showImage2" arcHeight="5.0" arcWidth="12.0" fill="WHITE" height="150.0" layoutX="22.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="100.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="224.0" />
       <Label fx:id="discardLabel" layoutX="416.0" layoutY="497.0" text="Label" visible="false" wrapText="true" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="230.0" />
       <Label layoutX="58.0" layoutY="175.0" text="Player 1" textFill="#fcfafa" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="170.0">
          <font>
@@ -108,5 +102,7 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <ScrollPane fx:id="discardPane" layoutX="375.0" layoutY="239.0" maxHeight="150.0" maxWidth="100.0" minHeight="150.0" minWidth="100.0" onMouseClicked="#discardClicked" prefHeight="150.0" prefWidth="100.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="224.0" />
+      <ScrollPane fx:id="handPane" layoutX="14.0" layoutY="15.0" maxHeight="150.0" maxWidth="100.0" minHeight="150.0" minWidth="100.0" prefHeight="150.0" prefWidth="100.0" />
    </children>
 </AnchorPane>
