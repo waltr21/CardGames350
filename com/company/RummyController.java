@@ -111,47 +111,6 @@ public class RummyController extends Application implements Initializable {
 
     }
 
-    @FXML void onPlayMeldAction(){
-
-        if(rummy.getStatus()){
-            return;
-        }
-        // Create the custom dialog.
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Play Meld");
-
-        // Set the button types.
-        ButtonType loginButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField suit = new TextField();
-        suit.setPromptText("Player");
-        TextField value = new TextField();
-        value.setPromptText("Suit");
-        gridPane.add(new Label("Suit"),0,0);
-        gridPane.add(suit, 1, 0);
-        gridPane.add(new Label("Value:"), 2, 0);
-        gridPane.add(value, 3, 0);
-
-        dialog.getDialogPane().setContent(gridPane);
-
-        // Convert the result to a username-password-pair when the login button is clicked.
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                return new Pair<>(suit.getText(), value.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-    }
-
     @FXML public void onMeld1Action() {
         if (rummy.getMelds().get(0).size() > 0){
             userCardsLabel.setText(rummy.toString((rummy.getMelds().get(0))));
@@ -180,12 +139,10 @@ public class RummyController extends Application implements Initializable {
             userCardsLabel.setLayoutX(cardImage2.getLayoutX());
             userCardsLabel.setLayoutY(cardImage2.getLayoutY());
             if (!showing) {
-              //  showMelds2.setText("Hide melds");
                 showImage.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-             //   showMelds2.setText("Show melds");
                 showImage.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
@@ -203,12 +160,10 @@ public class RummyController extends Application implements Initializable {
             userCardsLabel.setLayoutX(cardImage3.getLayoutX());
             userCardsLabel.setLayoutY(cardImage3.getLayoutY());
             if (!showing) {
-             //   showMelds3.setText("Hide melds");
                 showImage.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-             //   showMelds3.setText("Show melds");
                 showImage.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
@@ -227,12 +182,10 @@ public class RummyController extends Application implements Initializable {
             userCardsLabel.setLayoutX(cardImage4.getLayoutX());
             userCardsLabel.setLayoutY(cardImage4.getLayoutY());
             if (!showing) {
-             //   showMelds4.setText("Hide melds");
                 showImage.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-              //  showMelds4.setText("Show melds");
                 showImage.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
@@ -309,7 +262,7 @@ public class RummyController extends Application implements Initializable {
             return null;
         });
 
-        Optional<Pair<String, String>> result = dialog.showAndWait();
+        dialog.showAndWait();
         String s,v;
         try {
             s = suit.getText().toLowerCase().substring(0, 1);
@@ -319,7 +272,7 @@ public class RummyController extends Application implements Initializable {
             s = "";
             v = "";
         }
-        int s_int = 0;
+        int s_int;
         int v_int;
         switch (s){
 
@@ -393,13 +346,8 @@ public class RummyController extends Application implements Initializable {
 
     @FXML void deckClicked(){
 
-        if(rummy.getStatus()){
+        if(rummy.getStatus() || draw){
             return;
-        }
-        if(draw){
-
-            return;
-
         }
         rummy.removeTopDeck();
         userCardsLabel.setText(rummy.toString((rummy.getCurrentPlayer().getCards())));
@@ -409,13 +357,8 @@ public class RummyController extends Application implements Initializable {
 
     @FXML void discardClicked(){
 
-        if(rummy.getStatus()){
+        if(rummy.getStatus() || draw){
             return;
-        }
-        if(discard){
-
-            return;
-
         }
         TextInputDialog cardAmount = new TextInputDialog();
         cardAmount.setTitle("Discard Pile");
@@ -432,6 +375,7 @@ public class RummyController extends Application implements Initializable {
 
     }
 
+    //Source: https://stackoverflow.com/questions/31556373/javafx-dialog-with-2-input-fields
     @FXML void playMeld(){
 
         if(rummy.getStatus()){
@@ -462,7 +406,7 @@ public class RummyController extends Application implements Initializable {
         dialog.getDialogPane().setContent(gridPane);
         ArrayList<Card> meld = new ArrayList<>();
         while(true) {
-            Optional<Pair<String, String>> result = dialog.showAndWait();
+            dialog.showAndWait();
             String s,v;
             try {
                 s = suit.getText().toLowerCase().substring(0, 1);
@@ -472,7 +416,7 @@ public class RummyController extends Application implements Initializable {
                 s = "";
                 v = "";
             }
-            int s_int = 0;
+            int s_int;
             int v_int;
             switch (s){
 
