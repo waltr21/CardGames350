@@ -39,8 +39,12 @@ public class WarController extends Application implements Initializable {
     public void setImage(ImageView image, String path) {
 
         //System.out.println(path);
+        String newpath = (getClass().getResource("/Images/png/").toExternalForm());
 
-        image.setImage(new Image("file:"+path));
+        //System.out.println((newpath + path));
+
+
+        image.setImage(new Image(newpath + path));
     }
 
     @Override

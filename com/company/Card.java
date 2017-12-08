@@ -115,7 +115,8 @@ public class Card{
         }
         //String mainPath = System.getProperty("user.dir");
         //return mainPath + "\\Images\\png\\" + valuePath + suitPath + ".png";
-        return "..\\..\\Images\\png\\" + valuePath + suitPath + ".png";
+       // return "CardGames350\\com\\company\\Images\\png\\" + valuePath + suitPath + ".png";
+        return valuePath + suitPath + ".png";
     }
 
 

@@ -64,7 +64,7 @@ public class FiftyTwoPickupController extends Application implements Initializab
 
 
     public void placeCard(Card c) {
-        ImageView cardImage = new ImageView("file:" + c.imagePath());
+        ImageView cardImage = new ImageView(getClass().getResource("/Images/png/").toExternalForm() + c.imagePath());
 
         Random r = new Random();
         int x = r.nextInt(900);
