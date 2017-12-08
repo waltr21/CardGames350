@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /******************************************************************************
  * The underlying code for a game of Rummy. Currently uses text based input
@@ -12,29 +11,26 @@ import java.util.Scanner;
 public class Rummy {
 
     /** The game deck **/
-    private Deck deck;
+    private final Deck deck;
 
     /** ArrayList of players **/
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     /** ArrayList to hold discarded cards **/
-    private ArrayList<Card> discard;
+    private final ArrayList<Card> discard;
 
     /** Two dimensional array to hold player melds. First index is the player
      *  Second is the cards in the meld **/
-    private ArrayList<ArrayList<Card>> melds;
+    private final ArrayList<ArrayList<Card>> melds;
 
     /** The number of cards to be dealt **/
-    private int numCards;
+    private final int numCards;
 
     /** The number of players in the game **/
-    private int numPlayers;
+    private final int numPlayers;
 
     /** Integer for player's turn (0 - player 1, 1 - player 2, and so on) **/
     private int turn;
-
-    /** Scanner for player input **/
-    private Scanner in;
 
     /** Flag to check is game is still in progress **/
     private boolean gameOver = false;
@@ -42,7 +38,7 @@ public class Rummy {
     private String message;
 
     /** Array to hold scores **/
-    private int scores[];
+    private final int[] scores;
 
     /**************************************************************************
      * Constructor for the game.
@@ -63,10 +59,6 @@ public class Rummy {
             numPlayers = 2;
 
         }
-        //Cap the number of players
-        if (numPlayers > 4) {
-            this.numPlayers = 4;
-        }
         //Sets the amount of cards to be dealt to the players. If two, each get
         //ten. If three or four, each get seven cards.
         if(numPlayers == 2) {
@@ -86,12 +78,11 @@ public class Rummy {
         //Adds all players the the game.
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
-            melds.add(new ArrayList<Card>());
+            melds.add(new ArrayList<>());
         }
         deck.shuffle();
         //Deals the players their hands.
         giveHand();
-        in = new Scanner(System.in);
         //Player 1's turn.
         turn = 0;
         //Holds the score at the end of the round.
@@ -104,48 +95,9 @@ public class Rummy {
     }
 
     /**************************************************************************
-     * Initializes the game and loops until a player has run out of cards.
-     *************************************************************************/
-   /* private void startGame(){
-
-        //Loops until the round is over, which is when a player
-        //depletes their hands.
-        while(gameOver == false){
-
-            //Returns to player 1 if turn exceeds the amount of
-            //players.
-            if(turn >= numPlayers)
-                turn = 0;
-            System.out.println(getTurnMessage());
-            players.get(turn).printCards();
-            takeTurn(players.get(turn));
-            turn++;
-            //Checks for any empty hands.
-            for(int i = 0; i < numPlayers; i++){
-
-                if(players.get(i).cardCount() == 0) {
-                    gameOver = true;
-                    break;
-                }
-            }
-
-        }
-        message = "Game over!";
-        int winner = tallyScore();
-        System.out.println("The final scores are: ");
-        for (int i = 0; i < scores.length; i++){
-
-            System.out.println("Player "+(i+1)+": "+scores[i]);
-
-        }
-        System.out.println("Player "+winner+", you have won the game!");
-
-    }*/
-
-    /**************************************************************************
      * Method to give players their initial hands at the start of the round.
      *************************************************************************/
-    public void giveHand(){
+    private void giveHand(){
 
         for(int i = 0; i < numCards; i++){
 
@@ -222,11 +174,9 @@ public class Rummy {
             if(meld.get(i).getValue() == (meld.get(i-1).getValue()+1) && meld.get(i).getSuit() == meld.get(i-1).getSuit()){
                 valid = true;
             }
-            else if(meld.get(i).getValue() == meld.get(i-1).getValue()){
-                valid = true;
+            else {
+                valid = meld.get(i).getValue() == meld.get(i - 1).getValue();
             }
-            else
-                valid = false;
             i++;
 
         }
@@ -238,10 +188,8 @@ public class Rummy {
      * Method to calculate the final scores for each player at the end of the
      * round. Adds up each card in the meld and deducts each remaining card
      * from the player's hand.
-     *
-     * @return  Int representing the winning player.
      *************************************************************************/
-    private int tallyScore(){
+    private void tallyScore(){
 
         int winner = 0;
         for(int i = 0; i < numPlayers; i++){
@@ -289,50 +237,7 @@ public class Rummy {
 
         }
         message = "Winner: Player "+(winner+1)+"!";
-        return winner+1;
 
-    }
-
-    /**************************************************************************
-     * Helper method to print all cards in the discard pile.
-     *************************************************************************/
-    private void printDiscard(){
-
-        for(Card i : discard) System.out.println("Value: " + i.getValue() + " Suit: " + i.getSuit());
-        for(int i = 0; i < players.size(); i++){
-            if(players.get(i).getCards().size() == 0){
-                message = "Game over!";
-                gameOver = true;
-            }
-        }
-
-    }
-
-    /***************************************************************************
-     * Getter for the game's deck.
-     *
-     * @return The game's current deck
-     **************************************************************************/
-    public Deck getDeck() {
-        return deck;
-    }
-
-    /**************************************************************************
-     * Setter for the game's deck
-     *
-     * @param deck The deck to replace the game's current deck
-     *************************************************************************/
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
-    /*************************************************************************
-     * Getter for the game's players
-     *
-     * @return ArrayList holding each player object.
-     ************************************************************************/
-    public ArrayList<Player> getPlayers() {
-        return players;
     }
 
     /*************************************************************************
@@ -373,40 +278,12 @@ public class Rummy {
     }
 
     /**************************************************************************
-     * Setter for the number of players in the game
-     *
-     * @param numPlayers The number of players to play the game.
-     *************************************************************************/
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
-    }
-
-    /**************************************************************************
      * Getter for the current turn.
      *
      * @return Int representing the current player's turn
      *************************************************************************/
     public int getTurn() {
         return turn+1;
-    }
-
-    /**************************************************************************
-     * Checks if game is over
-     *
-     * @return True if game is over, false if game is ongoing.
-     *************************************************************************/
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    /**************************************************************************
-     * Sets the state of the game
-     *
-     * @param gameOver Sets to true if game is over or false if game is to
-     * start.
-     *************************************************************************/
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 
     /**************************************************************************
@@ -421,22 +298,22 @@ public class Rummy {
     public String toString(Player p){
 
         ArrayList<Card> temp;
-        String cardList = "";
+        StringBuilder cardList = new StringBuilder();
         temp = p.getCards();
         for (Card aTemp : temp) {
-            cardList += aTemp.toString() + "\n";
+            cardList.append(aTemp.toString()).append("\n");
         }
-        return cardList;
+        return cardList.toString();
 
     }
 
     public String toString(ArrayList<Card> hand){
 
-        String cardList = "";
+        StringBuilder cardList = new StringBuilder();
         for (Card aTemp : hand) {
-            cardList += aTemp.toString() + "\n";
+            cardList.append(aTemp.toString()).append("\n");
         }
-        return cardList;
+        return cardList.toString();
 
     }
 
@@ -463,7 +340,5 @@ public class Rummy {
         return message;
 
     }
-
-    public static void main(String[] args){Rummy rummy = new Rummy(2);}
 
 }

@@ -8,16 +8,32 @@ public class RummyTest {
 
 
   @Test
-  public void testValidPlayerAmount(){
+  public void testNumPlayers(){
 
-        Rummy game1 = new Rummy(-2);
-        assertTrue(game1.getNumPlayers() == 2);
-        assertTrue(game1.getNumCards() == 10);
-        Rummy game2 = new Rummy(5);
-        assertTrue(game2.getNumPlayers() == 4);
-        assertTrue(game2.getNumCards() == 7);
+        Rummy rummy = new Rummy(4);
+        assertTrue(rummy.getNumPlayers() == 4);
+        rummy = new Rummy(2);
+        assertTrue(rummy.getNumPlayers() == 2);
+        rummy = new Rummy(-2);
+        assertTrue(rummy.getNumPlayers() == 2);
+        rummy = new Rummy(5);
+        assertTrue(rummy.getNumPlayers() == 4);
+
 
   }
+
+    @Test
+    public void testCards(){
+
+        Rummy rummy = new Rummy(4);
+        assertTrue(rummy.getNumCards() == 7);
+        rummy = new Rummy(2);
+        assertTrue(rummy.getNumCards() == 10);
+
+
+    }
+
+
   @Ignore
   public void nullCheck(){
 

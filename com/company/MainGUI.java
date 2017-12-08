@@ -97,4 +97,15 @@ public class MainGUI extends Application {
     public void rummyMouseExit(){
         rummyImage.setBlendMode(BlendMode.SRC_OVER);
     }
+
+    public void handleRummyAction() {
+        RummyController rummy = new RummyController();
+        try {
+            rummy.start(new Stage());
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
 }
