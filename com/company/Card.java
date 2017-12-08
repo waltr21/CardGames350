@@ -109,8 +109,9 @@ public class Card{
                 valuePath = Integer.toString(value);
                 break;
         }
-        String mainPath = System.getProperty("user.dir");
-        return mainPath + "\\Images\\png\\" + valuePath + suitPath + ".png";
+        //String mainPath = System.getProperty("user.dir");
+        //return mainPath + "\\Images\\png\\" + valuePath + suitPath + ".png";
+        return "..\\..\\Images\\png\\" + valuePath + suitPath + ".png";
     }
 
 
