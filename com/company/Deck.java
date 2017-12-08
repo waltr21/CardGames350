@@ -85,5 +85,11 @@ public class Deck {
         return myCards.size();
     }
 
+    public void addCard(Card c){
+
+        myCards.add(c);
+
+    }
+
 
 }

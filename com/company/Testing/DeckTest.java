@@ -71,5 +71,14 @@ public class DeckTest{
         assertTrue(changed);
     }
 
+    @Test
+    public void testAdd(){
+
+        Deck d = new Deck(false);
+        d.addCard(new Card(6,1));
+        assertEquals(d.getSize(),53);
+
+    }
+
 
 }

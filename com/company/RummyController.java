@@ -310,8 +310,15 @@ public class RummyController extends Application implements Initializable {
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
-        String s = suit.getText().toLowerCase().substring(0,1);
-        String v = value.getText().toLowerCase();
+        String s,v;
+        try {
+            s = suit.getText().toLowerCase().substring(0, 1);
+            v = value.getText().toLowerCase();
+        } catch (Exception e){
+
+            s = "";
+            v = "";
+        }
         int s_int = 0;
         int v_int;
         switch (s){
@@ -328,6 +335,8 @@ public class RummyController extends Application implements Initializable {
             case "d":
                 s_int = 3;
                 break;
+            default:
+                return;
 
         }
         switch(v.substring(0,1)){
@@ -345,7 +354,15 @@ public class RummyController extends Application implements Initializable {
                 v_int = 1;
                 break;
             default:
-                v_int = Integer.parseInt(v);
+                try {
+                    v_int = Integer.parseInt(v);
+                }
+                catch (Exception e){
+                    return;
+                }
+                if(v_int > 10 || v_int < 2){
+                    return;
+                }
                 break;
 
         }
@@ -446,8 +463,15 @@ public class RummyController extends Application implements Initializable {
         ArrayList<Card> meld = new ArrayList<>();
         while(true) {
             Optional<Pair<String, String>> result = dialog.showAndWait();
-            String s = suit.getText().toLowerCase().substring(0,1);
-            String v = value.getText().toLowerCase();
+            String s,v;
+            try {
+                s = suit.getText().toLowerCase().substring(0, 1);
+                v = value.getText().toLowerCase();
+            }
+            catch (Exception e){
+                s = "";
+                v = "";
+            }
             int s_int = 0;
             int v_int;
             switch (s){
@@ -464,6 +488,8 @@ public class RummyController extends Application implements Initializable {
                 case "d":
                     s_int = 3;
                     break;
+                default:
+                    return;
 
             }
             switch(v.substring(0,1)){
@@ -481,7 +507,15 @@ public class RummyController extends Application implements Initializable {
                     v_int = 1;
                     break;
                 default:
-                    v_int = Integer.parseInt(v);
+                    try{
+                        v_int = Integer.parseInt(v);
+                    }
+                    catch (Exception e){
+                        return;
+                    }
+                    if(v_int > 10 || v_int < 2){
+                        return;
+                    }
                     break;
 
             }

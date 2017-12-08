@@ -90,7 +90,6 @@ public class Rummy {
         //Starts the discard pile with the top card of the deck.
         discard.add(deck.removeTop());
         message = "Game initialized.";
-        //startGame();
 
     }
 
@@ -113,6 +112,11 @@ public class Rummy {
 
     public void takeDiscard(int amount){
 
+        if(amount > discard.size()){
+            message = "Amount greater than what is currently in discard pile.";
+            return;
+        }
+
         for(int i = 0; i < amount; i++) {
 
             players.get(turn).giveCard(discard.remove(discard.size()-1));
@@ -123,20 +127,33 @@ public class Rummy {
     public void removeTopDeck(){
 
         players.get(turn).giveCard(deck.removeTop());
+        if(deck.getSize() == 0){
+            int size = discard.size();
+            for(int i = 0; i < size; i++){
+
+                deck.addCard(discard.remove(i));
+
+            }
+            deck.shuffle();
+        }
 
     }
 
     public void discard(Card c){
 
+        if(turn > 3){
+            turn = 0;
+        }
         players.get(turn).takeCard(c);
         discard.add(c);
         turn++;
         message = "Player "+(turn+1)+" discarded";
-        if(players.get(turn).getCards().size() == 0){
-            gameOver = true;
-            tallyScore();
+        for(int i = 0; i < numPlayers; i++) {
+            if (players.get(i).getCards().size() == 0) {
+                gameOver = true;
+                tallyScore();
+            }
         }
-
     }
 
     public void playMeld(ArrayList<Card> meld){
@@ -339,6 +356,14 @@ public class Rummy {
 
         return message;
 
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
 }
