@@ -72,9 +72,13 @@ public class Card{
         return String.format("%s of %s", values[value], suits[suit]);
     }
 
+    /**
+     * Finds the path to the appropriate image of the card.
+     * @return path of the image formatted in a string.
+     */
     public String imagePath() {
         String suitPath = "";
-        String valuePath = "";
+        String valuePath;
         switch (suit) {
             case 0:
                 suitPath = "S";

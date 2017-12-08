@@ -1,10 +1,6 @@
 package com.company;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Class for the Go Fish game. Holds all of the
@@ -20,8 +16,6 @@ public class GoFish{
     private int numCards;
     //Turn index for the players.
     private int turn;
-    //Scanner for testing in terminal game.
-    private Scanner cons;
     //message to update the game.
     private String message;
     //ArrayList for the possible AI in the game.
@@ -92,44 +86,10 @@ public class GoFish{
             }
         }
 
+
         //printAll();
     }
 
-    /**
-     * The start of the game. Continues to play until the deck is
-     * empty. (Not for GUI use!!!!)
-     */
-    private void startGame(){
-        while (gameDeck.getSize() > 0) {
-            System.out.println("Player " + (turn + 1) + " it is your turn!");
-
-            //System.out.print("Player to request a card from: ");
-            int indexS = Integer.parseInt(cons.nextLine());
-
-            //System.out.print("Value to request: ");
-            int valueS = Integer.parseInt(cons.nextLine());
-
-            //boolean tempValid = takeTurn(indexS, valueS);
-//            if (!tempValid){
-//                System.out.println("Not valid turn! Try again!");
-//            }
-
-            System.out.println("");
-        }
-
-        System.out.println("The game is complete!");
-        int high = -1;
-        int indexWin = -1;
-        //Get the winner with the most matches.
-        for (int i = 0; i < players.size(); i++){
-            if (players.get(i).getCompleteNum() > high) {
-                high = players.get(i).getCompleteNum();
-                indexWin = i;
-            }
-        }
-
-        System.out.println("Winner is: " + (indexWin + 1));
-    }
 
     /**
      * Takes a single turn for a player
@@ -200,7 +160,9 @@ public class GoFish{
      */
     public boolean takeBotTurn(){
         GoFishAI currBot = getCurrentAI();
-        System.out.println("Taking bot turn: " + currBot.getIndex());
+        if (currBot == null)
+            return false;
+        //System.out.println("Taking bot turn: " + currBot.getIndex());
         Card transfer;
 
         ArrayList<Integer> weightedCards = currBot.weightCards();
@@ -209,13 +171,13 @@ public class GoFish{
             if (!done) {
                 for (Pair slot : currBot.getMemory()) {
                     if (val == slot.getVal()) {
-                        System.out.println("Found card in memory...");
+                        //System.out.println("Found card in memory...");
                         Card tempCard = new Card(val, -1);
                         //Take all of the cards a user has
                         while (checkValid((players.get(slot.getIndex())), tempCard)) {
                             transfer = players.get(slot.getIndex()).takeCardFish(tempCard);
                             players.get(turn).giveCard(transfer);
-                            System.out.println("Bot has taken a " + transfer.getValue() + " from player: " + slot.getIndex());
+                            //System.out.println("Bot has taken a " + transfer.getValue() + " from player: " + slot.getIndex());
                             message = "Bot has taken " + transfer.getValue() + " from player " + (slot.getIndex()+1) + "!";
                         }
                         //Set the turn.
@@ -275,7 +237,7 @@ public class GoFish{
     /**
      * @return the current AI who is up for a turn.
      */
-    private GoFishAI getCurrentAI(){
+    public GoFishAI getCurrentAI(){
         for (GoFishAI bot : AI){
             if (bot.getIndex() == turn)
                 return bot;
@@ -313,8 +275,6 @@ public class GoFish{
         return false;
     }
 
-
-
     /**
      * Return true if the cards are the same value.
      * @param c A card to compare
@@ -326,20 +286,6 @@ public class GoFish{
         return c.getValue() == c1.getValue();
     }
 
-
-    /**
-     * Helper method to print the cards each user holds. (temporary)
-     */
-    private void printAll(){
-        int test = 1;
-        for (Player x : players){
-            x.sortCards();
-            System.out.println("Player " + test + ":");
-            x.printCards();
-            test++;
-            System.out.println("");
-        }
-    }
 
     /**
      * @return the size of the game deck.
@@ -416,9 +362,24 @@ public class GoFish{
         return turn;
     }
 
-    public static void main(String args[]){
-        GoFish g = new GoFish(2);
-        g.startGame();
+    public boolean gameWon(){
+        if (getGameDeckSize() < 1){
+            return true;
+        }
+        return false;
+    }
+
+    public int getWinner(){
+        int max = 0;
+        int ind = -1;
+        for (int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            if (max < p.getCompleteNum()) {
+                max = p.getCompleteNum();
+                ind = i;
+            }
+        }
+        return ind+1;
     }
 
 }

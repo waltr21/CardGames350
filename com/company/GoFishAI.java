@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * Created by RyanWalt on 11/27/17.
+ * Class to control the attributes in the AI.
  */
 public class GoFishAI {
     //Amount of cards the AI can remember.
@@ -18,37 +19,51 @@ public class GoFishAI {
     //Index for where the AI sits on the player turn list.
     int index = 0;
 
+    /**
+     * Contructor for the bot.
+     * @param lev Level of difficulty for the bot
+     * @param ind Position of the bot in the game.
+     */
     public GoFishAI(int lev, int ind){
         level = lev;
         index = ind;
         memory = new ArrayList<>();
     }
 
+    /**
+     * @return the index of the bot in the game.
+     */
     public int getIndex(){
         return index;
     }
 
+    /**
+     * Removes memory from the bot.
+     * @param playerIndex Player index of who wants the card
+     * @param cardVal Value of the card the player wants.
+     */
     public void removeMemory(int playerIndex, int cardVal){
         for (Pair p : memory){
             if (p.getIndex() == playerIndex && p.getVal() == cardVal){
                 memory.remove(p);
-                System.out.println("Memory removed from :" + index);
             }
         }
     }
 
+    /**
+     * Adds memory to the bot
+     * @param playerIndex Index of the player who wants the card
+     * @param cardVal Value of the card the player wants
+     */
     public void addMemory(int playerIndex, int cardVal){
         if (playerIndex == index){
             return;
         }
 
-        if (memory.size() > level){
-            memory.remove(0);
-            System.out.println("Memory lost.");
+        if (memory.size() >= level-1){
+            memory.remove(memory.get(0));
         }
         memory.add(new Pair(playerIndex, cardVal));
-        System.out.println("Memory added to: " + index + " -- Player: " + playerIndex
-                + " Card: " + cardVal);
     }
 
     public Player getPlayer(){
@@ -102,32 +117,17 @@ public class GoFishAI {
             }
         }
 
-        System.out.println(finalVals);
         return finalVals;
     }
 
 
+    /**
+     * @return The current memory of the bot.
+     */
     public ArrayList<Pair> getMemory(){
         return memory;
     }
 
-    /**
-     * Testing for the thing (temp)
-     * @param args
-     */
-    public static void main(String[] args){
-        GoFishAI x = new GoFishAI(5, 2);
-        x.getPlayer().giveCard(new Card(1,1));
-        x.getPlayer().giveCard(new Card(1,2));
-        x.getPlayer().giveCard(new Card(4,1));
-        x.getPlayer().giveCard(new Card(4,2));
-        x.getPlayer().giveCard(new Card(8,1));
-        x.getPlayer().giveCard(new Card(9,1));
-        x.getPlayer().giveCard(new Card(9,1));
-        x.getPlayer().giveCard(new Card(9,1));
-        x.getPlayer().giveCard(new Card(9,1));
-        x.weightCards();
-    }
 }
 
 /**
@@ -137,15 +137,27 @@ public class GoFishAI {
 class Pair{
     int index;
     int val;
+
+    /**
+     * Constructor for the pair class
+     * @param i index for the player.
+     * @param v Value for the card.
+     */
     public Pair(int i, int v){
         index = i;
         val = v;
     }
 
+    /**
+     * @return index of the player
+     */
     public int getIndex(){
         return index;
     }
 
+    /**
+     * @return Value of the card.
+     */
     public int getVal(){
         return val;
     }

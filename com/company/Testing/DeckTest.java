@@ -25,7 +25,6 @@ public class DeckTest{
 
         assertEquals(d.getSize(), 52);
         assertEquals(d1.getSize(), 54);
-
     }
 
     /**
@@ -52,7 +51,7 @@ public class DeckTest{
     public void testShuffle(){
         Deck d = new Deck(true);
         d.shuffle();
-        ArrayList<Card> temp = new ArrayList<>();
+        ArrayList<Card> temp;
         temp = d.getDeck();
 
         //Shuffle the deck and look through the values next to each other

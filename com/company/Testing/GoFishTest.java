@@ -1,6 +1,9 @@
 package com.company.Testing;
 import com.company.GoFish;
+import junit.framework.Assert;
 import org.junit.Test;
+
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -13,7 +16,7 @@ public class GoFishTest {
      */
     @Test
     public void testNewGameValues(){
-        GoFish game = new GoFish(4);
+        GoFish game = new GoFish(12);
 
         //Make sure we have the right amount of players and cards.
         assertEquals(game.getPlayers().size(), 4);
@@ -60,4 +63,37 @@ public class GoFishTest {
         //Check to make sure the player cards are set back to 5.
         assertEquals(game.getPlayers().get(1).getCards().size(), 5);
     }
+
+
+    /**
+     * Random tests for a whole bunch of getters
+     */
+    @Test
+    public void testGetters(){
+        GoFish game = new GoFish(2);
+        assertEquals(game.getGameDeckSize(), 32);
+        assertEquals(game.getPlayers().size(), 4);
+        assertEquals(game.getPlayer(), game.getPlayers().get(0));
+        assertEquals(game.getTurn(), 0);
+        game.takeTurn(1, 5);
+        assertEquals(game.getPlayer(), game.getPlayers().get(game.getTurn()));
+    }
+
+    /**
+     * Switches between turns between bot and player.
+     * Becuase a lot of this is random card values, we have to
+     * do a few to get more code coverage.
+     */
+    @Test
+    public void testInGameAI(){
+        GoFish game = new GoFish(1);
+        assertEquals(game.getCurrentAI(), null);
+        game.takeTurn(2, 3);
+        if (game.getTurn() >= 1)
+            assertNotNull(game.getCurrentAI());
+        game.takeBotTurn();
+        assertEquals(game.getCurrentAI(), null);
+        game.takeTurn(3, 6);
+    }
+
 }

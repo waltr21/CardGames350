@@ -246,6 +246,7 @@ public class GoFishController extends Application implements Initializable {
         valueChoice.setValue(null);
         valueChoice.setVisible(false);
         showImage.setVisible(false);
+        userCardsLabel.setVisible(false);
     }
 
     /**
@@ -278,17 +279,47 @@ public class GoFishController extends Application implements Initializable {
             Timeline timer1 = new Timeline(
                     new KeyFrame(Duration.seconds(6), event -> setBotText())
             );
-            timer1.play();
-
+            timer1.play();Las
+            if (game.gameWon()){
+                setNulls();
+            }
+        }
+        if (game.gameWon()){
+            setNulls();
         }
 
     }
 
+    /**
+     * Set all of the visuals to not be visible.
+     */
+    @FXML public void setNulls(){
+        setTurnText("Game over! Winner is: " + game.getWinner());
+        messageText.setVisible(false);
+        cardImage1.setVisible(false);
+        cardImage2.setVisible(false);
+        cardImage3.setVisible(false);
+        cardImage4.setVisible(false);
+        moveButton.setVisible(false);
+        showButton.setVisible(false);
+        messageText.setVisible(false);
+        valueChoice.setVisible(false);
+        userCardsLabel.setVisible(false);
+        showImage.setVisible(false);
+    }
+
+    /**
+     * Updates the bot result text
+     */
     public void setBotText(){
         setTurnText(game.getTurnMessage());
         setMessageText(game.getMessage());
     }
 
+    /**
+     * Updates the bot thinking text/animation
+     * @param s Turn string from the game.
+     */
     public void setBotThink(String s){
         setTurnText(s);
         setMessageText("Bot thinking ");
