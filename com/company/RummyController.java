@@ -2,8 +2,10 @@ package com.company;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,25 +29,25 @@ public class RummyController extends Application implements Initializable {
     @FXML
     private Label messageText, turnText, userCardsLabel, discardLabel;
     @FXML
-    private Rectangle showImage, showImage2;
+    private ScrollPane discardPane, handPane;
     @FXML
     private ImageView cardImage1, cardImage2,
-            cardImage3, cardImage4, cardDeck, cardDiscard;
+            cardImage3, cardImage4, cardDeck;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         rummy = new Rummy(4);
-        userCardsLabel.setLayoutX(cardImage1.getLayoutX());
-        userCardsLabel.setLayoutY(cardImage1.getLayoutY());
-        showImage.setLayoutX(cardImage1.getLayoutX());
-        showImage.setLayoutY(cardImage1.getLayoutY());
-        discardLabel.setLayoutX(cardDiscard.getLayoutX());
-        discardLabel.setLayoutY(cardDiscard.getLayoutY());
-        showImage2.setLayoutX(cardDiscard.getLayoutX());
-        showImage2.setLayoutY(cardDiscard.getLayoutY());
+        discardPane.setLayoutX(cardImage1.getLayoutX());
+        discardPane.setLayoutY(cardImage1.getLayoutY());
+        discardLabel.setLayoutX(discardPane.getLayoutX());
+        discardLabel.setLayoutY(discardPane.getLayoutY());
+        discardPane.setLayoutX(483);
+        discardPane.setLayoutY(224);
         discardLabel.setText(rummy.getDiscard().toString());
+        discardPane.setContent(discardLabel);
         discardLabel.setVisible(true);
+        handPane.setVisible(false);
         turnText.setText("Player "+ (rummy.getTurn())+", it's your turn.");
         messageText.setText(rummy.getMessage());
 
@@ -72,39 +73,33 @@ public class RummyController extends Application implements Initializable {
     @FXML public void onButtonAction(){
         userCardsLabel.setText(rummy.toString((rummy.getCurrentPlayer())));
         if (rummy.getTurn() == 1){
-            showImage.setLayoutX(cardImage1.getLayoutX());
-            showImage.setLayoutY(cardImage1.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage1.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage1.getLayoutY());
+            handPane.setTranslateX(cardImage1.getLayoutX()-15);
+            handPane.setTranslateY((cardImage1.getLayoutY()-15));
+            handPane.setContent(userCardsLabel);
         }
         else if (rummy.getTurn() == 2){
-            showImage.setLayoutX(cardImage2.getLayoutX());
-            showImage.setLayoutY(cardImage2.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage2.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage2.getLayoutY());
+            handPane.setTranslateX(cardImage2.getLayoutX()-15);
+            handPane.setTranslateY(cardImage2.getLayoutY()-15);
+            handPane.setContent(userCardsLabel);
         }
         else if (rummy.getTurn() == 3){
-            showImage.setLayoutX(cardImage3.getLayoutX());
-            showImage.setLayoutY(cardImage3.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage3.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage3.getLayoutY());
+            handPane.setTranslateX(cardImage3.getLayoutX()-15);
+            handPane.setTranslateY(cardImage3.getLayoutY()-15);
+            handPane.setContent(userCardsLabel);
         }
         else if (rummy.getTurn() == 4){
-            showImage.setLayoutX(cardImage4.getLayoutX());
-            showImage.setLayoutY(cardImage4.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage4.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage4.getLayoutY());
+            handPane.setTranslateX(cardImage4.getLayoutX()-15);
+            handPane.setTranslateY(cardImage4.getLayoutY()-15);
+            handPane.setContent(userCardsLabel);
         }
 
         if (!showing) {
-            //showCards.setText("Hide cards");
-            showImage.setVisible(true);
+            handPane.setVisible(true);
             userCardsLabel.setVisible(true);
             showing = true;
         }
         else{
-            //showCards.setText("Show cards");
-            showImage.setVisible(false);
+            handPane.setVisible(false);
             userCardsLabel.setVisible(false);
             showing = false;
         }
@@ -114,16 +109,15 @@ public class RummyController extends Application implements Initializable {
     @FXML public void onMeld1Action() {
         if (rummy.getMelds().get(0).size() > 0){
             userCardsLabel.setText(rummy.toString((rummy.getMelds().get(0))));
-            showImage.setLayoutX(cardImage1.getLayoutX());
-            showImage.setLayoutY(cardImage1.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage1.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage1.getLayoutY());
+            handPane.setContent(userCardsLabel);
+            handPane.setTranslateX(cardImage1.getLayoutX()-15);
+            handPane.setTranslateY(cardImage1.getLayoutY()-15);
             if (!showing) {
-                showImage.setVisible(true);
+                handPane.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-                showImage.setVisible(false);
+                handPane.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
             }
@@ -134,16 +128,15 @@ public class RummyController extends Application implements Initializable {
 
         if (rummy.getMelds().get(1).size() > 1){
             userCardsLabel.setText(rummy.toString((rummy.getMelds().get(1))));
-            showImage.setLayoutX(cardImage2.getLayoutX());
-            showImage.setLayoutY(cardImage2.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage2.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage2.getLayoutY());
+            handPane.setContent(userCardsLabel);
+            handPane.setTranslateX(cardImage2.getLayoutX()-15);
+            handPane.setTranslateY(cardImage2.getLayoutY()-15);
             if (!showing) {
-                showImage.setVisible(true);
+                handPane.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-                showImage.setVisible(false);
+                handPane.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
             }
@@ -155,16 +148,15 @@ public class RummyController extends Application implements Initializable {
 
         if (rummy.getMelds().get(2).size() > 2){
             userCardsLabel.setText(rummy.toString((rummy.getMelds().get(2))));
-            showImage.setLayoutX(cardImage3.getLayoutX());
-            showImage.setLayoutY(cardImage3.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage3.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage3.getLayoutY());
+            handPane.setContent(userCardsLabel);
+            handPane.setTranslateX(cardImage3.getLayoutX()-15);
+            handPane.setTranslateY(cardImage3.getLayoutY()-15);
             if (!showing) {
-                showImage.setVisible(true);
+                handPane.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-                showImage.setVisible(false);
+                handPane.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
             }
@@ -177,21 +169,19 @@ public class RummyController extends Application implements Initializable {
 
         if (rummy.getMelds().get(3).size() > 3){
             userCardsLabel.setText(rummy.toString((rummy.getMelds().get(3))));
-            showImage.setLayoutX(cardImage4.getLayoutX());
-            showImage.setLayoutY(cardImage4.getLayoutY());
-            userCardsLabel.setLayoutX(cardImage4.getLayoutX());
-            userCardsLabel.setLayoutY(cardImage4.getLayoutY());
+            handPane.setContent(userCardsLabel);
+            handPane.setTranslateX(cardImage4.getLayoutX()-15);
+            handPane.setTranslateY(cardImage4.getLayoutY()-15);
             if (!showing) {
-                showImage.setVisible(true);
+                handPane.setVisible(true);
                 userCardsLabel.setVisible(true);
                 showing = true;
             } else {
-                showImage.setVisible(false);
+                handPane.setVisible(false);
                 userCardsLabel.setVisible(false);
                 showing = false;
             }
         }
-
 
     }
 
@@ -201,15 +191,7 @@ public class RummyController extends Application implements Initializable {
         cardDeck.setBlendMode(BlendMode.LIGHTEN);
     }
 
-    @FXML public void onCardDragDiscard(){
-        if(discard)
-            return;
-        cardDiscard.setBlendMode(BlendMode.LIGHTEN);
-    }
-
     @FXML public void onCardExitDeck(){cardDeck.setBlendMode(BlendMode.SRC_OVER);}
-
-    @FXML public void onCardExitDiscard(){cardDeck.setBlendMode(BlendMode.SRC_OVER);}
 
     @FXML
     private void setMessageText(String m){
@@ -328,7 +310,7 @@ public class RummyController extends Application implements Initializable {
         ArrayList<Card> pile = rummy.getDiscard();
         discardLabel.setText(rummy.toString(pile));
         userCardsLabel.setVisible(false);
-        showImage.setVisible(false);
+        handPane.setVisible(false);
         showing = false;
         draw = false;
         discard = false;
@@ -357,7 +339,7 @@ public class RummyController extends Application implements Initializable {
 
     @FXML void discardClicked(){
 
-        if(rummy.getStatus() || draw){
+        if(rummy.getStatus() || discard){
             return;
         }
         TextInputDialog cardAmount = new TextInputDialog();
@@ -367,7 +349,12 @@ public class RummyController extends Application implements Initializable {
         Optional<String> amount = cardAmount.showAndWait();
         if(!amount.isPresent())
             return;
-        int x = Integer.parseInt(amount.get());
+        int x;
+        try{
+            x = Integer.parseInt(amount.get());
+        } catch (Exception e){
+            return;
+        }
         rummy.takeDiscard(x);
         userCardsLabel.setText(rummy.toString((rummy.getCurrentPlayer())));
         discardLabel.setText(rummy.toString(rummy.getDiscard()));
@@ -476,7 +463,6 @@ public class RummyController extends Application implements Initializable {
         rummy.playMeld(meld);
         setMessageText(rummy.getMessage());
         if(Objects.equals(rummy.getMessage(), "Meld played!")){
-            playerIndex++;
             setTurnText(rummy.getTurnMessage());
         }
         else{

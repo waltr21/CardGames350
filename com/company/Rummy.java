@@ -110,6 +110,12 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Takes a given amount of cards from the discard pile and puts them in
+     * the current player's hand.
+     *
+     * @param amount The amount of cards to take from the discard pile.
+     *************************************************************************/
     public void takeDiscard(int amount){
 
         if(amount > discard.size()){
@@ -124,6 +130,9 @@ public class Rummy {
         }
     }
 
+    /**************************************************************************
+     * Takes the top card from the deck and puts it in the player's hand.
+     *************************************************************************/
     public void removeTopDeck(){
 
         players.get(turn).giveCard(deck.removeTop());
@@ -139,23 +148,34 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Adds a given player card to the discard pile.
+     *
+     * @param c The card to add to discard pile.
+     **************************************************************************/
     public void discard(Card c){
 
-        if(turn > 3){
-            turn = 0;
-        }
         players.get(turn).takeCard(c);
         discard.add(c);
         turn++;
-        message = "Player "+(turn+1)+" discarded";
+        message = "Player "+(turn)+" discarded";
         for(int i = 0; i < numPlayers; i++) {
             if (players.get(i).getCards().size() == 0) {
                 gameOver = true;
                 tallyScore();
             }
         }
+        if(turn > 3){
+            turn = 0;
+        }
     }
 
+    /**************************************************************************
+     * Take's player's meld, sets whether the meld is valid or not, and
+     * adds these cards to the player's meld pile if valid.
+     *
+     * @param meld A list of cards holding the player's meld.
+     *************************************************************************/
     public void playMeld(ArrayList<Card> meld){
 
         if(checkValidMeld(meld)){
@@ -180,11 +200,16 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Helper method to check if a player's meld is valid.
+     *
+     * @param meld A list of cards holding the player's meld.
+     *************************************************************************/
     private boolean checkValidMeld(ArrayList<Card> meld){
 
+        boolean valid = false;
         if(meld.size() < 3)
             return false;
-        boolean valid = false;
         int i = 1;
         while(i < meld.size()){
 
@@ -312,6 +337,12 @@ public class Rummy {
         return scores;
     }
 
+    /**************************************************************************
+     * Converts a player's hand to a string.
+     *
+     * @param p The player to get cards from.
+     * @return The generated String of player cards.
+     *************************************************************************/
     public String toString(Player p){
 
         ArrayList<Card> temp;
@@ -324,6 +355,12 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Converts a list of cards to a string.
+     *
+     * @param hand The list of cards to convert to string.
+     * @return The generated String frong the given hand.
+     *************************************************************************/
     public String toString(ArrayList<Card> hand){
 
         StringBuilder cardList = new StringBuilder();
@@ -334,34 +371,64 @@ public class Rummy {
 
     }
 
+    /**************************************************************************
+     * Getter for current player
+     *
+     * @return the current Player.
+     **************************************************************************/
     public Player getCurrentPlayer(){
 
         return players.get(turn);
 
     }
 
+    /**************************************************************************
+     * Getter for the turn message string.
+     *
+     * @return String containing a message with the current player's turn.
+     *************************************************************************/
     public String getTurnMessage(){
 
         return "Player "+(turn+1)+", it's your turn.";
 
     }
 
+    /**************************************************************************
+     * Checks if game is over.
+     *
+     * @return true if game is over, false if game is in progress.
+     *************************************************************************/
     public boolean getStatus(){
 
         return gameOver;
 
     }
 
+    /**************************************************************************
+     * Gets the game's current message.
+     *
+     * @return the game message.
+     *************************************************************************/
     public String getMessage(){
 
         return message;
 
     }
 
+    /**************************************************************************
+     * Getter for the players ArrayList
+     *
+     * @return ArrayList containing the players.
+     *************************************************************************/
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**************************************************************************
+     * Getter for the game's deck.
+     *
+     * @return the game's deck.
+     *************************************************************************/
     public Deck getDeck() {
         return deck;
     }
